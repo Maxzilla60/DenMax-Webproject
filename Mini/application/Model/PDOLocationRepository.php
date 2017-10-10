@@ -32,7 +32,7 @@ class PDOLocationRepository extends Model
 
         $locationsArray = array();
         if (count($fetchedLocations) > 0) {
-            foreach ($fetchedLocations as $r) {
+            foreach ($fetchedLocations as $l) {
                 $locationsArray[] = new Location($l['id'], $l['name'], $l['company_id']);
             }
         }
