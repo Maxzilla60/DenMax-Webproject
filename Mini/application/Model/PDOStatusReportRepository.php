@@ -7,8 +7,7 @@ use StatusReport;
 
 class PDOStatusReportRepository extends Model
 {
-    public function getStatusReport($location_id)
-    {
+    public function getStatusReportsByLocation($location_id) {
         $sql = "SELECT * FROM statusreports WHERE location_id = :location_id";
         $query = $this->db->prepare($sql);
         $parameters = array(':location_id' => $location_id);

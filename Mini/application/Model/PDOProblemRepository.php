@@ -7,7 +7,7 @@ use Problem;
 
 class PDOProblemRepository extends Model
 {
-    public function getProblem($location_id) {
+    public function getProblemsByLocation($location_id) {
         $sql = "SELECT * FROM problems WHERE location_id = :location_id";
         $query = $this->db->prepare($sql);
         $parameters = array(':location_id' => $location_id);
@@ -23,6 +23,4 @@ class PDOProblemRepository extends Model
 
         return $problemsArray;
     }
-
-
 }
