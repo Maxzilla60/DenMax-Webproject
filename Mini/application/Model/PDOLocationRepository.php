@@ -5,6 +5,7 @@ namespace Mini\Model;
 use Mini\Core\Model;
 use Location;
 use StatusReport;
+use Problem;
 
 class PDOLocationRepository extends Model
 {
@@ -52,8 +53,8 @@ class PDOLocationRepository extends Model
 
         $problemsArray = array();
         if (count($fetchedProblems) > 0) {
-            foreach ($fetchedProblems as $r) {
-
+            foreach ($fetchedProblems as $p) {
+                $problemsArray[] = new Problem($p['id'], $p['location_id'], $p['description'], $p['date'], $p['fixed'], $p['technician']);
             }
         }
 
