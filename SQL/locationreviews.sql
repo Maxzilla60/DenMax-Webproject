@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.19, for Linux (x86_64)
 --
--- Host: 192.168.33.11    Database: locatiereviews
+-- Host: 192.168.33.11    Database: locationreviews
 -- ------------------------------------------------------
 -- Server version	5.7.19-0ubuntu0.16.04.1
 
@@ -73,11 +73,11 @@ DROP TABLE IF EXISTS `locations`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `naam` varchar(50) NOT NULL,
-  `comapny_id` int(11) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `company_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_company_id_idx` (`comapny_id`),
-  CONSTRAINT `fk_company_id_2` FOREIGN KEY (`comapny_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_company_id_idx` (`company_id`),
+  CONSTRAINT `fk_company_id_2` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -156,9 +156,9 @@ DROP TABLE IF EXISTS `roles`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
-  `rolesname` varchar(45) NOT NULL,
+  `rolename` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `rolesname_UNIQUE` (`rolesname`)
+  UNIQUE KEY `rolesname_UNIQUE` (`rolename`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -172,13 +172,13 @@ LOCK TABLES `roles` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `statusreport`
+-- Table structure for table `statusreports`
 --
 
-DROP TABLE IF EXISTS `statusreport`;
+DROP TABLE IF EXISTS `statusreports`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `statusreport` (
+CREATE TABLE `statusreports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` int(11) NOT NULL,
   `date` datetime NOT NULL,
@@ -190,13 +190,13 @@ CREATE TABLE `statusreport` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `statusreport`
+-- Dumping data for table `statusreports`
 --
 
-LOCK TABLES `statusreport` WRITE;
-/*!40000 ALTER TABLE `statusreport` DISABLE KEYS */;
-INSERT INTO `statusreport` VALUES (3,1,'2000-01-01 00:00:00',3),(4,2,'2000-01-02 00:00:00',2);
-/*!40000 ALTER TABLE `statusreport` ENABLE KEYS */;
+LOCK TABLES `statusreports` WRITE;
+/*!40000 ALTER TABLE `statusreports` DISABLE KEYS */;
+INSERT INTO `statusreports` VALUES (3,1,'2000-01-01 00:00:00',3),(4,2,'2000-01-02 00:00:00',2);
+/*!40000 ALTER TABLE `statusreports` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -234,4 +234,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-09-29 10:30:53
+-- Dump completed on 2017-10-10 15:00:55
