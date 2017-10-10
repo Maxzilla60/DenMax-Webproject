@@ -7,14 +7,16 @@ class Problem
     private $description;
     private $date;
     private $fixed;
+    private $technician;
 
-    public function __construct($id, $location_id, $description, $date, $fixed)
+    public function __construct($id, $location_id, $description, $date, $fixed, $technician)
     {
         $this->id = $id;
         $this->location_id = $location_id;
         $this->description = $description;
         $this->date = $date;
         $this->fixed = $fixed;
+        $this->technician = $technician;
     }
 
     public function toJSON() {
@@ -69,5 +71,15 @@ class Problem
     public function setFixed($fixed)
     {
         $this->fixed = $fixed;
+    }
+
+    public function getTechnician()
+    {
+        return $this->technician;
+    }
+
+    public function setTechnician($technician)
+    {
+        $this->technician = $technician;
     }
 }
