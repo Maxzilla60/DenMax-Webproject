@@ -24,7 +24,7 @@ class PDOLocationRepository extends Model
     }
 
     public function getLocationsByCompany($company_id) {
-        $sql = "SELECT * FROM locations WHERE company_id = :company_id!";
+        $sql = "SELECT * FROM locations WHERE company_id = :company_id";
         $query = $this->db->prepare($sql);
         $parameters = array(':company_id' => $company_id);
         $query->execute($parameters);
