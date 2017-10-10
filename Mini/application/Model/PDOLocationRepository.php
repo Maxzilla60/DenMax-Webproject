@@ -27,7 +27,7 @@ class PDOLocationRepository extends Model
 
     public function getStatusReport($location_id)
     {
-        $sql = "SELECT status, date FROM statusreports WHERE location_id = :location_id";
+        $sql = "SELECT * FROM statusreports WHERE location_id = :location_id";
         $query = $this->db->prepare($sql);
         $parameters = array(':location_id' => $location_id);
         $query->execute($parameters);
@@ -43,7 +43,20 @@ class PDOLocationRepository extends Model
         return $reportsArray;
     }
     
-    public function get($status_id)
-    {
+    public function getProblem($location_id) {
+        $sql = "SELECT * FROM problems WHERE location_id = :location_id";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':location_id' => $location_id);
+        $query->execute($parameters);
+        $fetchedProblems = $query->fetchAll();
+
+        $problemsArray = array();
+        if (count($fetchedProblems) > 0) {
+            foreach ($fetchedProblems as $r) {
+
+            }
+        }
+
+        return $problemsArray;
     }
 }
