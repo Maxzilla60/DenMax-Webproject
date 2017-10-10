@@ -1,5 +1,7 @@
 <?php
 
+namespace Mini\Model;
+
 class Problem
 {
     private $id;

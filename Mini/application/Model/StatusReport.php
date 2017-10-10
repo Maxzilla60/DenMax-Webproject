@@ -1,5 +1,7 @@
 <?php
 
+namespace Mini\Model;
+
 class StatusReport
 {
     private $id;
