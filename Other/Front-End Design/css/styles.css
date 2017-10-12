@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    transition-duration: 0.2s;
+    background-color: #EEEEEE;
+    box-sizing: border-box;
+}
+button {
+    background-color: #FCC314;
+}
+
+header {
+    width: 100%;
+    display: inline-flex;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    background-color: #FCC314;
+}
+header * {
+    background-color: #FCC314;
+}
+header .left {
+    width: 50%;
+}
+header .right {
+    text-align: right;
+    width: 50%;
+}
+header button {
+    padding: 5px;
+    margin-right: 10px;
+    border: solid #EEEEEE;
+}
+header button:hover {
+    background-color: #94AC3C;
+}
+
+nav {
+    width: 100%;
+    display: inline-flex;
+    border-bottom: solid #295BA7;
+}
+.menu-tab {
+    padding: 10px;
+    margin-left: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.menu-tab:hover {
+    background-color: #94AC3C;
+    color: white;
+}
+.selected {
+    background-color: #295BA7;
+    color: white;
+}
+data {
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+table {
+    width: 100%;
+    height: 100%;
+    border-spacing: 0;
+}
+table * {
+    height: 50px;
+}
+#name_th {
+    width: 60%;
+}
+th {
+    border-bottom: solid #295BA7;
+    color: #295BA7;
+}
+td {
+    padding-top: 5px;
+    padding-right: 5px;
+}
+td button {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 5px;
+}
+td button:hover {
+    background-color: #94AC3C;
+    color: white;
+}
+
+.location_problems_header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #FCC314;
+}
+.location_problems_header *{
+    text-align: center;
+    background-color: #FCC314;
+}
+.fixed {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px; 
+    background-color: forestgreen;
+}
