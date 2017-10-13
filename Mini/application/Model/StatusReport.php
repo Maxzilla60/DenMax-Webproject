@@ -17,10 +17,6 @@ class StatusReport
         $this->date = $date;
     }
 
-    public function toJSON() {
-        //TODO
-    }
-
     public function getId()
     {
         return $this->id;

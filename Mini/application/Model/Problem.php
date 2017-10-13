@@ -21,10 +21,6 @@ class Problem
         $this->technician = $technician;
     }
 
-    public function toJSON() {
-        //TODO
-    }
-
     public function getId()
     {
         return $this->id;
