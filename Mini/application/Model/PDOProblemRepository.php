@@ -3,7 +3,6 @@
 namespace Mini\Model;
 
 use Mini\Core\Model;
-use Problem;
 
 class PDOProblemRepository extends Model
 {

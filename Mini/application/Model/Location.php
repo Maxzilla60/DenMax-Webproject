@@ -15,10 +15,6 @@ class Location
         $this->company_id = $company_id;
     }
 
-    public function toJSON() {
-        //TODO
-    }
-
     public function getId()
     {
         return $this->id;

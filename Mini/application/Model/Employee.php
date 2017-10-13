@@ -13,10 +13,6 @@ class Employee
         $this->user_id = $user_id;
     }
 
-    public function toJSON() {
-        // TODO
-    }
-
     public function getCompanyId()
     {
         return $this->company_id;
