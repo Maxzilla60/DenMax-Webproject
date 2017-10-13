@@ -3,7 +3,6 @@
 namespace Mini\Model;
 
 use Mini\Core\Model;
-use Location;
 
 class PDOLocationRepository extends Model
 {
@@ -11,7 +10,7 @@ class PDOLocationRepository extends Model
         $sql = "SELECT * FROM locations";
         $query = $this->db->prepare($sql);
         $query->execute();
-        $fetchedLocations = $query->fetchAll(PDO::FETCH_ASSOC);
+        $fetchedLocations = $query->fetchAll(\PDO::FETCH_ASSOC);
 
         $locationsArray = array();
         if (count($fetchedLocations) > 0) {
@@ -28,7 +27,7 @@ class PDOLocationRepository extends Model
         $query = $this->db->prepare($sql);
         $parameters = array(':company_id' => $company_id);
         $query->execute($parameters);
-        $fetchedLocations = $query->fetchAll();
+        $fetchedLocations = $query->fetchAll(\PDO::FETCH_ASSOC);
 
         $locationsArray = array();
         if (count($fetchedLocations) > 0) {
