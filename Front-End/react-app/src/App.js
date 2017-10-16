@@ -23,8 +23,8 @@ class App extends Component {
         //HttpService.getStatusReportsByLocation(1).then(s => this.setState({problems: s}));
     }
     
-    search = (query) => {
-        alert(query);
+    search = (evt) => {
+        console.log(evt.target.value);
     }
     
     render() {
@@ -33,7 +33,7 @@ class App extends Component {
                 <LocationsTable locations={this.state.locations} />
                 <ProblemsTable problems={this.state.problems} />
                 <StatusReportsTable statusreports={this.state.statusreports} />
-                <LocationSearch onchange={this.search}/>
+                <input type="text" onChange={(evt) => this.search(evt)} /> 
             </div>
         );
     }
