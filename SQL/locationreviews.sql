@@ -108,7 +108,7 @@ CREATE TABLE `problemreactions` (
   PRIMARY KEY (`id`),
   KEY `fk_problem_id_idx` (`problem_id`),
   CONSTRAINT `fk_problem_id` FOREIGN KEY (`problem_id`) REFERENCES `problems` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,6 +117,7 @@ CREATE TABLE `problemreactions` (
 
 LOCK TABLES `problemreactions` WRITE;
 /*!40000 ALTER TABLE `problemreactions` DISABLE KEYS */;
+INSERT INTO `problemreactions` VALUES (1,1,'\0','Niet waar!'),(2,1,'',NULL),(3,2,'\0',''),(4,2,'',''),(5,2,'','Inderdaad!');
 /*!40000 ALTER TABLE `problemreactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-19 10:32:22
+-- Dump completed on 2017-10-19 10:58:32
