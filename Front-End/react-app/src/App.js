@@ -19,12 +19,13 @@ class App extends Component {
     
     componentWillMount() {
         HttpService.getAllLocations().then(s => this.setState({locations : s}));
-        //HttpService.getProblemsByLocation(1).then(s => this.setState({problems: s}));
-        //HttpService.getStatusReportsByLocation(1).then(s => this.setState({problems: s}));
+        HttpService.getProblemsByLocation(1).then(s => this.setState({problems: s}));
+        HttpService.getStatusReportsByLocation(1).then(s => this.setState({problems: s}));
     }
     
     search = (evt) => {
-        console.log(evt.target.value);
+        //console.log(evt.target.value);
+        HttpService.getLocationByCompany(evt.target.value).then(s => this.setState({locations : s}));
     }
     
     render() {
