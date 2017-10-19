@@ -7,6 +7,7 @@
  */
 
 namespace Mini\View;
+
 use Mini\Model\Location;
 
 
