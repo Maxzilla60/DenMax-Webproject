@@ -23,14 +23,14 @@ class PDOUserRepository extends Model
         $userArray = array();
         if (count($fetchedUsers) > 0) {
             foreach ($fetchedUsers as $u) {
-                $problemReactionArray[] = new User($u['id'], $u['name'], $u['role']);
+                $userArray[] = new User($u['id'], $u['name'], $u['role']);
             }
         }
 
         return $userArray;
     }
 
-    public function geUsersByRole($role)
+    public function getUsersByRole($role)
     {
         $sql = "SELECT * FROM users WHERE role = :role";
         $query = $this->db->prepare($sql);
@@ -41,7 +41,7 @@ class PDOUserRepository extends Model
         $userArray = array();
         if (count($fetchedUsers) > 0) {
             foreach ($fetchedUsers as $u) {
-                $UserArray[] = new User($u['id'], $u['name'], $u['role']);
+                $userArray[] = new User($u['id'], $u['name'], $u['role']);
             }
         }
 

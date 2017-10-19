@@ -18,7 +18,7 @@ class PDOProblemReactionRepository extends Model
         $sql = "SELECT * FROM problemreactions";
         $query = $this->db->prepare($sql);
         $query->execute();
-        $fetchedProblemReactions = $query->fetchAll(PDO::FETCH_ASSOC);
+        $fetchedProblemReactions = $query->fetchAll(\PDO::FETCH_ASSOC);
 
         $problemReactionArray = array();
         if (count($fetchedProblemReactions) > 0) {

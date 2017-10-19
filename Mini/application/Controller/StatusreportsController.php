@@ -8,10 +8,10 @@
 
 namespace Mini\Controller;
 
-use Mini\Model\PDOProblemRepository;
-use Mini\View\ProblemJsonView;
+use Mini\Model\PDOStatusReportRepository;
+use Mini\View\StatusReportJsonView;
 
-class ProblemsController
+class StatusreportsController
 {
     private $repository;
     private $view;
@@ -19,10 +19,10 @@ class ProblemsController
     function __construct($repo = null, $view = null)
     {
         if(!isset($repo)) {
-            $this->repository = new PDOProblemRepository();
+            $this->repository = new PDOStatusReportRepository();
         }
         if(!isset($view)) {
-            $this->view = new ProblemJsonView();
+            $this->view = new StatusReportJsonView();
         }
 
     }
@@ -34,8 +34,8 @@ class ProblemsController
     public function index()
     {
         // load views
-        $problems = $this->repository->getAllProblems();
-        $this->view->ShowAll($problems);
+        $statusreports = $this->repository->getAllStatusReports();
+        $this->view->ShowAll($statusreports);
     }
 
     /**
@@ -45,7 +45,7 @@ class ProblemsController
     public function location($id)
     {
         // load views
-        $problems = $this->repository->getProblemsByLocation($id);
-        $this->view->ShowAll($problems);
+        $statusreports = $this->repository->getStatusReportsByLocation($id);
+        $this->view->ShowAll($statusreports);
     }
 }
