@@ -18,7 +18,7 @@ class PDOUserRepository extends Model
         $sql = "SELECT * FROM users";
         $query = $this->db->prepare($sql);
         $query->execute();
-        $fetchedUsers = $query->fetchAll(PDO::FETCH_ASSOC);
+        $fetchedUsers = $query->fetchAll(\PDO::FETCH_ASSOC);
 
         $userArray = array();
         if (count($fetchedUsers) > 0) {
@@ -36,7 +36,7 @@ class PDOUserRepository extends Model
         $query = $this->db->prepare($sql);
         $parameters = array(':role' => $role);
         $query->execute($parameters);
-        $fetchedUsers = $query->fetchAll();
+        $fetchedUsers = $query->fetchAll(\PDO::FETCH_ASSOC);
 
         $userArray = array();
         if (count($fetchedUsers) > 0) {

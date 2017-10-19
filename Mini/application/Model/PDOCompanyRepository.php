@@ -3,16 +3,14 @@
 namespace Mini\Model;
 
 use Mini\Core\Model;
-use Company;
 
 class PDOCompanyRepository extends Model
 {
-    public function getCompaniesByUser($user_id) {
-        $sql = "SELECT * FROM locations WHERE id IN (SELECT company_id FROM employees WHERE user_id = :user_id)"; // TODO
+    public function getAllCompanies() {
+        $sql = "SELECT * FROM companies";
         $query = $this->db->prepare($sql);
-        $parameters = array(':user_id' => $user_id);
-        $query->execute($parameters);
-        $fetchedCompanies = $query->fetchAll();
+        $query->execute();
+        $fetchedCompanies = $query->fetchAll(\PDO::FETCH_ASSOC);
 
         $companiesArray = array();
         if (count($fetchedCompanies) > 0) {
@@ -22,5 +20,21 @@ class PDOCompanyRepository extends Model
         }
 
         return $companiesArray;
+    }
+
+
+    public function getCompanyByUser($user_id) {
+        $sql = "SELECT * FROM companies WHERE id IN (SELECT company_id FROM employees WHERE user_id = :user_id)";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':user_id' => $user_id);
+        $query->execute($parameters);
+
+        $fetchedCompany = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if (count($fetchedCompany) > 0) {
+                $company = new Company($fetchedCompany['id'], $fetchedCompany['name']);
+                return $company;
+        }
+        return null;
     }
 }

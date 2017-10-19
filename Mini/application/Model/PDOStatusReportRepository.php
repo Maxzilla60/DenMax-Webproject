@@ -3,7 +3,6 @@
 namespace Mini\Model;
 
 use Mini\Core\Model;
-use StatusReport;
 
 class PDOStatusReportRepository extends Model
 {
@@ -12,7 +11,7 @@ class PDOStatusReportRepository extends Model
         $query = $this->db->prepare($sql);
         $parameters = array(':location_id' => $location_id);
         $query->execute($parameters);
-        $fetchedReports = $query->fetchAll();
+        $fetchedReports = $query->fetchAll(\PDO::FETCH_ASSOC);
 
         $reportsArray = array();
         if (count($fetchedReports) > 0) {
