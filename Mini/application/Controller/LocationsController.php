@@ -30,7 +30,6 @@ class LocationsController
 
     /**
      * PAGE: index
-     * This method handles what happens when you move to http://yourproject/home/index (which is the default page btw)
      */
     public function index()
     {
@@ -41,9 +40,7 @@ class LocationsController
 
     /**
      * PAGE: company
-     * This method handles what happens when you move to http://yourproject/home/exampleone
-     * The camelCase writing is just for better readability. The method name is case-insensitive.
-     * @param int $id Id of the to-edit song
+     * @param int $id
      */
     public function company($id)
     {
