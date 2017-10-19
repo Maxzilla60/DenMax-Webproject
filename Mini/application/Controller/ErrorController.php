@@ -20,8 +20,8 @@ class ErrorController
     public function index()
     {
         // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/error/index.php';
-        require APP . 'view/_templates/footer.php';
+        require APP . 'View/_templates/header.php';
+        require APP . 'View/error/index.php';
+        require APP . 'View/_templates/footer.php';
     }
 }

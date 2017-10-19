@@ -31,9 +31,9 @@ class SongsController
         $amount_of_songs = $Song->getAmountOfSongs();
 
        // load views. within the views we can echo out $songs and $amount_of_songs easily
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/songs/index.php';
-        require APP . 'view/_templates/footer.php';
+        require APP . 'View/_templates/header.php';
+        require APP . 'View/songs/index.php';
+        require APP . 'View/_templates/footer.php';
     }
 
     /**
@@ -99,9 +99,9 @@ class SongsController
             // redirect the user to an error page or similar
 
             // load views. within the views we can echo out $song easily
-            require APP . 'view/_templates/header.php';
-            require APP . 'view/songs/edit.php';
-            require APP . 'view/_templates/footer.php';
+            require APP . 'View/_templates/header.php';
+            require APP . 'View/songs/edit.php';
+            require APP . 'View/_templates/footer.php';
         } else {
             // redirect user to songs index page (as we don't have a song_id)
             header('location: ' . URL . 'songs/index');

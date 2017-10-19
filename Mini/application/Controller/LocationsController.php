@@ -11,7 +11,7 @@ namespace Mini\Controller;
 use Mini\Model\PDOLocationRepository;
 use Mini\View\LocationJsonView;
 
-class LocationController
+class LocationsController
 {
     private $repository;
     private $view;
