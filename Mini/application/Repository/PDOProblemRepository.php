@@ -40,4 +40,18 @@ class PDOProblemRepository extends Model
 
         return $problemsArray;
     }
+
+    public function addProblem(Problem $problem) {
+        try {
+            $sql = "INSERT INTO problems (location_id, description, date, fixed, technician) VALUES (:location_id, :description, :date, :fixed, :technician)";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':location_id' => $problem->getLocationId(), ':description' => $problem->getDescription(), ':date' => $problem->getDate(), ':fixed' => $problem->getFixed(), ':technician' => $problem->getTechnician());
+
+            http_response_code(200);
+            $query->execute($parameters);
+        } catch (\PDOException $e) {
+            http_response_code(400);
+            echo 'Exception!: ' . $e->getMessage();
+        }
+    }
 }

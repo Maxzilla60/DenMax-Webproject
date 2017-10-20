@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Model\Problem;
 use Mini\Repository\PDOProblemRepository;
 use Mini\View\ProblemJsonView;
 
@@ -36,6 +37,27 @@ class ProblemsController
         // load views
         $problems = $this->repository->getAllProblems();
         $this->view->ShowAll($problems);
+    }
+
+    /**
+     * PAGE: add
+     */
+    public function add() {
+        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
+        if (isset($_POST['location_id']) && isset($_POST['description']) && isset($_POST['date']) && isset($_POST['fixed'])) {
+            // Technician is optioneel:
+            if (isset($_POST['technician'])) {
+                $technician = $_POST['technician'];
+            }
+            else {
+                $technician = null;
+            }
+            
+            $this->repository->addProblem(new Problem(0, $_POST['location_id'], $_POST['description'], $_POST['date'], $_POST['fixed'], $technician));
+        }
+
+        // Redirect
+        header('location: ' . URL . 'problems');
     }
 
     /**
