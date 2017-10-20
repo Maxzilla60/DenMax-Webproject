@@ -8,7 +8,7 @@
 
 namespace Mini\Controller;
 
-use Mini\Model\PDOStatusReportRepository;
+use Mini\Repository\PDOStatusReportRepository;
 use Mini\View\StatusReportJsonView;
 
 class StatusreportsController

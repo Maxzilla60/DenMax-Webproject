@@ -6,9 +6,10 @@
  * Time: 11:55
  */
 
-namespace Mini\Model;
+namespace Mini\Repository;
 
 use Mini\Core\Model;
+use Mini\Model\Role;
 
 class PDORoleRepository extends Model
 {

@@ -8,7 +8,7 @@
 
 namespace Mini\Controller;
 
-use Mini\Model\PDOProblemRepository;
+use Mini\Repository\PDOProblemRepository;
 use Mini\View\ProblemJsonView;
 
 class ProblemsController

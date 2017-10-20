@@ -8,7 +8,7 @@
 
 namespace Mini\Controller;
 
-use Mini\Model\PDOCompanyRepository;
+use Mini\Repository\PDOCompanyRepository;
 use Mini\View\CompanyJsonView;
 
 class CompaniesController

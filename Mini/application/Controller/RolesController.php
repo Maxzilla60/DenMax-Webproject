@@ -8,7 +8,7 @@
 
 namespace Mini\Controller;
 
-use Mini\Model\PDORoleRepository;
+use Mini\Repository\PDORoleRepository;
 use Mini\View\RoleJsonView;
 
 class RolesController

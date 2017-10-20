@@ -8,7 +8,7 @@
 
 namespace Mini\Controller;
 
-use Mini\Model\PDOUserRepository;
+use Mini\Repository\PDOUserRepository;
 use Mini\View\UserJsonView;
 
 class UsersController

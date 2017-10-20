@@ -6,10 +6,10 @@
  * Time: 16:51
  */
 
-namespace Mini\Model;
+namespace Mini\Repository;
 
 use Mini\Core\Model;
-
+use Mini\Model\User;
 
 class PDOUserRepository extends Model
 {

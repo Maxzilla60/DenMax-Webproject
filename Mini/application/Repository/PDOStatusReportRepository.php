@@ -1,8 +1,9 @@
 <?php
 
-namespace Mini\Model;
+namespace Mini\Repository;
 
 use Mini\Core\Model;
+use Mini\Model\StatusReport;
 
 class PDOStatusReportRepository extends Model
 {

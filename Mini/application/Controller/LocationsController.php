@@ -8,7 +8,7 @@
 
 namespace Mini\Controller;
 
-use Mini\Model\PDOLocationRepository;
+use Mini\Repository\PDOLocationRepository;
 use Mini\View\LocationJsonView;
 
 class LocationsController
