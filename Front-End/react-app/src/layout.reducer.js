@@ -1,6 +1,7 @@
 const initialState = {
     title: 'Dashboard',
     locations: [],
+    statusreports: []
 };
 
 const layoutreducer = (state = initialState, action) => {
@@ -9,6 +10,9 @@ const layoutreducer = (state = initialState, action) => {
             return { ...state, ...{ title: action.payload } };
         case 'SET_LOCATIONS':
             return { ...state, ...{ locations: action.payload } };
+        case 'SET_STATUSREPORTS':
+            return { ...state, ...{ statusreports: action.payload } };
+            
         case 'ADD_CALORIEENTRY':
             return { ...state, ...{ calorieEntries: [...state.calorieEntries, action.payload] } };
         case 'DELETE_CALORIEENTRY':

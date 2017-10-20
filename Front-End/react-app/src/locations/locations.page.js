@@ -26,7 +26,6 @@ class LocationsPage extends Component {
         }
         else {
             HttpService.getAllLocations().then(fetchedLocations => this.props.setLocations(fetchedLocations));
-            hasFetchedLocations = true;
         }
     }
 
@@ -34,8 +33,8 @@ class LocationsPage extends Component {
         const fetchedLocations = this.props.locations;
         return (
             <div>
-                <TextField onChange={(evt) => this.searchByCompany(evt)} hintText="Search by Company ID" style={{width: '100%'}} />
-                <LocationsTable entries={this.props.locations} />
+                <TextField type="number" onChange={(evt) => this.searchByCompany(evt)} hintText="Search by Company ID" style={{width: '100%'}} />
+                <LocationsTable entries={fetchedLocations} />
             </div>
         );
     }

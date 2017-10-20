@@ -15,8 +15,12 @@ class HttpService {
         return axios.get(`${this.baseUrl}/problems/${id}`).then(r => r.data);
     }
 
-    getStatusReportsByLocation(id) {
-        return axios.get(`${this.baseUrl}/statusreports/${id}`).then(r => r.data);
+    getAllStatusReports() {
+        return axios.get(`${this.baseUrl}/statusreports`).then(r => r.data);
+    }
+
+    getStatusReportByLocation(id) {
+        return axios.get(`${this.baseUrl}/statusreports/location/${id}`).then(r => r.data);
     }
 }
 

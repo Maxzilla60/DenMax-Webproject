@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import DashboardPage from './dashboard/dashboard.page';
 import LocationsPage from './locations/locations.page';
+import StatusreportsPage from './statusreports/statusreports.page';
 import { connect } from 'react-redux';
 
 class Layout extends Component {
@@ -35,9 +36,13 @@ class Layout extends Component {
                         <Link to="/locations"><MenuItem onClick={this.toggleState} >
                             Locations
                         </MenuItem></Link>
+                        <Link to="/statusreports"><MenuItem onClick={this.toggleState} >
+                            Status Reports
+                        </MenuItem></Link>
                     </Drawer>
                     <Route exact={true} path="/" component={DashboardPage} />
                     <Route exact={true} path="/locations" component={LocationsPage} />
+                    <Route exact={true} path="/statusreports" component={StatusreportsPage} />  
                 </div>
             </Router>
         );
