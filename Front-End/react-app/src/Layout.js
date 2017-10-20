@@ -8,11 +8,7 @@ import {
     Link
 } from 'react-router-dom';
 import DashboardPage from './dashboard/dashboard.page';
-import CaloriesPage from './calories/calories.page';
-import CaloriesAddPage from './calories/calories-add.page';
-import HabitsPage from './habits/habits.page';
-import SettingsPage from './settings/settings.page';
-import WeightPage from './weight/weight.page';
+import LocationsPage from './locations/locations.page';
 import { connect } from 'react-redux';
 
 class Layout extends Component {
@@ -33,30 +29,15 @@ class Layout extends Component {
                         onLeftIconButtonTouchTap={this.toggleState}
                     />
                     <Drawer open={this.state.drawerOpen}>
-                        <MenuItem onClick={this.toggleState} >
-                            <Link to="/">Dashboard</Link>
-                        </MenuItem>
-                        <MenuItem onClick={this.toggleState} >
-                            <Link to="/weight">Weight</Link>
-                        </MenuItem>
-                        <MenuItem onClick={this.toggleState} >
-                            <Link to="/calories">Calories</Link>
-                        </MenuItem>
-                        <MenuItem onClick={this.toggleState} containerElement={
-                            <Link to="/habits"></Link>
-                        }>
-                            Habits
-                        </MenuItem>
-                        <MenuItem onClick={this.toggleState} >
-                            <Link to="/settings">Settings</Link>
-                        </MenuItem>
+                        <Link to="/"><MenuItem onClick={this.toggleState} >
+                            Dashboard
+                        </MenuItem></Link>
+                        <Link to="/locations"><MenuItem onClick={this.toggleState} >
+                            Locations
+                        </MenuItem></Link>
                     </Drawer>
                     <Route exact={true} path="/" component={DashboardPage} />
-                    <Route exact={true} path="/calories" component={CaloriesPage} />
-                    <Route path="/calories/add" component={CaloriesAddPage} />
-                    <Route path="/habits" component={HabitsPage} />
-                    <Route path="/settings" component={SettingsPage} />
-                    <Route path="/weight" component={WeightPage} />
+                    <Route exact={true} path="/locations" component={LocationsPage} />
                 </div>
             </Router>
         );

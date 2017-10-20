@@ -1,14 +1,14 @@
 const initialState = {
     title: 'Dashboard',
-    calorieEntries: [],
+    locations: [],
 };
 
 const layoutreducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_TITLE':
             return { ...state, ...{ title: action.payload } };
-        case 'SET_CALORIEENTRIES':
-            return { ...state, ...{ calorieEntries: action.payload } };
+        case 'SET_LOCATIONS':
+            return { ...state, ...{ locations: action.payload } };
         case 'ADD_CALORIEENTRY':
             return { ...state, ...{ calorieEntries: [...state.calorieEntries, action.payload] } };
         case 'DELETE_CALORIEENTRY':

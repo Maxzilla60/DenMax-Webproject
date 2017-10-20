@@ -1,28 +1,25 @@
 import axios from 'axios';
 
 class HttpService {
-    userId = null;
-    baseUrl = 'http://react-pxl.westeurope.cloudapp.azure.com';
-    constructor(userId) {
-        this.userId = userId;
+    baseUrl = 'http://192.168.33.11';
+    
+    getAllLocations() {
+        return axios.get(`${this.baseUrl}/locations`).then(r => r.data);
     }
 
-    getId() {
-        return Math.random() * 10000000;
+    getLocationByCompany(id) {
+        return axios.get(`${this.baseUrl}/location/${id}`).then(r => r.data);
     }
 
-    getCalories() {
-        return axios.get(`${this.baseUrl}/calorieEntries?userId=${this.userId}`).then(r => r.data);
+    getProblemsByLocation(id) {
+        return axios.get(`${this.baseUrl}/problems/${id}`).then(r => r.data);
     }
 
-    addCalorieEntry(date, calories, id) {
-        return axios.post(`${this.baseUrl}/calorieEntries`, { id: id, userId: this.userId, date: date, weight: calories });
-    }
-    deleteCalorieEntry(id) {
-        return axios.delete(`${this.baseUrl}/calorieEntries/${id}`)
+    getStatusReportsByLocation(id) {
+        return axios.get(`${this.baseUrl}/statusreports/${id}`).then(r => r.data);
     }
 }
 
-const httpService = new HttpService(1);
+const httpService = new HttpService();
 
 export default httpService;
