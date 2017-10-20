@@ -10,6 +10,7 @@ import {
 import DashboardPage from './dashboard/dashboard.page';
 import LocationsPage from './locations/locations.page';
 import StatusreportsPage from './statusreports/statusreports.page';
+import ProblemsPage from './problems/problems.page';
 import { connect } from 'react-redux';
 
 class Layout extends Component {
@@ -39,10 +40,14 @@ class Layout extends Component {
                         <Link to="/statusreports"><MenuItem onClick={this.toggleState} >
                             Status Reports
                         </MenuItem></Link>
+                        <Link to="/problems"><MenuItem onClick={this.toggleState} >
+                            Problems
+                        </MenuItem></Link>
                     </Drawer>
                     <Route exact={true} path="/" component={DashboardPage} />
                     <Route exact={true} path="/locations" component={LocationsPage} />
                     <Route exact={true} path="/statusreports" component={StatusreportsPage} />  
+                    <Route exact={true} path="/problems" component={ProblemsPage} />
                 </div>
             </Router>
         );
