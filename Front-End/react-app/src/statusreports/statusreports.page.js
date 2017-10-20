@@ -31,12 +31,10 @@ class StatusreportsPage extends Component {
 
     render() {
         const fetchedStatusreports = this.props.statusreports;
-        console.log("Hierzo");
-        console.log(fetchedStatusreports);
         return (
             <div>
                 <TextField type="number" onChange={(evt) => this.searchByLocation(evt)} hintText="Search by Location ID" style={{width: '100%'}} />
-                <StatusreportsTable entries={this.props.statusreports} />
+                <StatusreportsTable entries={fetchedStatusreports} />
             </div>
         );
     }

@@ -13,7 +13,7 @@ const Row = (props) => (
     <TableRow key={props.entry.id} hoverable={true}>
         <TableRowColumn>{props.entry.id}</TableRowColumn>
         <StatusRowColumn status={props.entry.status} />
-        <TableRowColumn>{props.entry.location_id ? props.entry.location_id : "N/A"}</TableRowColumn>
+        <TableRowColumn>{props.entry.location_id}</TableRowColumn>
         <DateRowColumn date={props.entry.date} />
     </TableRow>
 )
