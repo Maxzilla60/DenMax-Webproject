@@ -26,7 +26,7 @@ const StatusRowColumn = (props) => {
     }
     if (props.status == 1) {
         return (
-            <TableRowColumn style={{backgroundColor: '#ffc107'}}>Avarage</TableRowColumn>
+            <TableRowColumn style={{backgroundColor: '#ffc107'}}>Average</TableRowColumn>
         )
     }
     if (props.status == 2) {
