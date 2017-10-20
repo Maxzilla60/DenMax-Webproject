@@ -8,7 +8,7 @@ class HttpService {
     }
 
     getLocationByCompany(id) {
-        return axios.get(`${this.baseUrl}/location/${id}`).then(r => r.data);
+        return axios.get(`${this.baseUrl}/locations/company/${id}`).then(r => r.data);
     }
 
     getProblemsByLocation(id) {

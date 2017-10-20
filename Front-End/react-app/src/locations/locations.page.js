@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+
 import LocationsTable from './locations-table';
+import TextField from 'material-ui/TextField';
+
 import HttpService from '../common/http-service';
 import { connect } from "react-redux";
+
 import mapDispatchToPropsTitle from '../common/title-dispatch-to-props';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+
 import { Link } from 'react-router-dom';
 
 let hasFetchedLocations = false;
@@ -16,6 +19,16 @@ class LocationsPage extends Component {
             hasFetchedLocations = true;
         }
     }
+    
+    searchByCompany = (evt) => {
+        if (evt.target.value != null && evt.target.value != "") {
+            HttpService.getLocationByCompany(evt.target.value).then(fetchedLocations => this.props.setLocations(fetchedLocations));
+        }
+        else {
+            HttpService.getAllLocations().then(fetchedLocations => this.props.setLocations(fetchedLocations));
+            hasFetchedLocations = true;
+        }
+    }
 
     render() {
         const fetchedLocations = this.props.locations;
@@ -23,6 +36,7 @@ class LocationsPage extends Component {
         console.log(fetchedLocations);
         return (
             <div>
+                <TextField onChange={(evt) => this.searchByCompany(evt)} hintText="Search by Company ID" style={{width: '100%'}} />
                 <LocationsTable entries={this.props.locations} />
             </div>
         );
