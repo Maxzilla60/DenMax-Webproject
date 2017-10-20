@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Model\StatusReport;
 use Mini\Repository\PDOStatusReportRepository;
 use Mini\View\StatusReportJsonView;
 
@@ -36,6 +37,19 @@ class StatusreportsController
         // load views
         $statusreports = $this->repository->getAllStatusReports();
         $this->view->ShowAll($statusreports);
+    }
+
+    /**
+     * PAGE: add
+     */
+    public function add() {
+        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
+        if (isset($_POST['location_id']) && isset($_POST['status']) && isset($_POST['date'])) {
+            $this->repository->addStatusReport(new StatusReport(0, $_POST['location_id'], $_POST['status'], $_POST['date']));
+        }
+
+        // Redirect
+        header('location: ' . URL . 'statusreports');
     }
 
     /**

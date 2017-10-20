@@ -39,4 +39,18 @@ class PDOStatusReportRepository extends Model
 
         return $reportsArray;
     }
+
+    public function addStatusReport(StatusReport $statusReport) {
+        try {
+            $sql = "INSERT INTO statusreports (location_id, status, date) VALUES (:location_id, :status, :date)";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':location_id' => $statusReport->getLocationId(), ':status' => $statusReport->getStatus(), ':date' => $statusReport->getDate());
+
+            http_response_code(200);
+            $query->execute($parameters);
+        } catch (\PDOException $e) {
+            http_response_code(400);
+            echo 'Exception!: ' . $e->getMessage();
+        }
+    }
 }
