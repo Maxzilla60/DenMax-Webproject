@@ -32,8 +32,6 @@ class LocationsPage extends Component {
 
     render() {
         const fetchedLocations = this.props.locations;
-        console.log("Hierzo");
-        console.log(fetchedLocations);
         return (
             <div>
                 <TextField onChange={(evt) => this.searchByCompany(evt)} hintText="Search by Company ID" style={{width: '100%'}} />
