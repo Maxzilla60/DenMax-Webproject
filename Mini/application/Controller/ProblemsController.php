@@ -73,6 +73,16 @@ class ProblemsController
         header('location: ' . URL . 'problems');
     }
 
+    /*
+    * PAGE: deleteTechnician
+    */
+    public function deleteTechnician($problem_id) {
+        $this->repository->deleteTechnician($problem_id);
+
+        // Redirect
+        header('location: ' . URL . 'problems');
+    }
+
     /**
      * PAGE: location
      * @param int $id
