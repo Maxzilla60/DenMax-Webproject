@@ -60,6 +60,19 @@ class ProblemsController
         header('location: ' . URL . 'problems');
     }
 
+    /*
+     * PAGE: updateTechnician
+     */
+    public function updateTechnician($problem_id) {
+        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
+        if (isset($_POST['technician'])) {
+            $this->repository->updateTechnician($problem_id, $_POST['technician']);
+        }
+
+        // Redirect
+        header('location: ' . URL . 'problems');
+    }
+
     /**
      * PAGE: location
      * @param int $id

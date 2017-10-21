@@ -54,4 +54,18 @@ class PDOProblemRepository extends Model
             echo 'Exception!: ' . $e->getMessage();
         }
     }
+
+    public function updateTechnician($problem_id, $technician) {
+        try {
+            $sql = "UPDATE problems SET technician = :technician WHERE id = :id";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':technician' => $technician, ':id' => $problem_id);
+
+            http_response_code(200);
+            $query->execute($parameters);
+        } catch (\PDOException $e) {
+            http_response_code(400);
+            echo 'Exception!: ' . $e->getMessage();
+        }
+    }
 }
