@@ -93,4 +93,15 @@ class ProblemsController
         $problems = $this->repository->getProblemsByLocation($id);
         $this->view->ShowAll($problems);
     }
+
+    /**
+     * PAGE: technician
+     * @param int $id
+     */
+    public function technician($id)
+    {
+        // load views
+        $problems = $this->repository->getProblemsByTechnician($id);
+        $this->view->ShowAll($problems);
+    }
 }
