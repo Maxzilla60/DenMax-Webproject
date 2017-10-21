@@ -52,7 +52,7 @@ class ProblemsController
             else {
                 $technician = null;
             }
-            
+
             $this->repository->addProblem(new Problem(0, $_POST['location_id'], $_POST['description'], $_POST['date'], $_POST['fixed'], $technician));
         }
 
