@@ -75,4 +75,18 @@ class PDOUserRepository extends Model
             echo 'Exception!: ' . $e->getMessage();
         }
     }
+
+    public function deleteUser($user_id) {
+        try {
+            $sql = "DELETE FROM users WHERE id = :id";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':id' => $user_id);
+
+            http_response_code(200);
+            $query->execute($parameters);
+        } catch (\PDOException $e) {
+            http_response_code(400);
+            echo 'Exception!: ' . $e->getMessage();
+        }
+    }
 }

@@ -78,10 +78,10 @@ class UsersController
     /*
     * PAGE: deleteTechnician
     */
-    public function deleteTechnician($problem_id) {
-        $this->repository->deleteTechnician($problem_id);
+    public function delete($user_id) {
+        $this->repository->deleteUser($user_id);
 
         // Redirect
-        header('location: ' . URL . 'problems');
+        header('location: ' . URL . 'users');
     }
 }
