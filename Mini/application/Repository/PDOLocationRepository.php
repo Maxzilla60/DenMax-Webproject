@@ -39,4 +39,18 @@ class PDOLocationRepository extends Model
 
         return $locationsArray;
     }
+
+    public function addLocation(Location $location) {
+        try {
+            $sql = "INSERT INTO locations (name, company_id) VALUES (:name, :company_id)";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':name' => $location->getName(), ':company_id' => $location->getCompanyId());
+
+            http_response_code(200);
+            $query->execute($parameters);
+        } catch (\PDOException $e) {
+            http_response_code(400);
+            echo 'Exception!: ' . $e->getMessage();
+        }
+    }
 }

@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Model\Location;
 use Mini\Repository\PDOLocationRepository;
 use Mini\View\LocationJsonView;
 
@@ -36,6 +37,19 @@ class LocationsController
         // load views
         $locations = $this->repository->getAllLocations();
         $this->view->ShowAll($locations);
+    }
+
+    /**
+     * PAGE: add
+     */
+    public function add() {
+        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
+        if (isset($_POST['name']) && isset($_POST['company_id'])) {
+            $this->repository->addLocation(new Location(0, $_POST['name'], $_POST['company_id']));
+        }
+
+        // Redirect
+        header('location: ' . URL . 'locations');
     }
 
     /**
