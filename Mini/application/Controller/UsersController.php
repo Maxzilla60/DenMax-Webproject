@@ -65,14 +65,14 @@ class UsersController
     /*
      * PAGE: updateTechnician
      */
-    public function updateTechnician($problem_id) {
+    public function update($user_id) {
         // Checken of we inderdaad iets posten en of de body juist is ingesteld:
-        if (isset($_POST['technician'])) {
-            $this->repository->updateTechnician($problem_id, $_POST['technician']);
+        if (isset($_POST['name']) && isset($_POST['role'])) {
+            $this->repository->updateUser($user_id, $_POST['name'], $_POST['role']);
         }
 
         // Redirect
-        header('location: ' . URL . 'problems');
+        header('location: ' . URL . 'users');
     }
 
     /*

@@ -61,4 +61,18 @@ class PDOUserRepository extends Model
             echo 'Exception!: ' . $e->getMessage();
         }
     }
+
+    public function updateUser($user_id, $name, $role) {
+        try {
+            $sql = "UPDATE users SET name = :name, role = :role WHERE id = :id";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':name' => $name, ':role' => $role, ':id' => $user_id);
+
+            http_response_code(200);
+            $query->execute($parameters);
+        } catch (\PDOException $e) {
+            http_response_code(400);
+            echo 'Exception!: ' . $e->getMessage();
+        }
+    }
 }
