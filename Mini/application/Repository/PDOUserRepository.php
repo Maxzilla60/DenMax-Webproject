@@ -47,4 +47,18 @@ class PDOUserRepository extends Model
 
         return $userArray;
     }
+
+    public function addUser(User $user) {
+        try {
+            $sql = "INSERT INTO users (name, role) VALUES (:name, :role)";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':name' => $user->getName(), ':role' => $user->getRole());
+
+            http_response_code(200);
+            $query->execute($parameters);
+        } catch (\PDOException $e) {
+            http_response_code(400);
+            echo 'Exception!: ' . $e->getMessage();
+        }
+    }
 }
