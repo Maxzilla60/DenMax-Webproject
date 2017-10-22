@@ -64,7 +64,7 @@ class UsersController
 
         // Redirect (headers)
         header("access-control-allow-origin: *");
-        header('location: ' . URL . 'users');
+        header('location: ' . URL . 'users', true, 200);
     }
 
     /*
@@ -82,7 +82,7 @@ class UsersController
 
         // Redirect (headers)
         header("access-control-allow-origin: *");
-        header('location: ' . URL . 'users');
+        header('location: ' . URL . 'users', true, 200);
     }
 
     /*
@@ -93,6 +93,6 @@ class UsersController
 
         // Redirect (headers)
         header("access-control-allow-origin: *");
-        header('location: ' . URL . 'users');
+        header('location: ' . URL . 'users', true, 200);
     }
 }

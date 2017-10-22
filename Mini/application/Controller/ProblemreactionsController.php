@@ -53,7 +53,7 @@ class ProblemreactionsController
 
         // Redirect (headers)
         header("access-control-allow-origin: *");
-        header('location: ' . URL . 'problemreactions/problem/' . $problem_id);
+        header('location: ' . URL . 'problemreactions/problem/' . $problem_id, true, 200);
     }
 
     /**

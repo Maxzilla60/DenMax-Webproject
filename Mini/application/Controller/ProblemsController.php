@@ -62,7 +62,7 @@ class ProblemsController
 
         // Redirect (headers)
         header("access-control-allow-origin: *");
-        header('location: ' . URL . 'problems');
+        header('location: ' . URL . 'problems', true, 200);
     }
 
     /*
@@ -80,7 +80,7 @@ class ProblemsController
 
         // Redirect (headers)
         header("access-control-allow-origin: *");
-        header('location: ' . URL . 'problems');
+        header('location: ' . URL . 'problems', true, 200);
     }
 
     /*
@@ -91,7 +91,7 @@ class ProblemsController
 
         // Redirect (headers)
         header("access-control-allow-origin: *");
-        header('location: ' . URL . 'problems');
+        header('location: ' . URL . 'problems', true, 200);
     }
 
     /**

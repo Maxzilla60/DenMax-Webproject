@@ -54,7 +54,7 @@ class StatusreportsController
 
         // Redirect (headers)
         header("access-control-allow-origin: *");
-        header('location: ' . URL . 'statusreports');
+        header('location: ' . URL . 'statusreports', true, 200);
     }
 
     /**

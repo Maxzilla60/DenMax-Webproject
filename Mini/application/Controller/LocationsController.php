@@ -53,8 +53,9 @@ class LocationsController
         }
 
         // Redirect (headers)
+        header("access-control-allow-methods: *");
         header("access-control-allow-origin: *");
-        header('location: ' . URL . 'locations');
+        header('Location: ' . URL . 'locations', true, 200);
     }
 
     /**
