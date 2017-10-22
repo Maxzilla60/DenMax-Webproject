@@ -30,6 +30,10 @@ class HttpService {
         return axios.get(`${this.baseUrl}/problems/location/${id}`).then(r => r.data);
     }
 
+    getProblemByTechnician(id) {
+        return axios.get(`${this.baseUrl}/problems/technician/${id}`).then(r => r.data);
+    }
+
     addProblem(description, date, fixed, location_id) {
         return axios.post(`${this.baseUrl}/problems/add`, {
             "location_id": location_id,

@@ -10,7 +10,7 @@ import HttpService from '../common/http-service';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-class StatusreportsAddPage extends Component {
+class ProblemsAddPage extends Component {
     constructor() {
         super();
         this.state = {statusValue: 0};
@@ -21,11 +21,7 @@ class StatusreportsAddPage extends Component {
             <div>
                 <form onSubmit={this.save}>
                     <TextField hintText="Location ID" name="location_id" type="number" style={{width: '100%'}} /><br/>
-                    <DropDownMenu name="status" value={this.state.statusValue} onChange={this.handleChange} style={{width: '100%'}}>
-                      <MenuItem value={0} primaryText="Good" />
-                      <MenuItem value={1} primaryText="Average" />
-                      <MenuItem value={2} primaryText="Bad" />
-                    </DropDownMenu>
+                    <TextField hintText="Description" name="description" type="text" style={{width: '100%'}} /><br/>
                     <FlatButton label="Add" type="submit" style={{width: '100%'}} />
                 </form>
             </div>
@@ -36,18 +32,19 @@ class StatusreportsAddPage extends Component {
         const momentDate = moment();
         const date = momentDate.format('YYYY-MM-DD kk:mm:ss');
         const location_id = ev.target['location_id'].value;
-        const status = this.state.statusValue;
+        const description = ev.target['description'].value;
         const id = "N/A";
         console.log("Hierzo:");
         console.log(date);
-        HttpService.addStatusReport(date, location_id, status).then(() => {
+        HttpService.addProblem(description, date, '0', location_id).then(() => {
             this.props.addStatusreport({
                 "id": id,
                 "date": date,
                 "location_id": location_id,
-                "status": status
+                "description": description,
+                "fixed": '0'
             });
-            window.location = "/statusreports";
+            window.location = "/problems";
         });
     }
     componentDidMount() {
@@ -59,9 +56,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         ...mapDispatchToPropsTitle(dispatch, ownProps),
         addStatusreport: (location) => {
-            dispatch({ type: 'ADD_STATUSREPORT', payload: location });
+            dispatch({ type: 'ADD_PROBLEM', payload: location });
         }
     }
 }
 
-export default connect(undefined, mapDispatchToProps)(StatusreportsAddPage)
+export default connect(undefined, mapDispatchToProps)(ProblemsAddPage)

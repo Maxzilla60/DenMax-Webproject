@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import ProblemsTable from './problems-table';
 import TextField from 'material-ui/TextField';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import HttpService from '../common/http-service';
 import { connect } from "react-redux";
@@ -35,6 +37,11 @@ class ProblemsPage extends Component {
             <div>
                 <TextField type="number" onChange={(evt) => this.searchByLocation(evt)} hintText="Search by Location ID" style={{width: '100%'}} />
                 <ProblemsTable entries={fetchedProblems} />
+                <Link to="/problems/add">
+                    <FloatingActionButton style={{ position: 'fixed', right: '15px', bottom: '15px' }}>
+                        <ContentAdd />
+                    </FloatingActionButton>
+                </Link>
             </div>
         );
     }
