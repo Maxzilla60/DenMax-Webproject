@@ -20,7 +20,7 @@ class ProblemsTechnicianPage extends Component {
         return (
             <div>
                 <form onSubmit={this.save}>
-                    <TextField hintText="Technician ID" name="technician_id" type="number" style={{width: '100%'}} /><br/>
+                    <TextField hintText="Technician ID" name="technician_id" type="number" style={{width: '100%'}} required /><br/>
                     <FlatButton label="Set" type="submit" style={{width: '100%'}} />
                     <FlatButton label="Delete" onClick={() => this.deleteTechnician(this.props.match.params.id)} style={{width: '100%'}} />
                 </form>

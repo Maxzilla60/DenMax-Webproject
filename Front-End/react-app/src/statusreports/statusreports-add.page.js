@@ -20,7 +20,7 @@ class StatusreportsAddPage extends Component {
         return (
             <div>
                 <form onSubmit={this.save}>
-                    <TextField hintText="Location ID" name="location_id" type="number" style={{width: '100%'}} /><br/>
+                    <TextField hintText="Location ID" name="location_id" type="number" style={{width: '100%'}} required /><br/>
                     <DropDownMenu name="status" value={this.state.statusValue} onChange={this.handleChange} style={{width: '100%'}}>
                       <MenuItem value={0} primaryText="Good" />
                       <MenuItem value={1} primaryText="Average" />

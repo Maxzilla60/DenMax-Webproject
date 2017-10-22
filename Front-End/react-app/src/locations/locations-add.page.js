@@ -14,8 +14,8 @@ class LocationsAddPage extends Component {
         return (
             <div>
                 <form onSubmit={this.save}>
-                    <TextField hintText="Name" name="name" type="text" style={{width: '100%'}} /><br/>
-                    <TextField hintText="Company ID" name="company_id" type="number" style={{width: '100%'}} /><br/>
+                    <TextField hintText="Name" name="name" type="text" style={{width: '100%'}} required /><br/>
+                    <TextField hintText="Company ID" name="company_id" type="number" style={{width: '100%'}} required /><br/>
                     <FlatButton label="Add" type="submit" style={{width: '100%'}} />
                 </form>
             </div>
