@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Model\ProblemReaction;
 use Mini\Repository\PDOProblemReactionRepository;
 use Mini\View\ProblemReactionJsonView;
 
@@ -27,7 +28,6 @@ class ProblemreactionsController
 
     }
 
-
     /**
      * PAGE: index
      */
@@ -36,6 +36,19 @@ class ProblemreactionsController
         // load views
         $problemreactions = $this->repository->getAllProblemReactions();
         $this->view->ShowAll($problemreactions);
+    }
+
+    /*
+     * PAGE; add
+     */
+    public function add($problem_id) {
+        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
+        if (isset($_POST['description']) && isset($_POST['rating'])) {
+            $this->repository->addProblemReaction(new ProblemReaction(0, $problem_id, $_POST['rating'], $_POST['description']));
+        }
+
+        // Redirect
+        header('location: ' . URL . 'problemreactions/problem/' . $problem_id);
     }
 
     /**
