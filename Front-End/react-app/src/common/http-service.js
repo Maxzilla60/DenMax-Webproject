@@ -57,7 +57,7 @@ class HttpService {
         });
     }
 
-    updateTechnician(problem_id) {
+    deleteTechnician(problem_id) {
         return axios.post(`${this.baseUrl}/problems/deleteTechnician/${problem_id}`).then(function (response) {
             console.log(response);
         }).catch(function (error) {

@@ -10,7 +10,7 @@ import HttpService from '../common/http-service';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-class ProblemsAddPage extends Component {
+class ProblemsTechnicianPage extends Component {
     constructor() {
         super();
         this.state = {statusValue: 0};
@@ -20,33 +20,23 @@ class ProblemsAddPage extends Component {
         return (
             <div>
                 <form onSubmit={this.save}>
-                    <TextField hintText="Location ID" name="location_id" type="number" style={{width: '100%'}} /><br/>
-                    <TextField hintText="Description" name="description" type="text" style={{width: '100%'}} /><br/>
-                    <FlatButton label="Add" type="submit" style={{width: '100%'}} />
+                    <TextField hintText="Technician ID" name="technician_id" type="number" style={{width: '100%'}} /><br/>
+                    <FlatButton label="Set" type="submit" style={{width: '100%'}} />
+                    <FlatButton label="Delete" style={{width: '100%'}} />
                 </form>
             </div>
         );
     }
     save = (ev) => {
         ev.preventDefault();
-        const momentDate = moment();
-        const date = momentDate.format('YYYY-MM-DD kk:mm:ss');
-        const location_id = ev.target['location_id'].value;
-        const description = ev.target['description'].value;
-        const id = "N/A";
-        HttpService.addProblem(description, date, '0', location_id).then(() => {
-            this.props.addStatusreport({
-                "id": id,
-                "date": date,
-                "location_id": location_id,
-                "description": description,
-                "fixed": '0'
-            });
+        const technician = ev.target['technician_id'].value;
+        const id = this.props.match.params.id;
+        HttpService.updateTechnician(id, technician).then(() => {
             window.location = "/problems";
         });
     }
     componentDidMount() {
-        this.props.setTitle('Add Problem');
+        this.props.setTitle('Edit Technician (' + this.props.match.params.id + ')' );
     }
 }
 
@@ -59,4 +49,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
 }
 
-export default connect(undefined, mapDispatchToProps)(ProblemsAddPage)
+export default connect(undefined, mapDispatchToProps)(ProblemsTechnicianPage)

@@ -7,6 +7,7 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import HttpService from '../common/http-service';
 
@@ -17,7 +18,9 @@ const Row = (props) => (
         <TableRowColumn>{props.entry.description}</TableRowColumn>
         <DateRowColumn date={props.entry.date} />
         <FixedRowColumn fixed={props.entry.fixed} id={props.entry.id}/>
-        <TableRowColumn>{props.entry.technician ? props.entry.technician : "N/A"}</TableRowColumn>
+        <Link to={"/problems/technician/" + props.entry.id}><TableRowColumn>
+                {props.entry.technician ? props.entry.technician : "N/A"}
+        </TableRowColumn></Link>
     </TableRow>
 )
 
