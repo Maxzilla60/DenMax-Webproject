@@ -34,6 +34,18 @@ class HttpService {
         return axios.get(`${this.baseUrl}/statusreports`).then(r => r.data);
     }
 
+    addStatusReport(date, location_id, status) {
+        return axios.post(`${this.baseUrl}/statusreports/add`, {
+            "location_id": location_id,
+            "date": date,
+            "status": status
+        }).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
     getStatusReportByLocation(id) {
         return axios.get(`${this.baseUrl}/statusreports/location/${id}`).then(r => r.data);
     }
