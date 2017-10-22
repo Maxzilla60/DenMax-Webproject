@@ -43,12 +43,17 @@ class LocationsController
      * PAGE: add
      */
     public function add() {
-        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
-        if (isset($_POST['name']) && isset($_POST['company_id'])) {
-            $this->repository->addLocation(new Location(0, $_POST['name'], $_POST['company_id']));
+        // JSON ophalen en decoden:
+        $input = file_get_contents('php://input');
+        $inputJSON = json_decode($input, TRUE);
+
+        // Checken of we de juiste data hebben meegekregen:
+        if (isset($inputJSON['name']) && isset($inputJSON['company_id'])) {
+            $this->repository->addLocation(new Location(0, $inputJSON['name'], $inputJSON['company_id']));
         }
 
-        // Redirect
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
         header('location: ' . URL . 'locations');
     }
 

@@ -43,20 +43,25 @@ class ProblemsController
      * PAGE: add
      */
     public function add() {
-        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
-        if (isset($_POST['location_id']) && isset($_POST['description']) && isset($_POST['date']) && isset($_POST['fixed'])) {
+        // JSON ophalen en decoden:
+        $input = file_get_contents('php://input');
+        $inputJSON = json_decode($input, TRUE);
+
+        // Checken of we de juiste data hebben meegekregen:
+        if (isset($inputJSON['location_id']) && isset($inputJSON['description']) && isset($inputJSON['date']) && isset($inputJSON['fixed'])) {
             // Technician is optioneel:
-            if (isset($_POST['technician'])) {
-                $technician = $_POST['technician'];
+            if (isset($inputJSON['technician'])) {
+                $technician = $inputJSON['technician'];
             }
             else {
                 $technician = null;
             }
 
-            $this->repository->addProblem(new Problem(0, $_POST['location_id'], $_POST['description'], $_POST['date'], $_POST['fixed'], $technician));
+            $this->repository->addProblem(new Problem(0, $inputJSON['location_id'], $inputJSON['description'], $inputJSON['date'], $inputJSON['fixed'], $technician));
         }
 
-        // Redirect
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
         header('location: ' . URL . 'problems');
     }
 
@@ -64,12 +69,17 @@ class ProblemsController
      * PAGE: updateTechnician
      */
     public function updateTechnician($problem_id) {
-        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
-        if (isset($_POST['technician'])) {
-            $this->repository->updateTechnician($problem_id, $_POST['technician']);
+        // JSON ophalen en decoden:
+        $input = file_get_contents('php://input');
+        $inputJSON = json_decode($input, TRUE);
+
+        // Checken of we de juiste data hebben meegekregen:
+        if (isset($inputJSON['technician'])) {
+            $this->repository->updateTechnician($problem_id, $inputJSON['technician']);
         }
 
-        // Redirect
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
         header('location: ' . URL . 'problems');
     }
 
@@ -79,7 +89,8 @@ class ProblemsController
     public function deleteTechnician($problem_id) {
         $this->repository->deleteTechnician($problem_id);
 
-        // Redirect
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
         header('location: ' . URL . 'problems');
     }
 

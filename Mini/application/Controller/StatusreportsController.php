@@ -43,12 +43,17 @@ class StatusreportsController
      * PAGE: add
      */
     public function add() {
-        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
-        if (isset($_POST['location_id']) && isset($_POST['status']) && isset($_POST['date'])) {
-            $this->repository->addStatusReport(new StatusReport(0, $_POST['location_id'], $_POST['status'], $_POST['date']));
+        // JSON ophalen en decoden:
+        $input = file_get_contents('php://input');
+        $inputJSON = json_decode($input, TRUE);
+
+        // Checken of we de juiste data hebben meegekregen:
+        if (isset($inputJSON['location_id']) && isset($inputJSON['status']) && isset($inputJSON['date'])) {
+            $this->repository->addStatusReport(new StatusReport(0, $inputJSON['location_id'], $inputJSON['status'], $inputJSON['date']));
         }
 
-        // Redirect
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
         header('location: ' . URL . 'statusreports');
     }
 

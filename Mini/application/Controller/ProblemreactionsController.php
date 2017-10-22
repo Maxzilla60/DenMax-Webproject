@@ -42,12 +42,17 @@ class ProblemreactionsController
      * PAGE; add
      */
     public function add($problem_id) {
-        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
-        if (isset($_POST['description']) && isset($_POST['rating'])) {
-            $this->repository->addProblemReaction(new ProblemReaction(0, $problem_id, $_POST['rating'], $_POST['description']));
+        // JSON ophalen en decoden:
+        $input = file_get_contents('php://input');
+        $inputJSON = json_decode($input, TRUE);
+
+        // Checken of we de juiste data hebben meegekregen:
+        if (isset($inputJSON['description']) && isset($inputJSON['rating'])) {
+            $this->repository->addProblemReaction(new ProblemReaction(0, $problem_id, $inputJSON['rating'], $inputJSON['description']));
         }
 
-        // Redirect
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
         header('location: ' . URL . 'problemreactions/problem/' . $problem_id);
     }
 

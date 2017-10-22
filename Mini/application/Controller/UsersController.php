@@ -53,12 +53,17 @@ class UsersController
      * PAGE: add
      */
     public function add() {
-        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
-        if (isset($_POST['name']) && isset($_POST['role'])) {
-            $this->repository->addUser(new User(0, $_POST['name'], $_POST['role']));
+        // JSON ophalen en decoden:
+        $input = file_get_contents('php://input');
+        $inputJSON = json_decode($input, TRUE);
+
+        // Checken of we de juiste data hebben meegekregen:
+        if (isset($inputJSON['name']) && isset($inputJSON['role'])) {
+            $this->repository->addUser(new User(0, $inputJSON['name'], $inputJSON['role']));
         }
 
-        // Redirect
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
         header('location: ' . URL . 'users');
     }
 
@@ -66,12 +71,17 @@ class UsersController
      * PAGE: updateTechnician
      */
     public function update($user_id) {
-        // Checken of we inderdaad iets posten en of de body juist is ingesteld:
-        if (isset($_POST['name']) && isset($_POST['role'])) {
-            $this->repository->updateUser($user_id, $_POST['name'], $_POST['role']);
+        // JSON ophalen en decoden:
+        $input = file_get_contents('php://input');
+        $inputJSON = json_decode($input, TRUE);
+
+        // Checken of we de juiste data hebben meegekregen:
+        if (isset($inputJSON['name']) && isset($inputJSON['role'])) {
+            $this->repository->updateUser($user_id, $inputJSON['name'], $inputJSON['role']);
         }
 
-        // Redirect
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
         header('location: ' . URL . 'users');
     }
 
@@ -81,7 +91,8 @@ class UsersController
     public function delete($user_id) {
         $this->repository->deleteUser($user_id);
 
-        // Redirect
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
         header('location: ' . URL . 'users');
     }
 }
