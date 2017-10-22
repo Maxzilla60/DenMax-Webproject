@@ -65,6 +65,14 @@ class HttpService {
         });
     }
 
+    fixProblem(problem_id) {
+        return axios.post(`${this.baseUrl}/problems/fixProblem/${problem_id}`).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
     getAllStatusReports() {
         return axios.get(`${this.baseUrl}/statusreports`).then(r => r.data);
     }

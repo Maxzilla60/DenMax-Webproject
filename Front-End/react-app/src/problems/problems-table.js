@@ -8,6 +8,7 @@ import {
     TableRowColumn,
 } from 'material-ui/Table';
 import moment from 'moment';
+import HttpService from '../common/http-service';
 
 const Row = (props) => (
     <TableRow key={props.entry.id} hoverable={true}>
@@ -15,12 +16,17 @@ const Row = (props) => (
         <TableRowColumn>{props.entry.location_id}</TableRowColumn>
         <TableRowColumn>{props.entry.description}</TableRowColumn>
         <DateRowColumn date={props.entry.date} />
-        <FixedRowColumn fixed={props.entry.fixed} />
+        <FixedRowColumn fixed={props.entry.fixed} id={props.entry.id}/>
         <TableRowColumn>{props.entry.technician ? props.entry.technician : "N/A"}</TableRowColumn>
     </TableRow>
 )
 
 const FixedRowColumn = (props) => {
+    const fixProblem = (id) => {
+        HttpService.fixProblem(id);
+        window.location = "/problems";
+    }
+    
     if (props.fixed == 1) {
         return (
             <TableRowColumn style={{backgroundColor: '#28a745'}}>Fixed</TableRowColumn>
@@ -28,7 +34,7 @@ const FixedRowColumn = (props) => {
     }
     if (props.fixed == 0) {
         return (
-            <TableRowColumn style={{backgroundColor: '#dc3545'}}>Not Fixed</TableRowColumn>
+            <TableRowColumn onClick={() => fixProblem(props.id)} style={{backgroundColor: '#dc3545', cursor: 'pointer'}}>Not Fixed</TableRowColumn>
         )
     }
 }
