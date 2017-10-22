@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import LocationsTable from './locations-table';
 import TextField from 'material-ui/TextField';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import HttpService from '../common/http-service';
 import { connect } from "react-redux";
@@ -35,6 +37,11 @@ class LocationsPage extends Component {
             <div>
                 <TextField type="number" onChange={(evt) => this.searchByCompany(evt)} hintText="Search by Company ID" style={{width: '100%'}} />
                 <LocationsTable entries={fetchedLocations} />
+                <Link to="/locations/add">
+                    <FloatingActionButton style={{ position: 'fixed', right: '15px', bottom: '15px' }}>
+                        <ContentAdd />
+                    </FloatingActionButton>
+                </Link>
             </div>
         );
     }

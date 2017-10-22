@@ -11,6 +11,17 @@ class HttpService {
         return axios.get(`${this.baseUrl}/locations/company/${id}`).then(r => r.data);
     }
 
+    addLocation(name, company_id) {
+        return axios.post(`${this.baseUrl}/locations/add`, {
+            "name": name,
+            "company_id": company_id
+        }).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
     getAllProblems() {
         return axios.get(`${this.baseUrl}/problems`).then(r => r.data);
     }
