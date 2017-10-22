@@ -19,6 +19,8 @@ const layoutreducer = (state = initialState, action) => {
             return { ...state, ...{ locations: [...state.locations, action.payload] } };
         case 'ADD_STATUSREPORT':
             return { ...state, ...{ statusreports: [...state.statusreports, action.payload] } };
+        case 'ADD_PROBLEM':
+            return { ...state, ...{ problems: [...state.problems, action.payload] } };
             
         case 'DELETE_CALORIEENTRY':
             const date = action.payload;
