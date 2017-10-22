@@ -58,6 +58,23 @@ class PDOProblemRepository extends Model
         return $problemsArray;
     }
 
+    public function getProblemsByTechnician($technician_id) {
+        $sql = "SELECT * FROM problems WHERE technician = :technician";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':technician' => $technician_id);
+        $query->execute($parameters);
+        $fetchedProblems = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        $problemsArray = array();
+        if (count($fetchedProblems) > 0) {
+            foreach ($fetchedProblems as $p) {
+                $problemsArray[] = new Problem($p['id'], $p['location_id'], $p['description'], $p['date'], $p['fixed'], $p['technician']);
+            }
+        }
+
+        return $problemsArray;
+    }
+
     public function addProblem(Problem $problem) {
         try {
             $sql = "INSERT INTO problems (location_id, description, date, fixed, technician) VALUES (:location_id, :description, :date, :fixed, :technician)";
