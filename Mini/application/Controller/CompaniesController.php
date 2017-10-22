@@ -46,6 +46,6 @@ class CompaniesController
     {
         // load views
         $company = $this->repository->getCompanyByUser($id);
-        $this->view->ShowCompany($company);
+        $this->view->ShowAll($company);
     }
 }

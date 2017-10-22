@@ -28,9 +28,9 @@ class CompanyJsonView
     }
 
 
-    public function ShowCompany(Company $company){
+    /*public function ShowCompany(Company $company){
         header('Content-Type: application/json');
         echo json_encode(['id' => $company->getId(),
             'name' => $company->getName()]);
-    }
+    }*/
 }

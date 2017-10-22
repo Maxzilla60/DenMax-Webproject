@@ -30,12 +30,14 @@ class PDOCompanyRepository extends Model
         $parameters = array(':user_id' => $user_id);
         $query->execute($parameters);
 
-        $fetchedCompany = $query->fetch(\PDO::FETCH_ASSOC);
+        $fetchedCompanies = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (count($fetchedCompany) > 0) {
-                $company = new Company($fetchedCompany['id'], $fetchedCompany['name']);
-                return $company;
+        $companiesArray = array();
+        if (count($fetchedCompanies) > 0) {
+            foreach ($fetchedCompanies as $c) {
+                $companiesArray[] = new Company($c['id'], $c['name']);
+            }
         }
-        return null;
+        return $companiesArray;
     }
 }
