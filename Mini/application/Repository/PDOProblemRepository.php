@@ -102,7 +102,7 @@ class PDOProblemRepository extends Model
 
     public function fixProblem($problem_id) {
         try {
-            $sql = "UPDATE problems SET fixed = 1 WHERE id = :id";
+            $sql = "UPDATE problems SET fixed = '1' WHERE id = :id";
             $query = $this->db->prepare($sql);
             $parameters = array(':id' => $problem_id);
 
