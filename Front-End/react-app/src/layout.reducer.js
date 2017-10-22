@@ -2,7 +2,8 @@ const initialState = {
     title: 'Dashboard',
     locations: [],
     statusreports: [],
-    problems: []
+    problems: [],
+    companies: []
 };
 
 const layoutreducer = (state = initialState, action) => {
@@ -15,6 +16,8 @@ const layoutreducer = (state = initialState, action) => {
             return { ...state, ...{ statusreports: action.payload } };
         case 'SET_PROBLEMS':
             return { ...state, ...{ problems: action.payload } };
+        case 'SET_COMPANIES':
+            return { ...state, ...{ companies: action.payload } };
         case 'ADD_LOCATION':
             return { ...state, ...{ locations: [...state.locations, action.payload] } };
         case 'ADD_STATUSREPORT':

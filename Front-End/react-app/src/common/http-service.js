@@ -92,6 +92,14 @@ class HttpService {
             console.log(error);
         });
     }
+
+    getAllCompanies() {
+        return axios.get(`${this.baseUrl}/companies`).then(r => r.data);
+    }
+
+    getCompanyByUser(id) {
+        return axios.get(`${this.baseUrl}/companies/user/${id}`).then(r => r.data);
+    }
 }
 
 const httpService = new HttpService();
