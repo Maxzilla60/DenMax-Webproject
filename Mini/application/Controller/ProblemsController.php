@@ -94,6 +94,17 @@ class ProblemsController
         header('location: ' . URL . 'problems', true, 200);
     }
 
+    /*
+    * PAGE: fixProblem
+    */
+    public function fixProblem($problem_id) {
+        $this->repository->fixProblem($problem_id);
+
+        // Redirect (headers)
+        header("access-control-allow-origin: *");
+        header('location: ' . URL . 'problems', true, 200);
+    }
+
     /**
      * PAGE: location
      * @param int $id
