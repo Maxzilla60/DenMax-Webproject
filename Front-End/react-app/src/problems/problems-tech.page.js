@@ -22,11 +22,17 @@ class ProblemsTechnicianPage extends Component {
                 <form onSubmit={this.save}>
                     <TextField hintText="Technician ID" name="technician_id" type="number" style={{width: '100%'}} /><br/>
                     <FlatButton label="Set" type="submit" style={{width: '100%'}} />
-                    <FlatButton label="Delete" style={{width: '100%'}} />
+                    <FlatButton label="Delete" onClick={() => this.deleteTechnician(this.props.match.params.id)} style={{width: '100%'}} />
                 </form>
             </div>
         );
     }
+    
+    deleteTechnician = (id) => {
+        HttpService.deleteTechnician(id);
+        window.location = "/problems";
+    }
+    
     save = (ev) => {
         ev.preventDefault();
         const technician = ev.target['technician_id'].value;
