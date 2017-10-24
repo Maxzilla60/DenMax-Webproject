@@ -14,6 +14,8 @@ import StatusreportsPage from './statusreports/statusreports.page';
 import StatusreportsAddPage from './statusreports/statusreports-add.page';
 import ProblemsPage from './problems/problems.page';
 import ProblemsAddPage from './problems/problems-add.page';
+import ProblemreactionsPage from './problemreactions/problemreactions.page';
+import ProblemreactionsAddPage from './problemreactions/problemreactions-add.page';
 import ProblemsTechnicianPage from './problems/problems-tech.page';
 import CompaniesPage from './companies/companies.page';
 import { connect } from 'react-redux';
@@ -51,6 +53,9 @@ class Layout extends Component {
                         <Link to="/companies"><MenuItem onClick={this.toggleState} >
                             Companies
                         </MenuItem></Link>
+                        <Link to="/problemreactions"><MenuItem onClick={this.toggleState} >
+                            Problem Reactions
+                        </MenuItem></Link>
                     </Drawer>
                     <Route exact={true} path="/" component={DashboardPage} />
                     <Route exact={true} path="/locations" component={LocationsPage} />
@@ -61,6 +66,8 @@ class Layout extends Component {
                     <Route path="/problems/add" component={ProblemsAddPage} />
                     <Route path="/problems/technician/:id" component={ProblemsTechnicianPage} />
                     <Route exact={true} path="/companies" component={CompaniesPage} />
+                    <Route exact={true} path="/problemreactions" component={ProblemreactionsPage} />
+                    <Route path="/problemreactions/add" component={ProblemreactionsAddPage} />
                 </div>
             </Router>
         );

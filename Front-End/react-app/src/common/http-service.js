@@ -100,6 +100,25 @@ class HttpService {
     getCompanyByUser(id) {
         return axios.get(`${this.baseUrl}/companies/user/${id}`).then(r => r.data);
     }
+
+    getAllProblemreactions() {
+        return axios.get(`${this.baseUrl}/problemreactions`).then(r => r.data);
+    }
+
+    getProblemreactionsByProblem(id) {
+        return axios.get(`${this.baseUrl}/problemreactions/problem/${id}`).then(r => r.data);
+    }
+
+    addProblemreaction(problem_id, rating, description) {
+        return axios.post(`${this.baseUrl}/problemreactions/add/${problem_id}`, {
+            "rating": rating,
+            "description": description
+        }).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
 }
 
 const httpService = new HttpService();

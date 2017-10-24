@@ -3,7 +3,8 @@ const initialState = {
     locations: [],
     statusreports: [],
     problems: [],
-    companies: []
+    companies: [],
+    problemreactions: []
 };
 
 const layoutreducer = (state = initialState, action) => {
@@ -16,6 +17,8 @@ const layoutreducer = (state = initialState, action) => {
             return { ...state, ...{ statusreports: action.payload } };
         case 'SET_PROBLEMS':
             return { ...state, ...{ problems: action.payload } };
+        case 'SET_PROBLEMREACTIONS':
+            return { ...state, ...{ problemreactions: action.payload } };
         case 'SET_COMPANIES':
             return { ...state, ...{ companies: action.payload } };
         case 'ADD_LOCATION':
@@ -24,6 +27,8 @@ const layoutreducer = (state = initialState, action) => {
             return { ...state, ...{ statusreports: [...state.statusreports, action.payload] } };
         case 'ADD_PROBLEM':
             return { ...state, ...{ problems: [...state.problems, action.payload] } };
+        case 'ADD_PROBLEMREACTION':
+            return { ...state, ...{ problemreactions: [...state.problemreactions, action.payload] } };
             
         case 'DELETE_CALORIEENTRY':
             const date = action.payload;
