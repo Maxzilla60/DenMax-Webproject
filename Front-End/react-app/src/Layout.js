@@ -18,6 +18,9 @@ import ProblemreactionsPage from './problemreactions/problemreactions.page';
 import ProblemreactionsAddPage from './problemreactions/problemreactions-add.page';
 import ProblemsTechnicianPage from './problems/problems-tech.page';
 import CompaniesPage from './companies/companies.page';
+import UsersPage from './users/users.page';
+import UsersAddPage from './users/users-add.page';
+import UsersEditPage from './users/users-edit.page';
 import { connect } from 'react-redux';
 
 class Layout extends Component {
@@ -56,6 +59,9 @@ class Layout extends Component {
                         <Link to="/problemreactions"><MenuItem onClick={this.toggleState} >
                             Problem Reactions
                         </MenuItem></Link>
+                        <Link to="/users"><MenuItem onClick={this.toggleState} >
+                            Users
+                        </MenuItem></Link>
                     </Drawer>
                     <Route exact={true} path="/" component={DashboardPage} />
                     <Route exact={true} path="/locations" component={LocationsPage} />
@@ -68,6 +74,9 @@ class Layout extends Component {
                     <Route exact={true} path="/companies" component={CompaniesPage} />
                     <Route exact={true} path="/problemreactions" component={ProblemreactionsPage} />
                     <Route path="/problemreactions/add" component={ProblemreactionsAddPage} />
+                    <Route exact={true} path="/users" component={UsersPage} />
+                    <Route path="/users/add" component={UsersAddPage} />
+                    <Route path="/users/edit/:id" component={UsersEditPage} />
                 </div>
             </Router>
         );

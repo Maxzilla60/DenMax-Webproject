@@ -119,6 +119,45 @@ class HttpService {
             console.log(error);
         });
     }
+    
+    getAllUsers() {
+        return axios.get(`${this.baseUrl}/users`).then(r => r.data);
+    }
+
+    getUsersByRole(role) {
+        return axios.get(`${this.baseUrl}/users/role/${role}`).then(r => r.data);   
+    }
+
+    addUser(name, role) {
+        return axios.post(`${this.baseUrl}/users/add`, {
+            "name": name,
+            "role": role
+        }).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    updateUser(id, name, role) {
+        return axios.post(`${this.baseUrl}/users/update/${id}`, {
+            "name": name,
+            "role": role
+        }).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    deleteUser(id) {
+        return axios.post(`${this.baseUrl}/users/delete/${id}`).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
 }
 
 const httpService = new HttpService();
