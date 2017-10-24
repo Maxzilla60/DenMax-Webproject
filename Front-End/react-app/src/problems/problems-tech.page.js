@@ -49,8 +49,8 @@ class ProblemsTechnicianPage extends Component {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         ...mapDispatchToPropsTitle(dispatch, ownProps),
-        addStatusreport: (location) => {
-            dispatch({ type: 'ADD_PROBLEM', payload: location });
+        addProblem: (problem) => {
+            dispatch({ type: 'ADD_PROBLEM', payload: problem });
         }
     }
 }
