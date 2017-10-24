@@ -53,7 +53,7 @@ class PDOProblemReactionRepository extends Model
             $sql = "INSERT INTO problemreactions (problem_id, description, rating) VALUES (:problem_id, :description, :rating)";
             $query = $this->db->prepare($sql);
             $parameters = array(':problem_id' => $problemReaction->getProblemId(), ':description' => $problemReaction->getDescription(), ':rating' => $problemReaction->getRating());
-
+            
             http_response_code(200);
             $query->execute($parameters);
         } catch (\PDOException $e) {

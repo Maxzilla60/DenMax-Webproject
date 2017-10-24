@@ -42,7 +42,7 @@ class Layout extends Component {
                     />
                     <Drawer open={this.state.drawerOpen}>
                         <Link to="/"><MenuItem onClick={this.toggleState} >
-                            Dashboard
+                            Home
                         </MenuItem></Link>
                         <Link to="/locations"><MenuItem onClick={this.toggleState} >
                             Locations
