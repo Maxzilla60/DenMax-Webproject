@@ -7,7 +7,6 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
-import FontIcon from 'material-ui/FontIcon';
 
 const Row = (props) => (
     <TableRow key={props.entry.id} hoverable={true}>
@@ -21,16 +20,12 @@ const Row = (props) => (
 const RatingRowColumn = (props) => {
     if (props.rating == 1) {
         return (
-            <TableRowColumn>
-                <FontIcon className="material-icons">⬆️</FontIcon>
-            </TableRowColumn>
+            <TableRowColumn style={{background: "#28a745"}}>⬆️</TableRowColumn>
         )
     }
     else {
         return (
-            <TableRowColumn>
-                <FontIcon className="material-icons">⬇️</FontIcon>
-            </TableRowColumn>
+            <TableRowColumn style={{background: "#dc3545"}}>⬇️</TableRowColumn>
         )
     }
 }
