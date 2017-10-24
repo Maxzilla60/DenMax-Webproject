@@ -16,6 +16,8 @@ class StatusreportsAddPage extends Component {
         this.state = {statusValue: 0};
     }
     
+    handleChange = (event, index, statusValue) => this.setState({statusValue});
+    
     render() {
         return (
             <div>
