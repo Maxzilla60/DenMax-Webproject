@@ -11,6 +11,7 @@ namespace Mini\Controller;
 use Mini\Model\Location;
 use Mini\Repository\PDOLocationRepository;
 use Mini\View\LocationJsonView;
+use Mini\Dao\PDOLocationDAO;
 
 class LocationsController
 {
@@ -20,7 +21,7 @@ class LocationsController
     function __construct($repo = null, $view = null)
     {
         if(!isset($repo)) {
-            $this->repository = new PDOLocationRepository();
+            $this->repository = new PDOLocationRepository(new PDOLocationDAO());
         }
         if(!isset($view)) {
             $this->view = new LocationJsonView();
