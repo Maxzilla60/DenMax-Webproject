@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Dao\PDOStatusReportDAO;
 use Mini\Model\StatusReport;
 use Mini\Repository\PDOStatusReportRepository;
 use Mini\View\StatusReportJsonView;
@@ -20,7 +21,7 @@ class StatusreportsController
     function __construct($repo = null, $view = null)
     {
         if(!isset($repo)) {
-            $this->repository = new PDOStatusReportRepository();
+            $this->repository = new PDOStatusReportRepository(new PDOStatusReportDAO());
         }
         if(!isset($view)) {
             $this->view = new StatusReportJsonView();
