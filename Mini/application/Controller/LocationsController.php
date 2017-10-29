@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Dao\DaoException;
 use Mini\Model\Location;
 use Mini\Repository\PDOLocationRepository;
 use Mini\View\LocationJsonView;
@@ -44,19 +45,28 @@ class LocationsController
      * PAGE: add
      */
     public function add() {
-        // JSON ophalen en decoden:
-        $input = file_get_contents('php://input');
-        $inputJSON = json_decode($input, TRUE);
+        try {
+            // JSON ophalen en decoden:
+            $input = file_get_contents('php://input');
+            $inputJSON = json_decode($input, TRUE);
 
-        // Checken of we de juiste data hebben meegekregen:
-        if (isset($inputJSON['name']) && isset($inputJSON['company_id'])) {
-            $this->repository->addLocation(new Location(0, $inputJSON['name'], $inputJSON['company_id']));
+            // Checken of we de juiste data hebben meegekregen:
+            if (isset($inputJSON['name']) && isset($inputJSON['company_id'])) {
+                $this->repository->addLocation(new Location(0, $inputJSON['name'], $inputJSON['company_id']));
+                http_response_code(200);
+            } else {
+                http_response_code(400);
+                echo 'wrong input';
+            }
+
+            // Redirect (headers)
+            header("access-control-allow-methods: *");
+            header("access-control-allow-origin: *");
+            header('Location: ' . URL . 'locations', true, 200);
+        } catch (DaoException $exception) {
+            http_response_code(400);
+            echo $exception;
         }
-
-        // Redirect (headers)
-        header("access-control-allow-methods: *");
-        header("access-control-allow-origin: *");
-        header('Location: ' . URL . 'locations', true, 200);
     }
 
     /**

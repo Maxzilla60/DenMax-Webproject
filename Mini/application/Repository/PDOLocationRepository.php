@@ -2,7 +2,6 @@
 
 namespace Mini\Repository;
 
-use Mini\Core\Model;
 use Mini\Dao\PDOLocationDAO;
 use Mini\Model\Location;
 
@@ -29,7 +28,7 @@ class PDOLocationRepository
     }
 
     public function addLocation(Location $location) {
-        $this->addLocation($location);
+        $this->locationDAO->addLocation($location);
     }
 
     private function isValidId($id)
