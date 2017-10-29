@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Dao\DaoException;
 use Mini\Model\Problem;
 use Mini\Repository\PDOProblemRepository;
 use Mini\View\ProblemJsonView;
@@ -44,66 +45,95 @@ class ProblemsController
      * PAGE: add
      */
     public function add() {
-        // JSON ophalen en decoden:
-        $input = file_get_contents('php://input');
-        $inputJSON = json_decode($input, TRUE);
+        try {
+            // JSON ophalen en decoden:
+            $input = file_get_contents('php://input');
+            $inputJSON = json_decode($input, TRUE);
 
-        // Checken of we de juiste data hebben meegekregen:
-        if (isset($inputJSON['location_id']) && isset($inputJSON['description']) && isset($inputJSON['date']) && isset($inputJSON['fixed'])) {
-            // Technician is optioneel:
-            if (isset($inputJSON['technician'])) {
-                $technician = $inputJSON['technician'];
-            }
-            else {
-                $technician = null;
+            // Checken of we de juiste data hebben meegekregen:
+            if (isset($inputJSON['location_id']) && isset($inputJSON['description']) && isset($inputJSON['date']) && isset($inputJSON['fixed'])) {
+                // Technician is optioneel:
+                if (isset($inputJSON['technician'])) {
+                    $technician = $inputJSON['technician'];
+                } else {
+                    $technician = null;
+                }
+
+                $this->repository->addProblem(new Problem(0, $inputJSON['location_id'], $inputJSON['description'], $inputJSON['date'], $inputJSON['fixed'], $technician));
+                http_response_code(200);
+            } else {
+                http_response_code(400);
+                echo 'wrong input';
             }
 
-            $this->repository->addProblem(new Problem(0, $inputJSON['location_id'], $inputJSON['description'], $inputJSON['date'], $inputJSON['fixed'], $technician));
+            // Redirect (headers)
+            header("access-control-allow-origin: *");
+            header('location: ' . URL . 'problems', true, 200);
+        } catch (DaoException $exception) {
+            http_response_code(400);
+            echo $exception;
         }
-
-        // Redirect (headers)
-        header("access-control-allow-origin: *");
-        header('location: ' . URL . 'problems', true, 200);
     }
 
     /*
      * PAGE: updateTechnician
      */
     public function updateTechnician($problem_id) {
-        // JSON ophalen en decoden:
-        $input = file_get_contents('php://input');
-        $inputJSON = json_decode($input, TRUE);
+        try {
+            // JSON ophalen en decoden:
+            $input = file_get_contents('php://input');
+            $inputJSON = json_decode($input, TRUE);
 
-        // Checken of we de juiste data hebben meegekregen:
-        if (isset($inputJSON['technician'])) {
-            $this->repository->updateTechnician($problem_id, $inputJSON['technician']);
+            // Checken of we de juiste data hebben meegekregen:
+            if (isset($inputJSON['technician'])) {
+                $this->repository->updateTechnician($problem_id, $inputJSON['technician']);
+                http_response_code(200);
+            } else {
+                http_response_code(400);
+                echo 'wrong input';
+            }
+
+            // Redirect (headers)
+            header("access-control-allow-origin: *");
+            header('location: ' . URL . 'problems', true, 200);
+        } catch (DaoException $exception) {
+            http_response_code(400);
+            echo $exception;
         }
-
-        // Redirect (headers)
-        header("access-control-allow-origin: *");
-        header('location: ' . URL . 'problems', true, 200);
     }
 
     /*
     * PAGE: deleteTechnician
     */
     public function deleteTechnician($problem_id) {
-        $this->repository->deleteTechnician($problem_id);
+        try {
+            $this->repository->deleteTechnician($problem_id);
+            http_response_code(200);
 
-        // Redirect (headers)
-        header("access-control-allow-origin: *");
-        header('location: ' . URL . 'problems', true, 200);
+            // Redirect (headers)
+            header("access-control-allow-origin: *");
+            header('location: ' . URL . 'problems', true, 200);
+        } catch (DaoException $exception) {
+            http_response_code(400);
+            echo $exception;
+        }
     }
 
     /*
     * PAGE: fixProblem
     */
     public function fixProblem($problem_id) {
-        $this->repository->fixProblem($problem_id);
+        try {
+            $this->repository->fixProblem($problem_id);
+            http_response_code(200);
 
-        // Redirect (headers)
-        header("access-control-allow-origin: *");
-        header('location: ' . URL . 'problems', true, 200);
+            // Redirect (headers)
+            header("access-control-allow-origin: *");
+            header('location: ' . URL . 'problems', true, 200);
+        } catch (DaoException $exception) {
+            http_response_code(400);
+            echo $exception;
+        }
     }
 
     /**

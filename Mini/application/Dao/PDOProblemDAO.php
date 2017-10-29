@@ -103,11 +103,8 @@ class PDOProblemDAO extends Model
             }
             $parameters = array(':location_id' => $problem->getLocationId(), ':description' => $problem->getDescription(), ':date' => $problem->getDate(), ':fixed' => $problem->getFixed(), ':technician' => $problem->getTechnician());
 
-            http_response_code(200);
             $query->execute($parameters);
         } catch (\PDOException $exception) {
-            http_response_code(400);
-            echo 'Exception!: ' . $exception->getMessage();
             throw new DaoException("PDO Exception, 0, $exception");
         }
     }
@@ -121,11 +118,8 @@ class PDOProblemDAO extends Model
             }
             $parameters = array(':technician' => $technician, ':id' => $problem_id);
 
-            http_response_code(200);
             $query->execute($parameters);
         } catch (\PDOException $exception) {
-            http_response_code(400);
-            echo 'Exception!: ' . $exception->getMessage();
             throw new DaoException("PDO Exception, 0, $exception");
         }
     }
@@ -139,11 +133,8 @@ class PDOProblemDAO extends Model
             }
             $parameters = array(':id' => $problem_id);
 
-            http_response_code(200);
             $query->execute($parameters);
         } catch (\PDOException $exception) {
-            http_response_code(400);
-            echo 'Exception!: ' . $exception->getMessage();
             throw new DaoException("PDO Exception, 0, $exception");
         }
     }
@@ -157,11 +148,8 @@ class PDOProblemDAO extends Model
             }
             $parameters = array(':id' => $problem_id);
 
-            http_response_code(200);
             $query->execute($parameters);
         } catch (\PDOException $exception) {
-            http_response_code(400);
-            echo 'Exception!: ' . $exception->getMessage();
             throw new DaoException("PDO Exception, 0, $exception");
         }
     }
