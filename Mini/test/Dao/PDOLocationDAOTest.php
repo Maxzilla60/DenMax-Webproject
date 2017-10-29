@@ -16,10 +16,9 @@ class PDOLocationDAOTest extends TestCase
         $this->connection = new PDO('sqlite::memory');
         $this->connection->exec(
             'CREATE TABLE locations (
-            id int(11),
+            id INTEGER PRIMARY KEY,
             name varchar(50),
-            company_id int(11),
-            PRIMARY KEY (id)
+            company_id int(11)
             )'
         );
     }
@@ -33,7 +32,7 @@ class PDOLocationDAOTest extends TestCase
     public function testGetAll_insertFive_FiveLocationObjects(){
         $name = "testname";
         for ($i = 1; $i <= 5; $i++){
-            $this->connection->exec("INSERT INTO locations (id, name, company_id) VALUES ('$i','$name', NULL );");
+            $this->connection->exec("INSERT INTO locations (id, name, company_id) VALUES (NULL,'$name', NULL );");
         }
         $locationDAO = new PDOLocationDAO($this->connection);
         $actualLocationCount = count($locationDAO->getAllLocations());
@@ -45,14 +44,14 @@ class PDOLocationDAOTest extends TestCase
         $name = "testname";
         $company_id = 1;
         $location = new Location($id, $name, $company_id);
-        $this->connection->exec("INSERT INTO locations (id, name, company_id) VALUES (1,'$name', 1);");
+        $this->connection->exec("INSERT INTO locations (id, name, company_id) VALUES (NULL,'$name', 1);");
         $locationDAO = new PDOLocationDAO($this->connection);
         $actualLocation = $locationDAO->getLocationsByCompany($company_id)[0];
         $this->assertEquals($location, $actualLocation);
     }
 
     public function testAddLocation_Location_LocationObject(){
-        $id = null;
+        $id = 1;
         $name = "testname";
         $company_id = 1;
         $location = new Location($id, $name, $company_id);
@@ -91,7 +90,7 @@ class PDOLocationDAOTest extends TestCase
     /**
      * @expectedException Mini\Dao\DaoException
      **/
-    public function testGetByCompany_tablePersonDoesntExist_ModelException()
+    public function testGetByCompany_tableLocationsDoesntExist_ModelException()
     {
         $this->connection->exec("DROP TABLE locations");
         $locationDAO = new PDOLocationDAO($this->connection);
@@ -101,7 +100,7 @@ class PDOLocationDAOTest extends TestCase
     /**
      * @expectedException Mini\Dao\DaoException
      **/
-    public function testGetAll_tablePersonDoesntExist_ModelException()
+    public function testGetAll_tableLocationsDoesntExist_ModelException()
     {
         $this->connection->exec("DROP TABLE locations");
         $locationDAO = new PDOLocationDAO($this->connection);
@@ -111,7 +110,7 @@ class PDOLocationDAOTest extends TestCase
     /**
      * @expectedException Mini\Dao\DaoException
      **/
-    public function testAdd_tablePersonDoesntExist_ModelException()
+    public function testAdd_tableLocationsDoesntExist_ModelException()
     {
         $this->connection->exec("DROP TABLE locations");
         $locationDAO = new PDOLocationDAO($this->connection);
