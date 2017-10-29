@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Dao\PDORoleDAO;
 use Mini\Repository\PDORoleRepository;
 use Mini\View\RoleJsonView;
 
@@ -19,7 +20,7 @@ class RolesController
     function __construct($repo = null, $view = null)
     {
         if(!isset($repo)) {
-            $this->repository = new PDORoleRepository();
+            $this->repository = new PDORoleRepository(new PDORoleDAO());
         }
         if(!isset($view)) {
             $this->view = new RoleJsonView();
