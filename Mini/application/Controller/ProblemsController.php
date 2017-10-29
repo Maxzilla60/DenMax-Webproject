@@ -11,6 +11,7 @@ namespace Mini\Controller;
 use Mini\Model\Problem;
 use Mini\Repository\PDOProblemRepository;
 use Mini\View\ProblemJsonView;
+use Mini\Dao\PDOProblemDAO;
 
 class ProblemsController
 {
@@ -20,7 +21,7 @@ class ProblemsController
     function __construct($repo = null, $view = null)
     {
         if(!isset($repo)) {
-            $this->repository = new PDOProblemRepository();
+            $this->repository = new PDOProblemRepository(new PDOProblemDAO());
         }
         if(!isset($view)) {
             $this->view = new ProblemJsonView();

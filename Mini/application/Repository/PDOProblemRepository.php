@@ -2,115 +2,61 @@
 
 namespace Mini\Repository;
 
-use Mini\Core\Model;
+use Mini\Dao\PDOProblemDAO;
 use Mini\Model\Problem;
 
-class PDOProblemRepository extends Model
+class PDOProblemRepository
 {
+    private $problemDAO;
+
+    public function __construct(PDOProblemDAO $problemDAO)
+    {
+        $this->problemDAO = $problemDAO;
+    }
+
     public function getAllProblems() {
-        $sql = "SELECT * FROM problems";
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $fetchedProblems = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $problemsArray = array();
-        if (count($fetchedProblems) > 0) {
-            foreach ($fetchedProblems as $p) {
-                $problemsArray[] = new Problem($p['id'], $p['location_id'], $p['description'], $p['date'], $p['fixed'], $p['technician']);
-            }
-        }
-
-        return $problemsArray;
+        $problems = $this->problemDAO->getAllProblems();
+        return $problems;
     }
 
 
     public function getProblemsByLocation($location_id) {
-        $sql = "SELECT * FROM problems WHERE location_id = :location_id";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':location_id' => $location_id);
-        $query->execute($parameters);
-        $fetchedProblems = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $problemsArray = array();
-        if (count($fetchedProblems) > 0) {
-            foreach ($fetchedProblems as $p) {
-                $problemsArray[] = new Problem($p['id'], $p['location_id'], $p['description'], $p['date'], $p['fixed'], $p['technician']);
-            }
+        $problems = null;
+        if($this->isValidId($location_id)) {
+            $problems = $this->problemDAO->getProblemsByLocation($location_id);
         }
-
-        return $problemsArray;
+        return $problems;
     }
 
     public function getProblemsByTechnician($technician_id) {
-        $sql = "SELECT * FROM problems WHERE technician = :technician";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':technician' => $technician_id);
-        $query->execute($parameters);
-        $fetchedProblems = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $problemsArray = array();
-        if (count($fetchedProblems) > 0) {
-            foreach ($fetchedProblems as $p) {
-                $problemsArray[] = new Problem($p['id'], $p['location_id'], $p['description'], $p['date'], $p['fixed'], $p['technician']);
-            }
+        $problems = null;
+        if($this->isValidId($technician_id)) {
+            $problems = $this->problemDAO->getProblemsByTechnician($technician_id);
         }
-
-        return $problemsArray;
+        return $problems;
     }
 
     public function addProblem(Problem $problem) {
-        try {
-            $sql = "INSERT INTO problems (location_id, description, date, fixed, technician) VALUES (:location_id, :description, :date, :fixed, :technician)";
-            $query = $this->db->prepare($sql);
-            $parameters = array(':location_id' => $problem->getLocationId(), ':description' => $problem->getDescription(), ':date' => $problem->getDate(), ':fixed' => $problem->getFixed(), ':technician' => $problem->getTechnician());
-
-            http_response_code(200);
-            $query->execute($parameters);
-        } catch (\PDOException $e) {
-            http_response_code(400);
-            echo 'Exception!: ' . $e->getMessage();
-        }
+        $this->problemDAO->addProblem($problem);
     }
 
     public function updateTechnician($problem_id, $technician) {
-        try {
-            $sql = "UPDATE problems SET technician = :technician WHERE id = :id";
-            $query = $this->db->prepare($sql);
-            $parameters = array(':technician' => $technician, ':id' => $problem_id);
-
-            http_response_code(200);
-            $query->execute($parameters);
-        } catch (\PDOException $e) {
-            http_response_code(400);
-            echo 'Exception!: ' . $e->getMessage();
-        }
+        $this->problemDAO->updateTechnician($problem_id, $technician);
     }
 
     public function deleteTechnician($problem_id) {
-        try {
-            $sql = "UPDATE problems SET technician = null WHERE id = :id";
-            $query = $this->db->prepare($sql);
-            $parameters = array(':id' => $problem_id);
-
-            http_response_code(200);
-            $query->execute($parameters);
-        } catch (\PDOException $e) {
-            http_response_code(400);
-            echo 'Exception!: ' . $e->getMessage();
-        }
+        $this->problemDAO->deleteTechnician($problem_id);
     }
 
     public function fixProblem($problem_id) {
-        try {
-            $sql = "UPDATE problems SET fixed = '1' WHERE id = :id";
-            $query = $this->db->prepare($sql);
-            $parameters = array(':id' => $problem_id);
+        $this->problemDAO->fixProblem($problem_id);
+    }
 
-            http_response_code(200);
-            $query->execute($parameters);
-        } catch (\PDOException $e) {
-            http_response_code(400);
-            echo 'Exception!: ' . $e->getMessage();
+    private function isValidId($id)
+    {
+        if (is_string($id) && ctype_digit(trim($id))) {
+            $id=(int)$id;
         }
+        return is_integer($id) and $id >= 0;
     }
 }
