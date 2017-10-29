@@ -1,2 +1,6 @@
 
 Mini/application/\.idea/
+
+Mini/myproject/:memory
+
+Mini/myproject/:memory:host=;dbname=; charset=
