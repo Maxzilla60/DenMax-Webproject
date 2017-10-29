@@ -9,56 +9,42 @@
 namespace Mini\Repository;
 
 use Mini\Core\Model;
+use Mini\Dao\PDOProblemReactionDAO;
 use Mini\Model\ProblemReaction;
 
-class PDOProblemReactionRepository extends Model
+class PDOProblemReactionRepository
 {
+    private $problemReactionsDAO;
+
+    public function __construct(PDOProblemReactionDAO $problemReactionsDAO)
+    {
+        $this->problemReactionsDAO = $problemReactionsDAO;
+    }
+
     public function getAllProblemReactions()
     {
-        $sql = "SELECT * FROM problemreactions";
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $fetchedProblemReactions = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $problemReactionArray = array();
-        if (count($fetchedProblemReactions) > 0) {
-            foreach ($fetchedProblemReactions as $pr) {
-                $problemReactionArray[] = new ProblemReaction($pr['id'], $pr['problem_id'], $pr['rating'], $pr['description']);
-            }
-        }
-
-        return $problemReactionArray;
+        $problemReactions = $this->problemReactionsDAO->getAllProblemReactions();
+        return $problemReactions;
     }
 
     public function getProblemReactionsByProblemId($problem_id)
     {
-        $sql = "SELECT * FROM problemreactions WHERE problem_id = :problem_id";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':problem_id' => $problem_id);
-        $query->execute($parameters);
-        $fetchedProblemReactions = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $problemReactionArray = array();
-        if (count($fetchedProblemReactions) > 0) {
-            foreach ($fetchedProblemReactions as $pr) {
-                $problemReactionArray[] = new ProblemReaction($pr['id'], $pr['problem_id'], $pr['rating'], $pr['description']);
-            }
+        $problemReactions = null;
+        if($this->isValidId($problem_id)) {
+            $problemReactions = $this->problemReactionsDAO->getProblemReactionsByProblemId($problem_id);
         }
-
-        return $problemReactionArray;
+        return $problemReactions;
     }
 
     public function addProblemReaction(ProblemReaction $problemReaction) {
-        try {
-            $sql = "INSERT INTO problemreactions (problem_id, description, rating) VALUES (:problem_id, :description, :rating)";
-            $query = $this->db->prepare($sql);
-            $parameters = array(':problem_id' => $problemReaction->getProblemId(), ':description' => $problemReaction->getDescription(), ':rating' => $problemReaction->getRating());
-            
-            http_response_code(200);
-            $query->execute($parameters);
-        } catch (\PDOException $e) {
-            http_response_code(400);
-            echo 'Exception!: ' . $e->getMessage();
+        $this->addProblemReaction($problemReaction);
+    }
+
+    private function isValidId($id)
+    {
+        if (is_string($id) && ctype_digit(trim($id))) {
+            $id=(int)$id;
         }
+        return is_integer($id) and $id >= 0;
     }
 }

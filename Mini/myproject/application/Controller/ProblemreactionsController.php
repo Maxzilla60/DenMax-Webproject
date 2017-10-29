@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Dao\PDOProblemReactionDAO;
 use Mini\Model\ProblemReaction;
 use Mini\Repository\PDOProblemReactionRepository;
 use Mini\View\ProblemReactionJsonView;
@@ -20,7 +21,7 @@ class ProblemreactionsController
     function __construct($repo = null, $view = null)
     {
         if(!isset($repo)) {
-            $this->repository = new PDOProblemReactionRepository();
+            $this->repository = new PDOProblemReactionRepository(new PDOProblemReactionDAO());
         }
         if(!isset($view)) {
             $this->view = new ProblemReactionJsonView();
