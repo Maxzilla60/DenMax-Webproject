@@ -12,7 +12,6 @@ use Mini\Model\Location;
 
 class PDOLocationRepositoryTest extends TestCase
 {
-
     public function setUp()
     {
         $this->mockUserDAO = $this->getMockBuilder('Mini\Dao\PDOLocationDAO')
@@ -53,7 +52,7 @@ class PDOLocationRepositoryTest extends TestCase
         $locationRepository->addLocation($location);
     }
 
-    public function testgetAll_LocationArray()
+    public function testGetAll_LocationArray()
     {
         $locations = [];
         for ($i = 0; $i<5; $i++){

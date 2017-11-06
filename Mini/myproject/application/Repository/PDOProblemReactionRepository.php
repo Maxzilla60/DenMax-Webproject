@@ -37,7 +37,7 @@ class PDOProblemReactionRepository
     }
 
     public function addProblemReaction(ProblemReaction $problemReaction) {
-        $this->addProblemReaction($problemReaction);
+        $this->problemReactionsDAO->addProblemReaction($problemReaction);
     }
 
     private function isValidId($id)

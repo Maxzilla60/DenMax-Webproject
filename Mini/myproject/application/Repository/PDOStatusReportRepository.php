@@ -22,7 +22,7 @@ class PDOStatusReportRepository
     public function getStatusReportsByLocation($location_id) {
         $statusReports = null;
         if($this->isValidId($location_id)) {
-            $statusReports = $this->statusReportDAO->getLocationsByCompany($location_id);
+            $statusReports = $this->statusReportDAO->getStatusReportsByLocation($location_id);
         }
         return $statusReports;
     }
