@@ -9,6 +9,7 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="false">
             <directory suffix=".php">application/Dao</directory>
+            <directory suffix=".php">application/Repository</directory>
         </whitelist>
     </filter>
 </phpunit>

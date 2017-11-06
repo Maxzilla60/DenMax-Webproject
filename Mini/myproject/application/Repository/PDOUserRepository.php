@@ -9,84 +9,46 @@
 namespace Mini\Repository;
 
 use Mini\Core\Model;
+use Mini\Dao\PDOUserDAO;
 use Mini\Model\User;
 
 class PDOUserRepository extends Model
 {
+    private $userDAO;
+
+    public function __construct(PDOUserDAO $userDAO)
+    {
+        $this->userDAO = $userDAO;
+    }
     public function getAllUsers()
     {
-        $sql = "SELECT * FROM users";
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $fetchedUsers = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $userArray = array();
-        if (count($fetchedUsers) > 0) {
-            foreach ($fetchedUsers as $u) {
-                $userArray[] = new User($u['id'], $u['name'], $u['role']);
-            }
-        }
-
-        return $userArray;
+        $users = $this->userDAO->getAllUsers();
+        return $users;
     }
 
     public function getUsersByRole($role)
     {
-        $sql = "SELECT * FROM users WHERE role = :role";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':role' => $role);
-        $query->execute($parameters);
-        $fetchedUsers = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $userArray = array();
-        if (count($fetchedUsers) > 0) {
-            foreach ($fetchedUsers as $u) {
-                $userArray[] = new User($u['id'], $u['name'], $u['role']);
-            }
-        }
-
-        return $userArray;
+        $users = $this->userDAO->getUsersByRole($role);
+        return $users;
     }
 
     public function addUser(User $user) {
-        try {
-            $sql = "INSERT INTO users (name, role) VALUES (:name, :role)";
-            $query = $this->db->prepare($sql);
-            $parameters = array(':name' => $user->getName(), ':role' => $user->getRole());
-
-            http_response_code(200);
-            $query->execute($parameters);
-        } catch (\PDOException $e) {
-            http_response_code(400);
-            echo 'Exception!: ' . $e->getMessage();
-        }
+        $this->userDAO->addUser($user);
     }
 
     public function updateUser($user_id, $name, $role) {
-        try {
-            $sql = "UPDATE users SET name = :name, role = :role WHERE id = :id";
-            $query = $this->db->prepare($sql);
-            $parameters = array(':name' => $name, ':role' => $role, ':id' => $user_id);
-
-            http_response_code(200);
-            $query->execute($parameters);
-        } catch (\PDOException $e) {
-            http_response_code(400);
-            echo 'Exception!: ' . $e->getMessage();
-        }
+        $this->userDAO->updateUser($user_id, $name, $role);
     }
 
     public function deleteUser($user_id) {
-        try {
-            $sql = "DELETE FROM users WHERE id = :id";
-            $query = $this->db->prepare($sql);
-            $parameters = array(':id' => $user_id);
+        $this->userDAO->deleteUser($user_id);
+    }
 
-            http_response_code(200);
-            $query->execute($parameters);
-        } catch (\PDOException $e) {
-            http_response_code(400);
-            echo 'Exception!: ' . $e->getMessage();
+    private function isValidId($id)
+    {
+        if (is_string($id) && ctype_digit(trim($id))) {
+            $id=(int)$id;
         }
+        return is_integer($id) and $id >= 0;
     }
 }

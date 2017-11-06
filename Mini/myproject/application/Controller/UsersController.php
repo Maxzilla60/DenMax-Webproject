@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Dao\PDOUserDAO;
 use Mini\Model\User;
 use Mini\Repository\PDOUserRepository;
 use Mini\View\UserJsonView;
@@ -20,7 +21,7 @@ class UsersController
     function __construct($repo = null, $view = null)
     {
         if(!isset($repo)) {
-            $this->repository = new PDOUserRepository();
+            $this->repository = new PDOUserRepository(new PDOUserDAO());
         }
         if(!isset($view)) {
             $this->view = new UserJsonView();

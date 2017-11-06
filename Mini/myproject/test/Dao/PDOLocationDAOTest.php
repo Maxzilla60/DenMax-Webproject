@@ -114,6 +114,6 @@ class PDOLocationDAOTest extends TestCase
     {
         $this->connection->exec("DROP TABLE locations");
         $locationDAO = new PDOLocationDAO($this->connection);
-        $actualLocation = $locationDAO->addLocation(new Location(1,"testname", 1));
+        $locationDAO->addLocation(new Location(1,"testname", 1));
     }
 }
