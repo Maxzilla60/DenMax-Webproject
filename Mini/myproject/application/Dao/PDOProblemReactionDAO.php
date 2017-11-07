@@ -46,6 +46,30 @@ class PDOProblemReactionDAO extends Model
         }
     }
 
+    public function getProblemReactionsById($id) {
+        try {
+            $sql = "SELECT * FROM problemreactions WHERE id = :id";
+            $query = $this->db->prepare($sql);
+            if($query == false) {
+                throw new \PDOException("Problem with PDOStatement");
+            }
+            $parameters = array(':id' => $id);
+            $query->execute($parameters);
+            $fetchedProblemReactions = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+            $problemReactionArray = array();
+            if (count($fetchedProblemReactions) > 0) {
+                foreach ($fetchedProblemReactions as $pr) {
+                    $problemReactionArray[] = new ProblemReaction($pr['id'], $pr['problem_id'], $pr['rating'], $pr['description']);
+                }
+            }
+
+            return $problemReactionArray;
+        } catch (\PDOException $exception) {
+            throw new DaoException("PDO Exception, 0, $exception");
+        }
+    }
+
     public function getProblemReactionsByProblemId($problem_id)
     {
         try {

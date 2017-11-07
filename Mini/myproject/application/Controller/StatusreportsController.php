@@ -41,6 +41,16 @@ class StatusreportsController
     }
 
     /**
+     * PAGE: id
+     */
+    public function id($id)
+    {
+        // load views
+        $statusreports = $this->repository->getStatusReportsById($id);
+        $this->view->ShowAll($statusreports);
+    }
+
+    /**
      * PAGE: add
      */
     public function add() {

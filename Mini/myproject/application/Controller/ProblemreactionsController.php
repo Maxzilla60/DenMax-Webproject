@@ -39,6 +39,16 @@ class ProblemreactionsController
         $this->view->ShowAll($problemreactions);
     }
 
+    /**
+     * PAGE: id
+     */
+    public function id($id)
+    {
+        // load views
+        $problemreactions = $this->repository->getProblemReactionsById($id);
+        $this->view->ShowAll($problemreactions);
+    }
+
     /*
      * PAGE; add
      */

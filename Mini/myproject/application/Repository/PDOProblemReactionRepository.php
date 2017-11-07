@@ -27,6 +27,12 @@ class PDOProblemReactionRepository
         return $problemReactions;
     }
 
+    public function getProblemReactionsById($id)
+    {
+        $problemReactions = $this->problemReactionsDAO->getProblemReactionsById($id);
+        return $problemReactions;
+    }
+
     public function getProblemReactionsByProblemId($problem_id)
     {
         $problemReactions = null;

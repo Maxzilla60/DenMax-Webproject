@@ -46,6 +46,31 @@ class PDOUserDAO extends Model
         }
     }
 
+    public function getUsersById($id)
+    {
+        try {
+            $sql = "SELECT * FROM users WHERE id = :id";
+            $query = $this->db->prepare($sql);
+            if($query == false) {
+                throw new \PDOException("Problem with PDOStatement");
+            }
+            $parameters = array(':id' => $id);
+            $query->execute($parameters);
+            $fetchedUsers = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+            $userArray = array();
+            if (count($fetchedUsers) > 0) {
+                foreach ($fetchedUsers as $u) {
+                    $userArray[] = new User($u['id'], $u['name'], $u['role']);
+                }
+            }
+
+            return $userArray;
+        } catch (\PDOException $exception) {
+            throw new DaoException("PDO Exception, 0, $exception");
+        }
+    }
+
     public function getUsersByRole($role)
     {
         try {

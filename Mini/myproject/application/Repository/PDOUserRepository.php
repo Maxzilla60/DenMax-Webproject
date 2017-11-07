@@ -26,6 +26,11 @@ class PDOUserRepository extends Model
         return $users;
     }
 
+    public function getUsersById($id) {
+        $users = $this->userDAO->getUsersById($id);
+        return $users;
+    }
+
     public function getUsersByRole($role)
     {
         $users = $this->userDAO->getUsersByRole($role);

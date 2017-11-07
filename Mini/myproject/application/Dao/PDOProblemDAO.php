@@ -45,6 +45,30 @@ class PDOProblemDAO extends Model
         }
     }
 
+    public function getProblemsById($id) {
+        try {
+            $sql = "SELECT * FROM problems WHERE id = :id";
+            $query = $this->db->prepare($sql);
+            if ($query == false) {
+                throw new \PDOException("Problem with PDOStatement");
+            }
+            $parameters = array(':id' => $id);
+            $query->execute($parameters);
+            $fetchedProblems = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+            $problemsArray = array();
+            if (count($fetchedProblems) > 0) {
+                foreach ($fetchedProblems as $p) {
+                    $problemsArray[] = new Problem($p['id'], $p['location_id'], $p['description'], $p['date'], $p['fixed'], $p['technician']);
+                }
+            }
+
+            return $problemsArray;
+        } catch (\PDOException $exception) {
+            throw new DaoException("PDO Exception, 0, $exception");
+        }
+    }
+
 
     public function getProblemsByLocation($location_id) {
         try {

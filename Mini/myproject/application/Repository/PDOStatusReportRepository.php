@@ -19,6 +19,11 @@ class PDOStatusReportRepository
         return $statusReports;
     }
 
+    public function getStatusReportsById($id) {
+        $statusReports = $this->statusReportDAO->getStatusReportsById($id);
+        return $statusReports;
+    }
+
     public function getStatusReportsByLocation($location_id) {
         $statusReports = null;
         if($this->isValidId($location_id)) {

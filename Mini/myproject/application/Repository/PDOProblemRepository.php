@@ -19,6 +19,11 @@ class PDOProblemRepository
         return $problems;
     }
 
+    public function getProblemsById($id){
+        $problems = $this->problemDAO->getProblemsById($id);
+        return $problems;
+    }
+
 
     public function getProblemsByLocation($location_id) {
         $problems = null;

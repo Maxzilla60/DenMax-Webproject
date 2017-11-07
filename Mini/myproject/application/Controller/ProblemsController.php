@@ -42,6 +42,16 @@ class ProblemsController
     }
 
     /**
+     * PAGE: id
+     */
+    public function id($id)
+    {
+        // load views
+        $problems = $this->repository->getProblemsById($id);
+        $this->view->ShowAll($problems);
+    }
+
+    /**
      * PAGE: add
      */
     public function add() {
