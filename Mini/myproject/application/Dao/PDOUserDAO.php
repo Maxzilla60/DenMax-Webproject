@@ -71,6 +71,31 @@ class PDOUserDAO extends Model
         }
     }
 
+    public function getUserByUsername($username)
+    {
+        try {
+            $sql = "SELECT * FROM users WHERE name = :name LIMIT 1";
+            $query = $this->db->prepare($sql);
+            if($query == false) {
+                throw new \PDOException("Problem with PDOStatement");
+            }
+            $parameters = array(':name' => $username);
+            $query->execute($parameters);
+            $fetchedUsers = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+            $userArray = array();
+            if (count($fetchedUsers) > 0) {
+                foreach ($fetchedUsers as $u) {
+                    $userArray[] = new User($u['id'], $u['name'], $u['role']);
+                }
+            }
+
+            return $userArray;
+        } catch (\PDOException $exception) {
+           throw new DaoException("PDO Exception, 0, $exception"); 
+        }
+    }
+
     public function addUser(User $user) {
         try {
             $sql = "INSERT INTO users (name, role) VALUES (:name, :role)";

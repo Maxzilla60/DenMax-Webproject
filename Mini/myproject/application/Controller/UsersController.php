@@ -40,6 +40,17 @@ class UsersController
     }
 
     /**
+     * PAGE: username
+     * @param int $id
+     */
+    public function username($username)
+    {
+        // load views
+        $users = $this->repository->getUserbyUsername($username);
+        $this->view->ShowAll($users);
+    }
+
+    /**
      * PAGE: role
      * @param int $id
      */

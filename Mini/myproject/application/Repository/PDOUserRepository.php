@@ -32,6 +32,11 @@ class PDOUserRepository extends Model
         return $users;
     }
 
+    public function getUserByUsername($username) {
+        $users = $this->userDAO->getUserByUsername($username);
+        return $users;
+    }
+
     public function addUser(User $user) {
         $this->userDAO->addUser($user);
     }
