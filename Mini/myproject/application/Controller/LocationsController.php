@@ -40,6 +40,16 @@ class LocationsController
         $locations = $this->repository->getAllLocations();
         $this->view->ShowAll($locations);
     }
+    /**
+     * PAGE: id
+     */
+    public function id($id)
+    {
+        // load views
+        $locations = $this->repository->getLocationsById($id);
+        $this->view->ShowAll($locations);
+    }
+
 
     /**
      * PAGE: add

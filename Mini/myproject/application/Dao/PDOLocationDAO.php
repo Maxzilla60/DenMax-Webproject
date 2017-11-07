@@ -46,6 +46,30 @@ class PDOLocationDAO extends Model
         }
     }
 
+    public function getLocationsById($id){
+        try {
+            $sql = "SELECT * FROM locations WHERE id = :id";
+            $query = $this->db->prepare($sql);
+            if($query == false) {
+                throw new \PDOException("Problem with PDOStatement");
+            }
+            $parameters = array(':id' => $id);
+            $query->execute($parameters);
+            $fetchedLocations = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+            $locationsArray = array();
+            if (count($fetchedLocations) > 0) {
+                foreach ($fetchedLocations as $l) {
+                    $locationsArray[] = new Location($l['id'], $l['name'], $l['company_id']);
+                }
+            }
+
+            return $locationsArray;
+        } catch (\PDOException $exception) {
+            throw new DaoException("PDO Exception, 0, $exception");
+        }
+    }
+
     public function getLocationsByCompany($company_id) {
         try {
             $sql = "SELECT * FROM locations WHERE company_id = :company_id";

@@ -2,42 +2,37 @@
 
 namespace Mini\Repository;
 
-use Mini\Core\Model;
+use Mini\Dao\PDOCompanyDAO;
 use Mini\Model\Company;
 
-class PDOCompanyRepository extends Model
+class PDOCompanyRepository
 {
+    private $companyDAO;
+
+    public function __construct(PDOCompanyDAO $companyDAO)
+    {
+        $this->companyDAO = $companyDAO;
+    }
+
     public function getAllCompanies() {
-        $sql = "SELECT * FROM companies";
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $fetchedCompanies = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $companiesArray = array();
-        if (count($fetchedCompanies) > 0) {
-            foreach ($fetchedCompanies as $c) {
-                $companiesArray[] = new Company($c['id'], $c['name']);
-            }
-        }
-
-        return $companiesArray;
+        $companies = $this->companyDAO->getAllCompanies();
+        return $companies;
     }
 
 
     public function getCompanyByUser($user_id) {
-        $sql = "SELECT * FROM companies WHERE id IN (SELECT company_id FROM employees WHERE user_id = :user_id)";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':user_id' => $user_id);
-        $query->execute($parameters);
-
-        $fetchedCompanies = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        $companiesArray = array();
-        if (count($fetchedCompanies) > 0) {
-            foreach ($fetchedCompanies as $c) {
-                $companiesArray[] = new Company($c['id'], $c['name']);
-            }
+        $companies = null;
+        if($this->isValidId($user_id)) {
+            $companies = $this->companyDAO->getCompanyByUser($user_id);
         }
-        return $companiesArray;
+        return $companies;
+    }
+
+    private function isValidId($id)
+    {
+        if (is_string($id) && ctype_digit(trim($id))) {
+            $id=(int)$id;
+        }
+        return is_integer($id) and $id >= 0;
     }
 }

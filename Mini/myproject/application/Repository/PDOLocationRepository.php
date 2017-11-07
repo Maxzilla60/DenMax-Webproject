@@ -19,6 +19,14 @@ class PDOLocationRepository
         return $locations;
     }
 
+    public function getLocationsById($id){
+        $locations = null;
+        if($this->isValidId($id)) {
+            $locations = $this->locationDAO->getLocationsById($id);
+        }
+        return $locations;
+    }
+
     public function getLocationsByCompany($company_id) {
         $locations = null;
         if($this->isValidId($company_id)) {

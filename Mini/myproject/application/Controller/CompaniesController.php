@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Dao\PDOCompanyDAO;
 use Mini\Repository\PDOCompanyRepository;
 use Mini\View\CompanyJsonView;
 
@@ -19,7 +20,7 @@ class CompaniesController
     function __construct($repo = null, $view = null)
     {
         if(!isset($repo)) {
-            $this->repository = new PDOCompanyRepository();
+            $this->repository = new PDOCompanyRepository(new PDOCompanyDAO());
         }
         if(!isset($view)) {
             $this->view = new CompanyJsonView();
@@ -40,7 +41,7 @@ class CompaniesController
 
     /**
      * PAGE: user
-     * @param int $id Id of the to-edit song
+     * @param int $id Id of the the user
      */
     public function user($id)
     {
