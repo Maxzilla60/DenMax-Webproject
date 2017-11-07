@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Problems | Edit Technician</title></head>
+<body>
+    {{ include('default/header.html.twig') }}
+    
+    <form action="/problems/technician/go" method="post" style="margin-left:auto;margin-right:auto;width:50%;text-align:center">
+        PROBLEM ID: {{ problem_id }}<br />
+        <input hidden type="number" name="problem_id" value={{ problem_id }} />
+        <input type="number" name="technician_id" placeholder="Technician ID" style="width:100%" /><br />
+        <input type="submit" value="Set Technician"  style="width:100%" />
+    </form>
+    <form action="/problems/technician/delete" method="post" style="margin-left:auto;margin-right:auto;width:50%">
+        <input hidden type="number" name="problem_id" value={{ problem_id }} />    
+        <input type="submit" value="Delete Technician" style="width:100%" />    
+    </form>
+</body>
+</html>

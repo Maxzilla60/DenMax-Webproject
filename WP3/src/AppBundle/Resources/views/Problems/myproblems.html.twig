@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>My Problems</title></head>
+<body>
+    {{ include('default/header.html.twig') }}
+    
+    {% if problems %}
+        <table style="width: 100%; text-align: center">
+            <tr>
+                <th>ID</th>
+                <th>DESCRIPTION</th>
+                <th>LOCATION ID</th>
+                <th>DATE</th>
+                <th>FIXED</th>
+            </tr>
+            {% for p in problems %}
+                <tr>
+                    <td>{{p.id}}</td>
+                    <td>{{p.description}}</td>
+                    <td>{{p.location_id}}</td>
+                    <td>{{p.date}}</td>
+                    
+                    {% if p.fixed == 1 %}
+                        <td style="background:green;color:white">YES</td>
+                    {% else %}
+                        <td style="background:red;color:white"><a href={{ path('fixproblem', {'problem_id': p.id}) }}><button>FIX</button></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %} Oops, you have no problems to fix!
+    {% endif %}
+    
+    <script>
+        function fixProblem(problem_id) {            
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://192.168.33.11/problems/fixProblem/'+problem_id, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    window.location = "/myproblems";
+                }
+            }
+            
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

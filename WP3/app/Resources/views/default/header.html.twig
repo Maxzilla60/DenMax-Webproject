@@ -1,0 +1,27 @@
+<header style="border-bottom: solid 1px black; margin-bottom: 10px; padding-bottom: 5px">
+    
+    <a href={{ url('home') }}><button>Home</button></a>
+    <a href={{ url('problems') }}><button>Problems</button></a>
+    <a href={{ url('statusreports') }}><button>Status Reports</button></a>
+    {% if app.session.get('role') is same as("0") %}
+        <a href={{ url('myproblems') }}><button>My Problems</button></a>
+    {% endif %}
+    {% if app.session.get('role') is same as("2") %}
+        <a href={{ url('technicians') }}><button>Technicians</button></a>
+    {% endif %}
+    {% if app.session.get('company') is not null %}
+        <a href={{ url('locations') }}><button>Company Locations</button></a>
+    {% endif %}
+    
+    <div style="float:right">
+        {% if app.session.get('username') != null %}
+            {{ app.session.get('username') }}
+            {% if app.session.get('company') is not null %}
+             ({{ app.session.get('company') }})
+            {% endif %}
+             | <a href={{ url('logout') }}>logout</a>
+        {% else %}
+            <a href={{ url('loginpage') }}>login</a>
+        {% endif %}
+    </div>
+</header>

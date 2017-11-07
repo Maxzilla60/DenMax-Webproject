@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Locations</title></head>
+<body>
+    {{ include('default/header.html.twig') }}
+    
+    <div style="border-bottom: solid 1px black; margin-bottom: 5px; padding-bottom: 5px">
+        <a href={{ url('addlocation') }}>
+            <button>New Location</button>
+        </a>
+    </div>
+    
+    {% if locations %}
+        <table style="width: 100%; text-align: center">
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+            </tr>
+            {% for l in locations %}
+                <tr>
+                    <td>{{l.id}}</td>
+                    <td>{{l.name}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %} Oops, your company has no locations.
+    {% endif %}
+</body>
+</html>

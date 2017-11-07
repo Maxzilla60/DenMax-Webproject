@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Problem Reactions</title></head>
+<body>
+    {% if problemreactions %}
+        <table style="width: 100%; text-align: center">
+            <tr>
+                <th>ID</th>
+                <th>PROBLEM ID</th>
+                <th>RATING</th>
+                <th>DESCRIPTION</th>
+            </tr>
+            {% for p in problemreactions %}
+                <tr>
+                    <td>{{p.id}}</td>
+                    <td>{{p.problem_id}}</td>
+                    <td>{{p.rating}}</td>
+                    <td>{{p.description}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %} Oops, no problemreactions found!
+    {% endif %}
+</body>
+</html>
