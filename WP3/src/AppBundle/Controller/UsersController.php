@@ -19,9 +19,10 @@ class UsersController extends Controller
             return $this->redirectToRoute('loginpage');
         }
         
-        $stuff = json_decode(file_get_contents("http://192.168.33.11/users/role/0"));
+        // Fetch all technicians from API
+        $fetchedTechnicians = json_decode(file_get_contents("http://192.168.33.11/users/role/0"));
         
-        return $this->render('AppBundle:Users:technicians.html.twig', array("users" => $stuff));
+        return $this->render('AppBundle:Users:technicians.html.twig', array("users" => $fetchedTechnicians));
     }
     
     /**
@@ -34,17 +35,18 @@ class UsersController extends Controller
             return $this->redirectToRoute('loginpage');
         }
         
+        // Get username from GET variables
         $username = $request->query->get('username');
         
-        $stuff = json_decode(file_get_contents("http://192.168.33.11/users/username/".$username));
-        
-        if (count($stuff) < 1) {
+        // Fetch user data
+        $fetchedUsers = json_decode(file_get_contents("http://192.168.33.11/users/username/".$username));
+        // Check if user exists:
+        if (count($fetchedUsers) < 1) {
             return $this->redirectToRoute('technicians');
         }
         
-        $user_id = $stuff[0]->id;
-        $role = $stuff[0]->role;
-        
+        $user_id = $fetchedUsers[0]->id;
+        $role = $fetchedUsers[0]->role;
         return $this->render('AppBundle:Users:edittechnician.html.twig', array("user_id" => $user_id, "role" => $role, "username" => $username));
     }
     
@@ -58,20 +60,23 @@ class UsersController extends Controller
             return $this->redirectToRoute('loginpage');
         }
         
+        // Get POST request variables:
         $username = $request->request->get('username');
         $user_id = $request->request->get('user_id');
         $role = $request->request->get('role');
         
+        // Check if POST variables are set:
         if ($username != null && $user_id != null && $role != null) {
+            // Setup POST request to API:
             $browser = $this->container->get('buzz');
-
+            // Build JSON payload:
             $json = json_encode([
                 "name" => $username,
                 "role" => "0"
             ]);
-
+            // Set request headers
             $headers = ['Content-Type', 'application/json'];
-
+            // Send POST to API
             $browser->post('http://192.168.33.11/users/update/'.$user_id, $headers, $json);
         }
         
@@ -87,15 +92,14 @@ class UsersController extends Controller
            $request->getSession()->get('role') != 2) {
             return $this->redirectToRoute('loginpage');
         }
-        
+        // Get user id from POST request variables
         $user_id = $request->request->get('user_id');
-        
+        // Check if user id is set:
         if ($user_id != null) {
+            // Setup POST request to API:
             $browser = $this->container->get('buzz');
-
-            $headers = ['Content-Type', 'application/json'];
-
-            $browser->post('http://192.168.33.11/users/delete/'.$user_id, $headers);
+            // Send POST to API
+            $browser->post('http://192.168.33.11/users/delete/'.$user_id);
         }
         
         return $this->redirectToRoute('technicians');
@@ -106,11 +110,6 @@ class UsersController extends Controller
     */
     public function addTechnicianAction(Request $request) {
         // Check for logged in user and appropriate role:
-        if ($request->getSession()->get('username') == null ||
-           $request->getSession()->get('role') != 2) {
-            return $this->redirectToRoute('loginpage');
-        }
-        
         if ($request->getSession()->get('username') == null ||
            $request->getSession()->get('role') != 2) {
             return $this->redirectToRoute('loginpage');
@@ -129,18 +128,20 @@ class UsersController extends Controller
             return $this->redirectToRoute('loginpage');
         }
         
+        // Get username from POST request variables
         $username = $request->request->get('username');
-        
+        // Check if username is set:
         if ($username != null) {
+            // Setup POST request to API:
             $browser = $this->container->get('buzz');
-
+            // Build JSON payload:
             $json = json_encode([
                 "name" => $username,
                 "role" => "0"
             ]);
-
+            // Set request headers
             $headers = ['Content-Type', 'application/json'];
-
+            // Send POST to API
             $browser->post('http://192.168.33.11/users/add/', $headers, $json);
         }
         

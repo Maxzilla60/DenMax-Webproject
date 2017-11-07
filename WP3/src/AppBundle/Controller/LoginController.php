@@ -14,6 +14,7 @@ class LoginController extends Controller
     *  @Route("/login", name="loginpage")
     */
     public function loginAction(Request $request) {
+        // Check if someone is already logged in:
         if ($request->getSession()->get('username') != null) {
             return $this->redirectToRoute('home');
         }
@@ -24,33 +25,37 @@ class LoginController extends Controller
     /**
     *  @Route("/login/go")
     */
-    public function loginGoAction(Request $request) {        
+    public function loginGoAction(Request $request) {
+        // Get username from POST request variables
         $username = $request->request->get('username');
-        
+        // Check if POST variable is set:
         if ($username == null) {
             return $this->redirectToRoute('loginpage');
         }
         
-        $stuff = json_decode(file_get_contents("http://192.168.33.11/users/username/".$username));
-        
-        if (count($stuff) < 1) {
+        // Fetch user from API
+        $fetchedUsers = json_decode(file_get_contents("http://192.168.33.11/users/username/".$username));
+        // Check if user exists:
+        if (count($fetchedUsers) < 1) {
             return $this->redirectToRoute('loginpage');
         }
         
+        // Get and set new session cookies:
         $session = $request->getSession();
         $session->set('username', $username);
-        $session->set('role', $stuff[0]->role);
-        $session->set('id', $stuff[0]->id);
+        $session->set('role', $fetchedUsers[0]->role);
+        $session->set('id', $fetchedUsers[0]->id);
         
-        $stuff = json_decode(file_get_contents("http://192.168.33.11/companies/user/".$stuff[0]->id));
-        
-        if (count($stuff) < 1) {
+        // Fetch user's company from API
+        $fetchedCompanies = json_decode(file_get_contents("http://192.168.33.11/companies/user/".$fetchedUsers[0]->id));
+        // Check if user has a company and set session cookies:
+        if (count($fetchedCompanies) < 1) {
             $session->set('company', null);
             $session->set('company_id', null);
         }
         else {
-            $session->set('company', $stuff[0]->name);
-            $session->set('company_id', $stuff[0]->id);
+            $session->set('company', $fetchedCompanies[0]->name);
+            $session->set('company_id', $fetchedCompanies[0]->id);
         }
 
         return $this->redirectToRoute('home');
@@ -60,8 +65,8 @@ class LoginController extends Controller
     *   @Route("/logout", name="logout")
     */
     public function logoutAction(Request $request) {
+        // Clear session cookies and redirect:
         $request->getSession()->clear();
-        
         return $this->redirectToRoute('home');
     }
 }

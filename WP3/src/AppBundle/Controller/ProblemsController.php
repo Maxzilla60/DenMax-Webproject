@@ -13,16 +13,19 @@ class ProblemsController extends Controller
     *  @Route("/problems", name="problems")
     */
     public function problemsAction(Request $request) {
+        // Get location id for searching by location from POST variables:
         $location_id = $request->request->get('location_id');
         
+        // Fetch Problems from API:
         if ($location_id == null) {
-            $stuff = json_decode(file_get_contents("http://192.168.33.11/problems"));
+            $fetchedProblems = json_decode(file_get_contents("http://192.168.33.11/problems"));
         }
+        // Search by location:
         else {
-            $stuff = json_decode(file_get_contents("http://192.168.33.11/problems/location/".$location_id));
+            $fetchedProblems = json_decode(file_get_contents("http://192.168.33.11/problems/location/".$location_id));
         }
         
-        return $this->render('AppBundle:Problems:problems.html.twig', array("problems" => $stuff, "search" => $location_id));
+        return $this->render('AppBundle:Problems:problems.html.twig', array("problems" => $fetchedProblems, "search" => $location_id));
     }
     
     /**
@@ -35,6 +38,7 @@ class ProblemsController extends Controller
             return $this->redirectToRoute('loginpage');
         }
         
+        // Get problem id from POST variables
         $problem_id = $request->query->get('problem_id');
         
         return $this->render('AppBundle:Problems:settechnician.html.twig', array("problem_id" => $problem_id));
@@ -51,18 +55,21 @@ class ProblemsController extends Controller
             return $this->redirectToRoute('loginpage');
         }        
         
+        // Get POST request variables:
         $technician_id = $request->request->get('technician_id');
         $problem_id = $request->request->get('problem_id');
         
+        // Check if POST variables are set:
         if ($technician_id != null && $problem_id != null) {
+            // Setup POST request to API:
             $browser = $this->container->get('buzz');
-
+            // Build JSON payload:
             $json = json_encode([
                 "technician" => $technician_id
             ]);
-
+            // Set request header
             $headers = ['Content-Type', 'application/json'];
-
+            // Send POST to API
             $browser->post('http://192.168.33.11/problems/updateTechnician/'.$problem_id, $headers, $json);
         }
         
@@ -80,17 +87,18 @@ class ProblemsController extends Controller
             return $this->redirectToRoute('loginpage');
         } 
         
+        // Get problem id from POST variables
         $problem_id = $request->request->get('problem_id');
         
+        // Check if POST variables are set:
         if ($problem_id != null) {
+            // Setup POST request to API:
             $browser = $this->container->get('buzz');
-
+            // Send POST to API
             $browser->post('http://192.168.33.11/problems/deleteTechnician/'.$problem_id);
-                
-        return $this->redirectToRoute('problems');
         }
         
-        return new Response($problem_id);
+        return $this->redirectToRoute('problems');
     }
     
     /**
@@ -103,11 +111,13 @@ class ProblemsController extends Controller
             return $this->redirectToRoute('loginpage');
         }
         
+        // Get technician's user id from POST variables
         $user_id = $request->getSession()->get('id');
         
-        $stuff = json_decode(file_get_contents("http://192.168.33.11/problems/technician/".$user_id));
+        // Fetch all Problems for technician
+        $fetchedProblems = json_decode(file_get_contents("http://192.168.33.11/problems/technician/".$user_id));
         
-        return $this->render('AppBundle:Problems:myproblems.html.twig', array("problems" => $stuff));
+        return $this->render('AppBundle:Problems:myproblems.html.twig', array("problems" => $fetchedProblems));
     }
     
     /**
@@ -121,16 +131,16 @@ class ProblemsController extends Controller
             return $this->redirectToRoute('loginpage');
         }
         
+        // Get technician's user id from POST variables
         $problem_id = $request->query->get('problem_id');
-        
+        // Check if problem id is set:
         if ($problem_id != null) {
+            // Setup POST request to API:
             $browser = $this->container->get('buzz');
-
+            // Send POST to API
             $browser->post('http://192.168.33.11/problems/fixProblem/'.$problem_id);
-                
-        return $this->redirectToRoute('myproblems');
         }
         
-        return new Response($problem_id);
+        return $this->redirectToRoute('myproblems');
     }
 }
