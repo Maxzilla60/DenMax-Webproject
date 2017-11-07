@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: dennis
- * Date: 12.10.17
- * Time: 11:36
+ * Date: 07.11.17
+ * Time: 15:28
  */
 
 namespace Mini\Controller;
@@ -13,23 +13,17 @@ use Mini\Dao\PDOStatusReportDAO;
 use Mini\Model\StatusReport;
 use Mini\Repository\PDOStatusReportRepository;
 use Mini\View\StatusReportJsonView;
+use PDO;
 
-class StatusreportsController
+class GuzzleStatusreportsController extends StatusreportsController
 {
-    protected $repository;
-    protected $view;
-
-    function __construct($repo = null, $view = null)
+    function __construct()
     {
-        if(!isset($repo)) {
-            $this->repository = new PDOStatusReportRepository(new PDOStatusReportDAO());
-        }
-        if(!isset($view)) {
-            $this->view = new StatusReportJsonView();
-        }
-
+        $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING);
+        $this->view = new StatusReportJsonView();
+        $this->repository = new PDOStatusReportRepository(new PDOStatusReportDAO(
+            new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_GUZZLENAME, DB_USER, DB_PASS, $options)));
     }
-
 
     /**
      * PAGE: index

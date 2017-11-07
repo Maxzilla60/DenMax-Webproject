@@ -94,6 +94,34 @@ class PDOProblemDAO extends Model
         }
     }
 
+    public function getProblemScoreFromReactions($problem_id) {
+        try {
+            $sql = "SELECT * FROM problemreactions WHERE problem_id = :problem_id";
+            $query = $this->db->prepare($sql);
+            if ($query == false) {
+                throw new \PDOException("Problem with PDOStatement");
+            }
+            $parameters = array(':problem_id' => $problem_id);
+            $query->execute($parameters);
+            $fetchedReactions = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+            $score = 0;
+            if (count($fetchedReactions) > 0) {
+                foreach ($fetchedReactions as $r) {
+                    if($r['rating'] == 0){
+                        $score--;
+                    } else {
+                        $score++;
+                    }
+                }
+            }
+
+            return $score;
+        } catch (\PDOException $exception) {
+            throw new DaoException("PDO Exception, 0, $exception");
+        }
+    }
+
     public function getProblemsByTechnician($technician_id) {
         try {
             $sql = "SELECT * FROM problems WHERE technician = :technician";

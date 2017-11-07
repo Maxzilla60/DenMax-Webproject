@@ -2,34 +2,29 @@
 /**
  * Created by PhpStorm.
  * User: dennis
- * Date: 12.10.17
- * Time: 11:36
+ * Date: 07.11.17
+ * Time: 13:58
  */
 
 namespace Mini\Controller;
 
-use Mini\Dao\DaoException;
-use Mini\Model\Location;
+
+use Mini\Dao\PDOLocationDAO;
 use Mini\Repository\PDOLocationRepository;
 use Mini\View\LocationJsonView;
-use Mini\Dao\PDOLocationDAO;
+use Mini\Dao\DaoException;
+use Mini\Model\Location;
+use PDO;
 
-class LocationsController
+class GuzzleLocationsController extends LocationsController
 {
-    protected $repository;
-    protected $view;
-
-    function __construct($repo = null, $view = null)
+    function __construct()
     {
-        if(!isset($repo)) {
-            $this->repository = new PDOLocationRepository(new PDOLocationDAO());
-        }
-        if(!isset($view)) {
-            $this->view = new LocationJsonView();
-        }
-
+        $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING);
+        $this->view = new LocationJsonView();
+        $this->repository = new PDOLocationRepository(new PDOLocationDAO(
+            new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_GUZZLENAME, DB_USER, DB_PASS, $options)));
     }
-
 
     /**
      * PAGE: index

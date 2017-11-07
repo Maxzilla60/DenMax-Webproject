@@ -24,11 +24,20 @@ class PDOProblemDAOTest extends TestCase
             technician int(11)
             )'
         );
+        $this->connection->exec(
+            'CREATE TABLE problemreactions (
+            id INTEGER PRIMARY KEY,
+            problem_id int(11),
+            rating tinyint(1),
+            description varchar(45)
+            )'
+        );
     }
 
     public function tearDown()
     {
         $this->connection->exec('DROP TABLE problems');
+        $this->connection->exec('DROP TABLE problemreactions');
         $this->connection=null;
     }
 
@@ -96,6 +105,26 @@ class PDOProblemDAOTest extends TestCase
         $problemDAO = new PDOProblemDAO($this->connection);
         $actualProblem = $problemDAO->getProblemsByTechnician($technician)[0];
         $this->assertEquals($problem, $actualProblem);
+    }
+
+    public function testGetScore_idExists_Score(){
+
+        $problem_id = 2;
+        $description = "testdescription";
+
+        for ($i = 1; $i <= 5; $i++){
+            $this->connection->exec("INSERT INTO problemreactions (id, problem_id, rating, description) 
+                                     VALUES (NULL, '$problem_id' ,1, '$description' );");
+        }
+        for ($i = 1; $i <= 2; $i++){
+            $this->connection->exec("INSERT INTO problemreactions (id, problem_id, rating, description) 
+                                     VALUES (NULL, '$problem_id' ,0, '$description' );");
+        }
+        $expectedScore = 5 - 2;
+
+        $problemDAO = new PDOProblemDAO($this->connection);
+        $actualScore = $problemDAO->getProblemScoreFromReactions($problem_id);
+        $this->assertEquals($expectedScore, $actualScore);
     }
 
     public function testAddProblem_Problem_ProblemObject(){
@@ -244,6 +273,16 @@ class PDOProblemDAOTest extends TestCase
         $this->connection->exec("DROP TABLE problems");
         $problemDAO = new PDOProblemDAO($this->connection);
         $actualProblem = $problemDAO->getProblemsById(1);
+    }
+
+    /**
+     * @expectedException Mini\Dao\DaoException
+     **/
+    public function testGetProblemReactionScore_tableProblemReactionsDoesntExist_ModelException()
+    {
+        $this->connection->exec("DROP TABLE problemreactions");
+        $problemDAO = new PDOProblemDAO($this->connection);
+        $actualProblem = $problemDAO->getProblemScoreFromReactions(1);
     }
 
     /**

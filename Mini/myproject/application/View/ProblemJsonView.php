@@ -41,4 +41,9 @@ class ProblemJsonView
             'fixed' => $problem->getFixed(),
             'technician' => $problem->getTechnician()]);
     }
+
+    public function ShowScore($score){
+        header('Content-Type: application/json');
+        echo json_encode(['score' => $score]);
+    }
 }

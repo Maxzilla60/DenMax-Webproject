@@ -167,4 +167,15 @@ class ProblemsController
         $problems = $this->repository->getProblemsByTechnician($id);
         $this->view->ShowAll($problems);
     }
+
+    /**
+     * PAGE: technician
+     * @param int $id
+     */
+    public function score($id)
+    {
+        // load views
+        $score = $this->repository->getProblemScoreFromReactions($id);
+        $this->view->ShowScore($score);
+    }
 }

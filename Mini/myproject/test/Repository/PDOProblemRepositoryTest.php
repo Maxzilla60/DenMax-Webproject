@@ -83,6 +83,19 @@ class PDOProblemRepositoryTest extends TestCase
         $this->assertEquals($problems, $actualProblems);
     }
 
+    public function testGetScore_IdExists_ProblemArray()
+    {
+        $problem_id = "2";
+        $score = 4;
+        $this->mockUserDAO->expects($this->atLeastOnce())
+            ->method('getProblemScoreFromReactions')
+            ->with($this->equalTo($problem_id))
+            ->will($this->returnValue($score));
+        $problemRepository = new PDOProblemRepository($this->mockUserDAO);
+        $actualScore = $problemRepository->getProblemScoreFromReactions($problem_id);
+        $this->assertEquals($score, $actualScore);
+    }
+
     public function testAddProblem_ProblemObject_CallsDao()
     {
         $problem = new Problem(1, 1, "desc", "10-10-2010", 1, 1);

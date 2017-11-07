@@ -57,6 +57,14 @@ class PDOProblemRepository
         $this->problemDAO->fixProblem($problem_id);
     }
 
+    public function getProblemScoreFromReactions($problem_id){
+        $problems = null;
+        if($this->isValidId($problem_id)) {
+            $problems = $this->problemDAO->getProblemScoreFromReactions($problem_id);
+        }
+        return $problems;
+    }
+
     private function isValidId($id)
     {
         if (is_string($id) && ctype_digit(trim($id))) {
