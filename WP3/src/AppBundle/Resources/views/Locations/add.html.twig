@@ -4,6 +4,12 @@
 <body>
     {{ include('default/header.html.twig') }}
     
+    <form action="/locations/add/go" method="post" style="margin-left:auto;margin-right:auto;width:50%;text-align:center">
+        <input required type="text" name="name" placeholder="Name" style="width:100%" /><br />
+        <input type="submit" value="Add Location"  style="width:100%" />
+    </form>
+    
+    
     <input required type="text" id="name" placeholder="Name" />
     <input hidden type="number" id="company_id" value={{ app.session.get('company_id') }} />
     <button onclick="doAdd()" >Add</button>

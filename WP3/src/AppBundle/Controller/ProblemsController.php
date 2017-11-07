@@ -29,6 +29,7 @@ class ProblemsController extends Controller
     *  @Route("/problems/technician", name="settechnician")
     */
     public function setTechnicianAction(Request $request) {
+        // Check for logged in user and appropriate role:
         if ($request->getSession()->get('username') == null ||
            $request->getSession()->get('role') != 1) {
             return $this->redirectToRoute('loginpage');
@@ -44,6 +45,12 @@ class ProblemsController extends Controller
     *  Method("POST")
     */
     public function setTechnicianGoAction(Request $request) {
+        // Check for logged in user and appropriate role:
+        if ($request->getSession()->get('username') == null ||
+           $request->getSession()->get('role') != 1) {
+            return $this->redirectToRoute('loginpage');
+        }        
+        
         $technician_id = $request->request->get('technician_id');
         $problem_id = $request->request->get('problem_id');
         
@@ -66,7 +73,13 @@ class ProblemsController extends Controller
     *  @Route("/problems/technician/delete")
     *  Method("POST")
     */
-    public function setTechnicianDeleteAction(Request $request) {
+    public function deleteTechnicianAction(Request $request) {
+        // Check for logged in user and appropriate role:
+        if ($request->getSession()->get('username') == null ||
+           $request->getSession()->get('role') != 1) {
+            return $this->redirectToRoute('loginpage');
+        } 
+        
         $problem_id = $request->request->get('problem_id');
         
         if ($problem_id != null) {
@@ -84,6 +97,7 @@ class ProblemsController extends Controller
     *  @Route("/myproblems", name="myproblems")
     */
     public function myProblemsAction(Request $request) {
+        // Check for logged in user and appropriate role:
         if ($request->getSession()->get('username') == null ||
            $request->getSession()->get('role') != 0) {
             return $this->redirectToRoute('loginpage');
@@ -101,6 +115,12 @@ class ProblemsController extends Controller
     *  Method("POST")
     */
     public function fixProblemAction(Request $request) {
+        // Check for logged in user and appropriate role:
+        if ($request->getSession()->get('username') == null ||
+           $request->getSession()->get('role') != 0) {
+            return $this->redirectToRoute('loginpage');
+        }
+        
         $problem_id = $request->query->get('problem_id');
         
         if ($problem_id != null) {

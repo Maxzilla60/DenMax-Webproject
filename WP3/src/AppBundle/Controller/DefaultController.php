@@ -20,23 +20,4 @@ class DefaultController extends Controller
         ]);*/
         return $this->render('default/home.html.twig');
     }
-    
-    /**
-     * @Route("/buzz", name="buzztest")
-     */
-    public function buzzAction()
-    {
-        $browser = $this->container->get('buzz');
-        
-        $json = json_encode([
-            "name" => "BuzzTest",
-            "role" => "0"
-        ]);
-        
-        $headers = ['Content-Type', 'application/json'];
-        
-        $browser->post('http://192.168.33.11/users/add', $headers, $json);
-        
-        return $this->render('default/home.html.twig');
-    }
 }

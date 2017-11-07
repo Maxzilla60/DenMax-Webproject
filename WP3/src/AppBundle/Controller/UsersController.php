@@ -13,6 +13,12 @@ class UsersController extends Controller
     *  @Route("/technicians", name="technicians")
     */
     public function techniciansAction(Request $request) {
+        // Check for logged in user and appropriate role:
+        if ($request->getSession()->get('username') == null ||
+           $request->getSession()->get('role') != 2) {
+            return $this->redirectToRoute('loginpage');
+        }
+        
         $stuff = json_decode(file_get_contents("http://192.168.33.11/users/role/0"));
         
         return $this->render('AppBundle:Users:technicians.html.twig', array("users" => $stuff));
@@ -22,6 +28,7 @@ class UsersController extends Controller
     *  @Route("/technicians/edit", name="edittechnician")
     */
     public function editTechnicianAction(Request $request) {
+        // Check for logged in user and appropriate role:
         if ($request->getSession()->get('username') == null ||
            $request->getSession()->get('role') != 2) {
             return $this->redirectToRoute('loginpage');
@@ -45,6 +52,12 @@ class UsersController extends Controller
     *  @Route("/technicians/edit/go")
     */
     public function editTechnicianGoAction(Request $request) {
+        // Check for logged in user and appropriate role:
+        if ($request->getSession()->get('username') == null ||
+           $request->getSession()->get('role') != 2) {
+            return $this->redirectToRoute('loginpage');
+        }
+        
         $username = $request->request->get('username');
         $user_id = $request->request->get('user_id');
         $role = $request->request->get('role');
@@ -69,6 +82,12 @@ class UsersController extends Controller
     *  @Route("/technicians/delete/go")
     */
     public function deleteTechnicianGoAction(Request $request) {
+        // Check for logged in user and appropriate role:
+        if ($request->getSession()->get('username') == null ||
+           $request->getSession()->get('role') != 2) {
+            return $this->redirectToRoute('loginpage');
+        }
+        
         $user_id = $request->request->get('user_id');
         
         if ($user_id != null) {
@@ -86,6 +105,12 @@ class UsersController extends Controller
     *  @Route("/technicians/add", name="addtechnician")
     */
     public function addTechnicianAction(Request $request) {
+        // Check for logged in user and appropriate role:
+        if ($request->getSession()->get('username') == null ||
+           $request->getSession()->get('role') != 2) {
+            return $this->redirectToRoute('loginpage');
+        }
+        
         if ($request->getSession()->get('username') == null ||
            $request->getSession()->get('role') != 2) {
             return $this->redirectToRoute('loginpage');
@@ -98,6 +123,12 @@ class UsersController extends Controller
     *  @Route("/technicians/add/go")
     */
     public function addTechnicianGoAction(Request $request) {
+        // Check for logged in user and appropriate role:
+        if ($request->getSession()->get('username') == null ||
+           $request->getSession()->get('role') != 2) {
+            return $this->redirectToRoute('loginpage');
+        }
+        
         $username = $request->request->get('username');
         
         if ($username != null) {
