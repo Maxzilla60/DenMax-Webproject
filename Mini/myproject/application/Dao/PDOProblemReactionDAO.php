@@ -106,11 +106,8 @@ class PDOProblemReactionDAO extends Model
             }
             $parameters = array(':problem_id' => $problemReaction->getProblemId(), ':description' => $problemReaction->getDescription(), ':rating' => $problemReaction->getRating());
 
-            http_response_code(200);
             $query->execute($parameters);
         } catch (\PDOException $exception) {
-            http_response_code(400);
-            //echo 'Exception!: ' . $e->getMessage();
             throw new DaoException("PDO Exception, 0, $exception");
         }
     }

@@ -102,11 +102,8 @@ class PDOStatusReportDAO extends Model
             }
             $parameters = array(':location_id' => $statusReport->getLocationId(), ':status' => $statusReport->getStatus(), ':date' => $statusReport->getDate());
 
-            http_response_code(200);
             $query->execute($parameters);
         } catch (\PDOException $exception) {
-            http_response_code(400);
-            //echo 'Exception!: ' . $exception->getMessage();
             throw new DaoException("PDO Exception, 0, $exception");
         }
     }

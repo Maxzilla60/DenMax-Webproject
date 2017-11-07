@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Dao\DaoException;
 use Mini\Dao\PDOStatusReportDAO;
 use Mini\Model\StatusReport;
 use Mini\Repository\PDOStatusReportRepository;
@@ -54,18 +55,27 @@ class StatusreportsController
      * PAGE: add
      */
     public function add() {
-        // JSON ophalen en decoden:
-        $input = file_get_contents('php://input');
-        $inputJSON = json_decode($input, TRUE);
+        try {
+            // JSON ophalen en decoden:
+            $input = file_get_contents('php://input');
+            $inputJSON = json_decode($input, TRUE);
 
-        // Checken of we de juiste data hebben meegekregen:
-        if (isset($inputJSON['location_id']) && isset($inputJSON['status']) && isset($inputJSON['date'])) {
-            $this->repository->addStatusReport(new StatusReport(0, $inputJSON['location_id'], $inputJSON['status'], $inputJSON['date']));
+            // Checken of we de juiste data hebben meegekregen:
+            if (isset($inputJSON['location_id']) && isset($inputJSON['status']) && isset($inputJSON['date'])) {
+                $this->repository->addStatusReport(new StatusReport(0, $inputJSON['location_id'], $inputJSON['status'], $inputJSON['date']));
+                http_response_code(200);
+            } else {
+                http_response_code(400);
+                echo 'wrong input';
+            }
+
+            // Redirect (headers)
+            header("access-control-allow-origin: *");
+            header('location: ' . URL . 'statusreports', true, 200);
+        } catch (DaoException $exception) {
+            http_response_code(400);
+            echo $exception;
         }
-
-        // Redirect (headers)
-        header("access-control-allow-origin: *");
-        header('location: ' . URL . 'statusreports', true, 200);
     }
 
     /**

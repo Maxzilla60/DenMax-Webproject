@@ -8,6 +8,7 @@
 
 namespace Mini\Controller;
 
+use Mini\Dao\DaoException;
 use Mini\Dao\PDOProblemReactionDAO;
 use Mini\Model\ProblemReaction;
 use Mini\Repository\PDOProblemReactionRepository;
@@ -53,18 +54,27 @@ class ProblemreactionsController
      * PAGE; add
      */
     public function add($problem_id) {
-        // JSON ophalen en decoden:
-        $input = file_get_contents('php://input');
-        $inputJSON = json_decode($input, TRUE);
+        try {
+            // JSON ophalen en decoden:
+            $input = file_get_contents('php://input');
+            $inputJSON = json_decode($input, TRUE);
 
-        // Checken of we de juiste data hebben meegekregen:
-        if (isset($inputJSON['description']) && isset($inputJSON['rating'])) {
-            $this->repository->addProblemReaction(new ProblemReaction(0, $problem_id, $inputJSON['rating'], $inputJSON['description']));
+            // Checken of we de juiste data hebben meegekregen:
+            if (isset($inputJSON['description']) && isset($inputJSON['rating'])) {
+                $this->repository->addProblemReaction(new ProblemReaction(0, $problem_id, $inputJSON['rating'], $inputJSON['description']));
+                http_response_code(200);
+            } else {
+                http_response_code(400);
+                echo 'wrong input';
+            }
+
+            // Redirect (headers)
+            header("access-control-allow-origin: *");
+            header('location: ' . URL . 'problemreactions/problem/' . $problem_id, true, 200);
+        } catch (DaoException $exception) {
+            http_response_code(400);
+            echo $exception;
         }
-
-        // Redirect (headers)
-        header("access-control-allow-origin: *");
-        header('location: ' . URL . 'problemreactions/problem/' . $problem_id, true, 200);
     }
 
     /**
