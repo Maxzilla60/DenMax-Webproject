@@ -41,6 +41,19 @@ class PDOProblemReactionDAOTest extends TestCase
         $this->assertEquals(5, $actualProblemReactionCount);
     }
 
+    public function testGetById_idExists_LocationObject(){
+        $id = 1;
+        $problem_id = 1;
+        $rating = 0;
+        $description = "testdesc";
+        $problemReaction = new ProblemReaction($id, $problem_id,  $rating, $description);
+        $this->connection->exec("INSERT INTO problemreactions (id, problem_id, rating, description) 
+                                     VALUES (NULL, '$problem_id' , '$rating', '$description' );");
+        $locationDAO = new PDOProblemReactionDAO($this->connection);
+        $actualProblemReaction = $locationDAO->getProblemReactionsById($id)[0];
+        $this->assertEquals($problemReaction, $actualProblemReaction);
+    }
+
     public function testGetByCompany_idExists_LocationObject(){
         $id = 1;
         $problem_id = 1;
@@ -98,6 +111,16 @@ class PDOProblemReactionDAOTest extends TestCase
      * @expectedException Mini\Dao\DaoException
      **/
     public function testGetById_tableLocationsDoesntExist_ModelException()
+    {
+        $this->connection->exec("DROP TABLE problemreactions");
+        $locationDAO = new PDOProblemReactionDAO($this->connection);
+        $actualLocation = $locationDAO->getProblemReactionsById(1);
+    }
+
+    /**
+     * @expectedException Mini\Dao\DaoException
+     **/
+    public function testGetByProblemId_tableLocationsDoesntExist_ModelException()
     {
         $this->connection->exec("DROP TABLE problemreactions");
         $locationDAO = new PDOProblemReactionDAO($this->connection);

@@ -39,6 +39,28 @@ class PDOUserDAOTest extends TestCase
         $this->assertEquals(5, $actualUserCount);
     }
 
+    public function testGetById_idExists_RoleObject(){
+        $id = 1;
+        $name = "testname";
+        $role = 1;
+        $location = new User($id, $name, $role);
+        $this->connection->exec("INSERT INTO users (id, name, role) VALUES (NULL,'$name', '$role');");
+        $locationDAO = new PDOUserDAO($this->connection);
+        $actualLocation = $locationDAO->getUsersById($id)[0];
+        $this->assertEquals($location, $actualLocation);
+    }
+
+    public function testGetByUsername_idExists_RoleObject(){
+        $id = 1;
+        $name = "testname";
+        $role = 1;
+        $location = new User($id, $name, $role);
+        $this->connection->exec("INSERT INTO users (id, name, role) VALUES (NULL,'$name', '$role');");
+        $locationDAO = new PDOUserDAO($this->connection);
+        $actualLocation = $locationDAO->getUserByUsername($name)[0];
+        $this->assertEquals($location, $actualLocation);
+    }
+
     public function testGetByRole_idExists_RoleObject(){
         $id = 1;
         $name = "testname";
@@ -151,6 +173,26 @@ class PDOUserDAOTest extends TestCase
         $this->connection->exec("DROP TABLE users");
         $userDAO = new PDOUserDAO($this->connection);
         $actualusers = $userDAO->getUsersByRole(0);
+    }
+
+    /**
+     * @expectedException Mini\Dao\DaoException
+     **/
+    public function testGetById_tableUsersDoesntExist_ModelException()
+    {
+        $this->connection->exec("DROP TABLE users");
+        $userDAO = new PDOUserDAO($this->connection);
+        $actualusers = $userDAO->getUsersById(0);
+    }
+
+    /**
+     * @expectedException Mini\Dao\DaoException
+     **/
+    public function testGetByUserName_tableUsersDoesntExist_ModelException()
+    {
+        $this->connection->exec("DROP TABLE users");
+        $userDAO = new PDOUserDAO($this->connection);
+        $actualusers = $userDAO->getUserByUsername("test");
     }
 
     /**

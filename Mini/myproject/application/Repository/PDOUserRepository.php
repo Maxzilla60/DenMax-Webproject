@@ -27,7 +27,10 @@ class PDOUserRepository extends Model
     }
 
     public function getUsersById($id) {
-        $users = $this->userDAO->getUsersById($id);
+        $users = null;
+        if($this->isValidId($id)) {
+            $users = $this->userDAO->getUsersById($id);
+        }
         return $users;
     }
 

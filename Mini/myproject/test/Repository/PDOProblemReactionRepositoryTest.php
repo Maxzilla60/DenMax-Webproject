@@ -40,6 +40,19 @@ class PDOProblemReactionRepositoryTest extends TestCase
         $this->assertEquals($problemReactions, $actualReactions);
     }
 
+    public function testFindProblemReactionById_idExists_ProblemReactionObject()
+    {
+        $id = "1";
+        $problemReaction = new ProblemReaction($id, 1, 1, "desc");
+        $this->mockUserDAO->expects($this->atLeastOnce())
+            ->method('getProblemReactionsById')
+            ->with($this->equalTo($id))
+            ->will($this->returnValue($problemReaction));
+        $locationRepository = new PDOProblemReactionRepository($this->mockUserDAO);
+        $actualLocation = $locationRepository->getProblemReactionsById($id);
+        $this->assertEquals($problemReaction, $actualLocation);
+    }
+
     public function testAddProblemReaction_ProblemReactionObject_CallsDao()
     {
         $problemReaction = new ProblemReaction(1, 1, 1, "desc");

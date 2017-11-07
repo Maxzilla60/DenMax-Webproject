@@ -64,6 +64,23 @@ class PDOProblemDAOTest extends TestCase
         $this->assertEquals($problem, $actualProblem);
     }
 
+    public function testGetById_idExists_ProblemObject(){
+        $id = 1;
+        $location_id = 1;
+        $description = "testdescription";
+        $date = new DateTime();
+        $dateString = $date->format("YYYY-MM-DD");
+        $fixed = 1;
+        $technician = 1;
+        $problem = new Problem($id, $location_id, $description, $dateString, $fixed, $technician);
+        $this->connection->exec("INSERT INTO problems 
+                (id, location_id, description, date, fixed, technician) VALUES 
+                ('$id','$location_id', '$description' , '$dateString', '$fixed', '$technician');");
+        $problemDAO = new PDOProblemDAO($this->connection);
+        $actualProblem = $problemDAO->getProblemsById($id)[0];
+        $this->assertEquals($problem, $actualProblem);
+    }
+
     public function testGetByTechnician_idExists_ProblemObject(){
         $id = 1;
         $location_id = 1;
@@ -217,6 +234,16 @@ class PDOProblemDAOTest extends TestCase
         $this->connection->exec("DROP TABLE problems");
         $problemDAO = new PDOProblemDAO($this->connection);
         $actualProblem = $problemDAO->getProblemsByTechnician(1);
+    }
+
+    /**
+     * @expectedException Mini\Dao\DaoException
+     **/
+    public function testGetById_tableProblemsDoesntExist_ModelException()
+    {
+        $this->connection->exec("DROP TABLE problems");
+        $problemDAO = new PDOProblemDAO($this->connection);
+        $actualProblem = $problemDAO->getProblemsById(1);
     }
 
     /**

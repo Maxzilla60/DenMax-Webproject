@@ -44,6 +44,20 @@ class PDOStatusReportDAOTest extends TestCase
         $this->assertEquals(5, $actualStatusReportCount);
     }
 
+    public function testGetById_idExists_StatusReportObject(){
+        $id = 1;
+        $status = 3;
+        $date = new DateTime();
+        $dateString = $date->format("YYYY-MM-DD");
+        $location = 1;
+        $statusReport = new StatusReport($id, $location, $status, $dateString);
+        $this->connection->exec("INSERT INTO statusreports (id, status, date, location_id) 
+                                 VALUES (NULL,'$status', '$dateString', '$location');");
+        $statusReportDAO = new PDOStatusReportDAO($this->connection);
+        $actualStatusReport = $statusReportDAO->getStatusReportsById($id)[0];
+        $this->assertEquals($statusReport, $actualStatusReport);
+    }
+
     public function testGetByLocation_idExists_StatusReportObject(){
         $status = 3;
         $date = new DateTime();
@@ -95,6 +109,16 @@ class PDOStatusReportDAOTest extends TestCase
         $this->connection->exec("DROP TABLE statusreports");
         $locationDAO = new PDOStatusReportDAO($this->connection);
         $actualLocation = $locationDAO->getAllStatusReports(0);
+    }
+
+    /**
+     * @expectedException Mini\Dao\DaoException
+     **/
+    public function testGetById_tableStatusReportsDoesntExist_ModelException()
+    {
+        $this->connection->exec("DROP TABLE statusreports");
+        $locationDAO = new PDOStatusReportDAO($this->connection);
+        $actualLocation = $locationDAO->getStatusReportsById(0);
     }
 
     /**

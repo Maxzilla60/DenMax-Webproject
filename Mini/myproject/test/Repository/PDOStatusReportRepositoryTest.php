@@ -38,6 +38,19 @@ class PDOStatusReportRepositoryTest extends TestCase
         $this->assertEquals($statusReports, $actualStatusReports);
     }
 
+    public function testGetById_IdExists_StatusReportArray()
+    {
+        $id = "2";
+        $statusReport = new StatusReport($id, 1, "desc", "10-10-2010");
+        $this->mockUserDAO->expects($this->atLeastOnce())
+            ->method('getStatusReportsById')
+            ->with($this->equalTo($id))
+            ->will($this->returnValue($statusReport));
+        $statusReportRepository = new PDOStatusReportRepository($this->mockUserDAO);
+        $actualStatusReports = $statusReportRepository->getStatusReportsById($id);
+        $this->assertEquals($statusReport, $actualStatusReports);
+    }
+
     public function testGetByLocation_IdExists_StatusReportArray()
     {
         $location_id = "2";

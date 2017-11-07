@@ -24,6 +24,21 @@ class PDOLocationRepositoryTest extends TestCase
         $this->mockUserDAO = null;
     }
 
+    public function testFindLocationById_idExists_LocationObject()
+    {
+        $id = "1";
+        $name= 'testname';
+        $company_id = 1;
+        $location = new Location($id, $name, $company_id);
+        $this->mockUserDAO->expects($this->atLeastOnce())
+            ->method('getLocationsById')
+            ->with($this->equalTo($id))
+            ->will($this->returnValue($location));
+        $locationRepository = new PDOLocationRepository($this->mockUserDAO);
+        $actualLocation = $locationRepository->getLocationsById($id);
+        $this->assertEquals($location, $actualLocation);
+    }
+
     public function testFindLocationByCompany_idExists_LocationObject()
     {
         $id = "1";
@@ -32,10 +47,10 @@ class PDOLocationRepositoryTest extends TestCase
         $location = new Location($id, $name, $company_id);
         $this->mockUserDAO->expects($this->atLeastOnce())
             ->method('getLocationsByCompany')
-            ->with($this->equalTo($id))
+            ->with($this->equalTo($company_id))
             ->will($this->returnValue($location));
         $locationRepository = new PDOLocationRepository($this->mockUserDAO);
-        $actualLocation = $locationRepository->getLocationsByCompany($id);
+        $actualLocation = $locationRepository->getLocationsByCompany($company_id);
         $this->assertEquals($location, $actualLocation);
     }
 

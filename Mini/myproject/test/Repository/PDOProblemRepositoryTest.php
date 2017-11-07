@@ -38,6 +38,19 @@ class PDOProblemRepositoryTest extends TestCase
         $this->assertEquals($problems, $actualProblems);
     }
 
+    public function testGetById_IdExists_ProblemArray()
+    {
+        $id = 1;
+        $problem = new Problem($id, 1, "desc", "10-10-2010", 1, 1);
+        $this->mockUserDAO->expects($this->atLeastOnce())
+            ->method('getProblemsById')
+            ->with($this->equalTo($id))
+            ->will($this->returnValue($problem));
+        $problemRepository = new PDOProblemRepository($this->mockUserDAO);
+        $actualProblems = $problemRepository->getProblemsById($id);
+        $this->assertEquals($problem, $actualProblems);
+    }
+
     public function testGetByLocation_IdExists_ProblemArray()
     {
         $location_id = "2";
@@ -86,7 +99,7 @@ class PDOProblemRepositoryTest extends TestCase
         $technician = 2;
         $this->mockUserDAO->expects($this->atLeastOnce())
             ->method('updateTechnician')
-            ->with($this->equalTo($id, $technician));
+            ->with($this->equalTo($id), $this->equalTo($technician));
         $problemRepository = new PDOProblemRepository($this->mockUserDAO);
         $problemRepository->updateTechnician($id, $technician);
     }
