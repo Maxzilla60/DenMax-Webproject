@@ -39,6 +39,17 @@ class PDOLocationDAOTest extends TestCase
         $this->assertEquals(5, $actualLocationCount);
     }
 
+    public function testGetById_idExists_LocationObject(){
+        $id = 1;
+        $name = "testname";
+        $company_id = 1;
+        $location = new Location($id, $name, $company_id);
+        $this->connection->exec("INSERT INTO locations (id, name, company_id) VALUES (NULL,'$name', 1);");
+        $locationDAO = new PDOLocationDAO($this->connection);
+        $actualLocation = $locationDAO->getLocationsById($id)[0];
+        $this->assertEquals($location, $actualLocation);
+    }
+
     public function testGetByCompany_idExists_LocationObject(){
         $id = 1;
         $name = "testname";
@@ -95,6 +106,16 @@ class PDOLocationDAOTest extends TestCase
         $this->connection->exec("DROP TABLE locations");
         $locationDAO = new PDOLocationDAO($this->connection);
         $actualLocation = $locationDAO->getLocationsByCompany(0);
+    }
+
+    /**
+     * @expectedException Mini\Dao\DaoException
+     **/
+    public function testGetById_tableLocationsDoesntExist_ModelException()
+    {
+        $this->connection->exec("DROP TABLE locations");
+        $locationDAO = new PDOLocationDAO($this->connection);
+        $actualLocation = $locationDAO->getLocationsById(1);
     }
 
     /**
