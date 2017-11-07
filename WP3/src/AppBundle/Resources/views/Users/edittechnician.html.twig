@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Technicians | Edit</title></head>
+<body>
+    {{ include('default/header.html.twig') }}
+    
+    <form action="/technicians/edit/go" method="post" style="margin-left:auto;margin-right:auto;width:50%;text-align:center">
+        USER ID: {{ user_id }}<br />
+        <input hidden type="number" name="user_id" value={{ user_id }} />
+        <input required type="text" name="username" value={{ username }} placeholder="Username" style="width:100%" /><br />
+        <input required type="number" name="role" placeholder="Role" min="0" max="2" value={{ role }} style="width:100%" />
+        <input type="submit" value="Edit Technician"  style="width:100%" />
+    </form>
+    <form action="/technicians/delete/go" method="post" style="margin-left:auto;margin-right:auto;width:50%">
+        <input hidden type="number" name="user_id" value={{ user_id }} />    
+        <input type="submit" value="Delete Technician" style="width:100%" />
+    </form>
+</body>
+</html>

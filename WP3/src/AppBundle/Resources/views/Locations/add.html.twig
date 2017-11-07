@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Locations | Add</title></head>
+<body>
+    {{ include('default/header.html.twig') }}
+    
+    <input required type="text" id="name" placeholder="Name" />
+    <input hidden type="number" id="company_id" value={{ app.session.get('company_id') }} />
+    <button onclick="doAdd()" >Add</button>
+    
+    <script>
+        function doAdd() {
+            var postjson = {
+                name: document.getElementById("name").value,
+                company_id: document.getElementById("company_id").value
+            };
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://192.168.33.11/locations/add', true);
+            xhr.setRequestHeader("Content-type", "application/json");
+
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    window.location = "/locations";
+                }
+            }
+            
+            xhr.send(JSON.stringify(postjson));
+        }
+    </script>
+</body>
+</html>

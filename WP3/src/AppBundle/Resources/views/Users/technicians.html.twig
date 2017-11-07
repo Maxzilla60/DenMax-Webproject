@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Technicians</title></head>
+<body>
+    {{ include('default/header.html.twig') }}
+    
+    <div style="border-bottom: solid 1px black; margin-bottom: 5px; padding-bottom: 5px">
+        <a href={{ url('addtechnician') }}>
+            <button>New Technician</button>
+        </a>
+    </div>
+    
+    {% if users %}
+        <table style="width: 100%; text-align: center">
+            <tr>
+                <th>ID</th>
+                <th>USERNAME</th>
+                <th>EDIT</th>
+            </tr>
+            {% for u in users %}
+                <tr>
+                    <td>{{u.id}}</td>
+                    <td>{{u.name}}</td>                    
+                    <td><a href={{ path('edittechnician', {'username': u.name}) }}><button>EDIT</button></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %} Oops, no users found!
+    {% endif %}
+</body>
+</html>

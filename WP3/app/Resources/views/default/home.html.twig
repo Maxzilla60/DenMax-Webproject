@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Home</title></head>
+<body>
+    {{ include('default/header.html.twig') }}
+
+    {% if app.session.get('username') != null %}
+        <h1 style="text-align: center">Hello, {{ app.session.get('username') }}!</h1>
+        <div style="text-align: center">
+            My Role:
+            {% if app.session.get('role') is same as("0") %} Technician
+            {% elseif app.session.get('role') is same as("1") %} Work Manager
+            {% elseif app.session.get('role') is same as("2") %} Admin
+            {% endif %}<br />
+            
+            My Company: {{ app.session.get('company') ? app.session.get('company') : "N/A" }}<br />
+        </div>
+    {% else %}
+        <h1 style="text-align: center">Hi!</h1>
+    {% endif %}
+</body>
+</html>

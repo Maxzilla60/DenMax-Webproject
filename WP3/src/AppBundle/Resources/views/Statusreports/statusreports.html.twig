@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Status Reports</title></head>
+<body>
+    {{ include('default/header.html.twig') }}
+    
+    <div style="border-bottom: solid 1px black; margin-bottom: 5px; padding-bottom: 5px">
+        <form method="post">
+            <input type="number" placeholder="Search by Location" name="location_id" value={{ search }} />
+            <input type="submit" value="Search" />
+        </form>
+    </div>
+    
+    {% if statusreports %}
+        <table style="width: 100%; text-align: center">
+            <tr>
+                <th>ID</th>
+                <th>LOCATION ID</th>
+                <th>STATUS</th>
+                <th>DATE</th>
+            </tr>
+            {% for s in statusreports %}
+                <tr>
+                    <td>{{s.id}}</td>
+                    <td>{{s.location_id}}</td>
+
+                    {% if s.status == 0 %} <td style="color:green">GOOD</td>
+                    {% elseif s.status == 1 %} <td style="color:orange">AVARAGE</td>
+                    {% elseif s.status == 2 %} <td style="color:red">BAD</td>
+                    {% endif %}
+                    
+                    <td>{{s.date}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %} Oops, no statusreports found!
+    {% endif %}
+</body>
+</html>

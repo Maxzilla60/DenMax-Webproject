@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Technicians | New</title></head>
+<body>
+    {{ include('default/header.html.twig') }}
+    
+    <form action="/technicians/add/go" method="post" style="margin-left:auto;margin-right:auto;width:50%;text-align:center">
+        <input required type="text" name="username" placeholder="Username" style="width:100%" /><br />
+        <input type="submit" value="Add Technician"  style="width:100%" />
+    </form>
+</body>
+</html>
