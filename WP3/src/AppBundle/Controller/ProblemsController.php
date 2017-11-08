@@ -7,8 +7,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use AppBundle\Repository\ProblemsRepo;
+
 class ProblemsController extends Controller
 {
+    private $repo;
+    
+    function __construct($repo = null)
+    {
+        if(!isset($repo)) {
+            $this->repo = new ProblemsRepo();
+        }
+    }
+    
     /**
     *  @Route("/problems", name="problems")
     */
@@ -18,11 +29,11 @@ class ProblemsController extends Controller
         
         // Fetch Problems from API:
         if ($location_id == null) {
-            $fetchedProblems = json_decode(file_get_contents("http://192.168.33.11/problems"));
+            $fetchedProblems = $this->repo->getAllProblems();
         }
         // Search by location:
         else {
-            $fetchedProblems = json_decode(file_get_contents("http://192.168.33.11/problems/location/".$location_id));
+            $fetchedProblems = $this->repo->getProblemsByLocation($location_id);
         }
         
         return $this->render('AppBundle:Problems:problems.html.twig', array("problems" => $fetchedProblems, "search" => $location_id));
@@ -61,16 +72,9 @@ class ProblemsController extends Controller
         
         // Check if POST variables are set:
         if ($technician_id != null && $problem_id != null) {
-            // Setup POST request to API:
-            $browser = $this->container->get('buzz');
-            // Build JSON payload:
-            $json = json_encode([
-                "technician" => $technician_id
-            ]);
-            // Set request header
-            $headers = ['Content-Type', 'application/json'];
-            // Send POST to API
-            $browser->post('http://192.168.33.11/problems/updateTechnician/'.$problem_id, $headers, $json);
+            // Send POST to API:
+            $this->repo->setBuzz($this->container->get('buzz'));
+            $this->repo->updateTechnicianForProblem($technician_id, $problem_id);
         }
         
         return $this->redirectToRoute('problems');
@@ -92,10 +96,9 @@ class ProblemsController extends Controller
         
         // Check if POST variables are set:
         if ($problem_id != null) {
-            // Setup POST request to API:
-            $browser = $this->container->get('buzz');
-            // Send POST to API
-            $browser->post('http://192.168.33.11/problems/deleteTechnician/'.$problem_id);
+            // Send POST to API:
+            $this->repo->setBuzz($this->container->get('buzz'));
+            $this->repo->deleteTechnicianFromProblem($problem_id);
         }
         
         return $this->redirectToRoute('problems');
@@ -115,7 +118,7 @@ class ProblemsController extends Controller
         $user_id = $request->getSession()->get('id');
         
         // Fetch all Problems for technician
-        $fetchedProblems = json_decode(file_get_contents("http://192.168.33.11/problems/technician/".$user_id));
+        $fetchedProblems = $this->repo->getProblemsByTechnician($user_id);
         
         return $this->render('AppBundle:Problems:myproblems.html.twig', array("problems" => $fetchedProblems));
     }
@@ -135,10 +138,9 @@ class ProblemsController extends Controller
         $problem_id = $request->query->get('problem_id');
         // Check if problem id is set:
         if ($problem_id != null) {
-            // Setup POST request to API:
-            $browser = $this->container->get('buzz');
-            // Send POST to API
-            $browser->post('http://192.168.33.11/problems/fixProblem/'.$problem_id);
+            // Send POST to API:
+            $this->repo->setBuzz($this->container->get('buzz'));
+            $this->repo->fixProblem($problem_id);
         }
         
         return $this->redirectToRoute('myproblems');

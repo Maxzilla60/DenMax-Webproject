@@ -13,7 +13,7 @@
             {% elseif app.session.get('role') is same as("2") %} Admin
             {% endif %}<br />
             
-            My Company: {{ app.session.get('company') ? app.session.get('company') : "N/A" }}<br />
+            {# My Company: {{ app.session.get('company') ? app.session.get('company') : "N/A" }}<br />#}
         </div>
     {% else %}
         <h1 style="text-align: center">Hi!</h1>

@@ -7,8 +7,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use AppBundle\Repository\UsersRepo;
+
 class UsersController extends Controller
 {
+    private $repo;
+    
+    function __construct($repo = null)
+    {
+        if(!isset($repo)) {
+            $this->repo = new UsersRepo();
+        }
+    }
+
     /**
     *  @Route("/technicians", name="technicians")
     */
@@ -20,7 +31,7 @@ class UsersController extends Controller
         }
         
         // Fetch all technicians from API
-        $fetchedTechnicians = json_decode(file_get_contents("http://192.168.33.11/users/role/0"));
+        $fetchedTechnicians = $this->repo->getUsersByRole(0);
         
         return $this->render('AppBundle:Users:technicians.html.twig', array("users" => $fetchedTechnicians));
     }
@@ -39,7 +50,7 @@ class UsersController extends Controller
         $username = $request->query->get('username');
         
         // Fetch user data
-        $fetchedUsers = json_decode(file_get_contents("http://192.168.33.11/users/username/".$username));
+        $fetchedUsers = $this->repo->getUserByUsername($username);
         // Check if user exists:
         if (count($fetchedUsers) < 1) {
             return $this->redirectToRoute('technicians');
@@ -67,17 +78,9 @@ class UsersController extends Controller
         
         // Check if POST variables are set:
         if ($username != null && $user_id != null && $role != null) {
-            // Setup POST request to API:
-            $browser = $this->container->get('buzz');
-            // Build JSON payload:
-            $json = json_encode([
-                "name" => $username,
-                "role" => "0"
-            ]);
-            // Set request headers
-            $headers = ['Content-Type', 'application/json'];
-            // Send POST to API
-            $browser->post('http://192.168.33.11/users/update/'.$user_id, $headers, $json);
+            // Send POST to API:
+            $this->repo->setBuzz($this->container->get('buzz'));
+            $this->repo->updateTechnician($user_id, $username);
         }
         
         return $this->redirectToRoute('technicians');
@@ -96,10 +99,9 @@ class UsersController extends Controller
         $user_id = $request->request->get('user_id');
         // Check if user id is set:
         if ($user_id != null) {
-            // Setup POST request to API:
-            $browser = $this->container->get('buzz');
-            // Send POST to API
-            $browser->post('http://192.168.33.11/users/delete/'.$user_id);
+            // Send POST to API:
+            $this->repo->setBuzz($this->container->get('buzz'));
+            $this->repo->deleteUser($user_id);
         }
         
         return $this->redirectToRoute('technicians');
@@ -132,17 +134,9 @@ class UsersController extends Controller
         $username = $request->request->get('username');
         // Check if username is set:
         if ($username != null) {
-            // Setup POST request to API:
-            $browser = $this->container->get('buzz');
-            // Build JSON payload:
-            $json = json_encode([
-                "name" => $username,
-                "role" => "0"
-            ]);
-            // Set request headers
-            $headers = ['Content-Type', 'application/json'];
-            // Send POST to API
-            $browser->post('http://192.168.33.11/users/add/', $headers, $json);
+            // Send POST to API:
+            $this->repo->setBuzz($this->container->get('buzz'));
+            $this->repo->addTechnician($username);
         }
         
         return $this->redirectToRoute('technicians');

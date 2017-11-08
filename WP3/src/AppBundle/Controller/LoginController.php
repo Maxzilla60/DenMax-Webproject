@@ -8,8 +8,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 
+use AppBundle\Repository\UsersRepo;
+
 class LoginController extends Controller
 {
+    private $repo;
+    
+    function __construct($repo = null)
+    {
+        if(!isset($repo)) {
+            $this->repo = new UsersRepo();
+        }
+    }
+
     /**
     *  @Route("/login", name="loginpage")
     */
@@ -34,7 +45,7 @@ class LoginController extends Controller
         }
         
         // Fetch user from API
-        $fetchedUsers = json_decode(file_get_contents("http://192.168.33.11/users/username/".$username));
+        $fetchedUsers = $this->repo->getUserByUsername($username);
         // Check if user exists:
         if (count($fetchedUsers) < 1) {
             return $this->redirectToRoute('loginpage');
@@ -46,7 +57,7 @@ class LoginController extends Controller
         $session->set('role', $fetchedUsers[0]->role);
         $session->set('id', $fetchedUsers[0]->id);
         
-        // Fetch user's company from API
+        /*// Fetch user's company from API
         $fetchedCompanies = json_decode(file_get_contents("http://192.168.33.11/companies/user/".$fetchedUsers[0]->id));
         // Check if user has a company and set session cookies:
         if (count($fetchedCompanies) < 1) {
@@ -56,7 +67,7 @@ class LoginController extends Controller
         else {
             $session->set('company', $fetchedCompanies[0]->name);
             $session->set('company_id', $fetchedCompanies[0]->id);
-        }
+        }*/
 
         return $this->redirectToRoute('home');
     }
