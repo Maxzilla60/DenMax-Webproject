@@ -75,12 +75,14 @@ class UsersController extends Controller
         $username = $request->request->get('username');
         $user_id = $request->request->get('user_id');
         $role = $request->request->get('role');
+
+        //return new Response($user_id." | ".$username." | ".$role);
         
         // Check if POST variables are set:
         if ($username != null && $user_id != null && $role != null) {
             // Send POST to API:
             $this->repo->setBuzz($this->container->get('buzz'));
-            $this->repo->updateTechnician($user_id, $username);
+            $this->repo->updateTechnician($user_id, $username, $role);
         }
         
         return $this->redirectToRoute('technicians');

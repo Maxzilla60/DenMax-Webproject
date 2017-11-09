@@ -51,8 +51,11 @@ class ProblemsController extends Controller
         
         // Get problem id from POST variables
         $problem_id = $request->query->get('problem_id');
+
+        // Fetch all Technicians from API
+        $technicians = $this->repo->getUsersByRole(0);
         
-        return $this->render('AppBundle:Problems:settechnician.html.twig', array("problem_id" => $problem_id));
+        return $this->render('AppBundle:Problems:settechnician.html.twig', array("problem_id" => $problem_id, "technicians" => $technicians));
     }
     
     /**

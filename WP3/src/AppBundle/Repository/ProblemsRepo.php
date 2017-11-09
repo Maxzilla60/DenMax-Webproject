@@ -21,6 +21,10 @@ class ProblemsRepo {
     	return json_decode(file_get_contents("http://192.168.33.11/problems/technician/".$technician_id));
     }
 
+    public function getUsersByRole($role) {
+        return json_decode(file_get_contents("http://192.168.33.11/users/role/".$role));
+    }
+
     public function updateTechnicianForProblem($technician_id, $problem_id) {
         // Build JSON payload:
         $json = json_encode([

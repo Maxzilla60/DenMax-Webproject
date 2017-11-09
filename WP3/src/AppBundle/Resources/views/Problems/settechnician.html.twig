@@ -10,7 +10,12 @@
     <form action="/problems/technician/go" method="post" style="margin-left:auto;margin-right:auto;width:50%;text-align:center">
         PROBLEM ID: {{ problem_id }}<br />
         <input hidden type="number" name="problem_id" value={{ problem_id }} />
-        <input type="number" name="technician_id" placeholder="Technician ID" style="width:100%" /><br />
+        <!--<input type="number" name="technician_id" placeholder="Technician ID" style="width:100%" /><br />-->
+        <select name="technician_id" style="width:100%">
+            {% for t in technicians %}
+                <option value={{ t.id }} selected>{{ t.name }}</option>
+            {% endfor %}
+        </select>
         <input type="submit" value="Set Technician"  style="width:100%" />
     </form>
     <form action="/problems/technician/delete" method="post" style="margin-left:auto;margin-right:auto;width:50%">

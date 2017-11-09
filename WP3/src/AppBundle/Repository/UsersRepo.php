@@ -17,11 +17,11 @@ class UsersRepo {
     	return json_decode(file_get_contents("http://192.168.33.11/users/role/".$role));
     }
 
-    public function updateTechnician($user_id, $username) {
+    public function updateTechnician($user_id, $username, $role) {
 		// Build JSON payload:
 		$json = json_encode([
 		    "name" => $username,
-		    "role" => "0"
+		    "role" => $role
 		]);
 		// Set request headers
 		$headers = ['Content-Type', 'application/json'];

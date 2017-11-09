@@ -11,7 +11,11 @@
         USER ID: {{ user_id }}<br />
         <input hidden type="number" name="user_id" value={{ user_id }} />
         <input required type="text" name="username" value={{ username }} placeholder="Username" style="width:100%" /><br />
-        <input required type="number" name="role" placeholder="Role" min="0" max="2" value={{ role }} style="width:100%" />
+        <select name="role" style="width:100%">
+            <option value="0" selected>Technician</option>
+            <option value="1">Work Manager</option>
+            <option value="2">Admin</option>
+        </select>
         <input type="submit" value="Edit Technician"  style="width:100%" />
     </form>
     <form action="/technicians/delete/go" method="post" style="margin-left:auto;margin-right:auto;width:50%">
