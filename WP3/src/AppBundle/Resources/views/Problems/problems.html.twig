@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>Problems</title></head>
+<head>
+    <meta charset="utf-8"><title>Problems</title>
+    {{ include('default/style.html.twig') }}
+</head>
 <body>
     {{ include('default/header.html.twig') }}
     
@@ -12,12 +15,12 @@
     </div>
     
     {% if problems %}
-        <table style="width: 100%; text-align: center">
+        <table class="responsive_table">
             <tr>
                 <th>ID</th>
-                <th>DESCRIPTION</th>
                 <th>LOCATION ID</th>
-                <th>DATE</th>
+                <th>DESCRIPTION</th>
+                <th class="responsive_hide">DATE</th>
                 <th>FIXED</th>
                 {% if app.session.get('role') == 1 %}
                     <th>TECHNICIAN</th>
@@ -26,9 +29,9 @@
             {% for p in problems %}
                 <tr>
                     <td>{{p.id}}</td>
-                    <td>{{p.description}}</td>
                     <td>{{p.location_id}}</td>
-                    <td>{{p.date}}</td>
+                    <td>{{p.description}}</td>
+                    <td class="responsive_hide">{{p.date}}</td>
                     
                     {% if p.fixed == 1 %}
                         <td style="background:green;color:white">YES</td>

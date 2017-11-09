@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>Status Reports</title></head>
+<head>
+    <meta charset="utf-8"><title>Status Reports</title>
+    {{ include('default/style.html.twig') }}
+</head>
 <body>
     {{ include('default/header.html.twig') }}
     
@@ -18,7 +21,7 @@
     </div>
     
     {% if statusreports %}
-        <table style="width: 100%; text-align: center">
+        <table class="responsive_table">
             <tr>
                 <th>ID</th>
                 <th>LOCATION ID</th>
