@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,6 +39,7 @@ class UsersController extends Controller
     
     /**
     *  @Route("/technicians/edit", name="edittechnician")
+    *  @Method({"GET"})
     */
     public function editTechnicianAction(Request $request) {
         // Check for logged in user and appropriate role:
@@ -62,7 +64,8 @@ class UsersController extends Controller
     }
     
     /**
-    *  @Route("/technicians/edit/go")
+    *  @Route("/technicians/edit")
+    *  @Method({"POST"})
     */
     public function editTechnicianGoAction(Request $request) {
         // Check for logged in user and appropriate role:
@@ -75,8 +78,6 @@ class UsersController extends Controller
         $username = $request->request->get('username');
         $user_id = $request->request->get('user_id');
         $role = $request->request->get('role');
-
-        //return new Response($user_id." | ".$username." | ".$role);
         
         // Check if POST variables are set:
         if ($username != null && $user_id != null && $role != null) {
@@ -89,7 +90,7 @@ class UsersController extends Controller
     }
     
     /**
-    *  @Route("/technicians/delete/go")
+    *  @Route("/technicians/delete")
     */
     public function deleteTechnicianGoAction(Request $request) {
         // Check for logged in user and appropriate role:
@@ -111,6 +112,7 @@ class UsersController extends Controller
     
     /**
     *  @Route("/technicians/add", name="addtechnician")
+    *  @Method({"GET"})
     */
     public function addTechnicianAction(Request $request) {
         // Check for logged in user and appropriate role:
@@ -123,7 +125,8 @@ class UsersController extends Controller
     }
     
     /**
-    *  @Route("/technicians/add/go")
+    *  @Route("/technicians/add")
+    *  @Method({"POST"})
     */
     public function addTechnicianGoAction(Request $request) {
         // Check for logged in user and appropriate role:

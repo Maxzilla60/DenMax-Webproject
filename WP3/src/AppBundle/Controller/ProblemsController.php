@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -41,6 +42,7 @@ class ProblemsController extends Controller
     
     /**
     *  @Route("/problems/technician", name="settechnician")
+    *  @Method({"GET"})
     */
     public function setTechnicianAction(Request $request) {
         // Check for logged in user and appropriate role:
@@ -52,6 +54,10 @@ class ProblemsController extends Controller
         // Get problem id from POST variables
         $problem_id = $request->query->get('problem_id');
 
+        if ($problem_id == null) {
+            return $this->redirectToRoute('problems');
+        }
+
         // Fetch all Technicians from API
         $technicians = $this->repo->getUsersByRole(0);
         
@@ -59,8 +65,8 @@ class ProblemsController extends Controller
     }
     
     /**
-    *  @Route("/problems/technician/go")
-    *  Method("POST")
+    *  @Route("/problems/technician")
+    *  @Method({"POST"})
     */
     public function setTechnicianGoAction(Request $request) {
         // Check for logged in user and appropriate role:
@@ -85,7 +91,7 @@ class ProblemsController extends Controller
     
     /**
     *  @Route("/problems/technician/delete")
-    *  Method("POST")
+    *  @Method({"POST"})
     */
     public function deleteTechnicianAction(Request $request) {
         // Check for logged in user and appropriate role:
@@ -96,6 +102,10 @@ class ProblemsController extends Controller
         
         // Get problem id from POST variables
         $problem_id = $request->request->get('problem_id');
+
+        if ($problem_id == null) {
+            return $this->redirectToRoute('problems');
+        }
         
         // Check if POST variables are set:
         if ($problem_id != null) {
@@ -128,7 +138,7 @@ class ProblemsController extends Controller
     
     /**
     *  @Route("/myproblems/fix", name="fixproblem")
-    *  Method("POST")
+    *  @Method({"GET"})
     */
     public function fixProblemAction(Request $request) {
         // Check for logged in user and appropriate role:
@@ -139,6 +149,11 @@ class ProblemsController extends Controller
         
         // Get technician's user id from POST variables
         $problem_id = $request->query->get('problem_id');
+
+        if ($problem_id == null) {
+            return $this->redirectToRoute('myproblems');
+        }
+
         // Check if problem id is set:
         if ($problem_id != null) {
             // Send POST to API:

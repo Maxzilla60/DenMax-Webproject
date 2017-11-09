@@ -33,21 +33,5 @@
         </table>
     {% else %} Oops, you have no problems to fix!
     {% endif %}
-    
-    <script>
-        function fixProblem(problem_id) {            
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://192.168.33.11/problems/fixProblem/'+problem_id, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-
-            xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                    window.location = "/myproblems";
-                }
-            }
-            
-            xhr.send();
-        }
-    </script>
 </body>
 </html>
