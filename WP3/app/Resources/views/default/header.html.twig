@@ -5,6 +5,12 @@
             {% if app.session.get('company') is not null %}
                 ({{ app.session.get('company') }})
             {% endif %}
+
+            {% if app.session.get('role') is same as("0") %} <div style="color: orange; display:inline">(Technician)</div>
+            {% elseif app.session.get('role') is same as("1") %} <div style="color: orange; display:inline">(Work Manager)</div>
+            {% elseif app.session.get('role') is same as("2") %} <div style="color: orange; display:inline">(Admin)</div>
+            {% endif %}
+
             | <a href={{ url('logout') }}>logout</a>
         {% else %}
             <a href={{ url('loginpage') }}>login</a>
@@ -15,13 +21,13 @@
     <a href={{ url('problems') }}><button>Problems</button></a>
     <a href={{ url('statusreports') }}><button>Status Reports</button></a>
     {% if app.session.get('role') is same as("0") %}
-        <a href={{ url('myproblems') }}><button>My Problems</button></a>
+        <a href={{ url('myproblems') }}><button class="extra_button">My Problems</button></a>
     {% endif %}
     {% if app.session.get('role') is same as("2") %}
-        <a href={{ url('technicians') }}><button>Technicians</button></a>
+        <a href={{ url('technicians') }}><button class="extra_button">Technicians</button></a>
     {% endif %}
     {% if app.session.get('company') is not null %}
-        <a href={{ url('locations') }}><button>Company Locations</button></a>
+        <a href={{ url('locations') }}><button class="extra_button">Company Locations</button></a>
     {% endif %}
 
 </header>

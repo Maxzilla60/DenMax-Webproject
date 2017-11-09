@@ -78,6 +78,6 @@ class LoginController extends Controller
     public function logoutAction(Request $request) {
         // Clear session cookies and redirect:
         $request->getSession()->clear();
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('loginpage');
     }
 }

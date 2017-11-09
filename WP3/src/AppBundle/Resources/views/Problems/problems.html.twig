@@ -40,7 +40,7 @@
                     {% endif %}
                     
                     {% if app.session.get('role') == 1 %}
-                        <td><a href={{ path('settechnician', {'problem_id': p.id}) }}>{{ p.technician ? p.technician : 'N/A' }}</a></td>
+                        <td><a href={{ path('settechnician', {'problem_id': p.id}) }} class="technician_id">{{ p.technician ? p.technician : 'N/A' }}</a></td>
                     {% endif %}
                 </tr>
             {% endfor %}
