@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use AppBundle\Repository\StatusreportsRepo;
@@ -86,6 +87,40 @@ class StatusreportsController extends Controller
         // Set headers:
         $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="statusreports.csv"');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/statusreports/csv2", name="csv2")
+     */
+    public function statusreportsCSV2Action() {
+        $fetchedStatusreports = $this->repo->getAllStatusreports();
+
+        $rows = array();
+        $data = array("Id", "Location Id", "Status", "Date");
+        $rows[] = implode(',', $data);
+        foreach ($fetchedStatusreports as $report) {
+            if ($report->status == "0") {
+                $status = "GOOD";
+            }
+            else if ($report->status == "1") {
+                $status = "AVARAGE";
+            }
+            else {
+                $status = "BAD";
+            }
+
+            $data = array($report->id, $report->location_id, $status, $report->date);
+
+            $rows[] = implode(',', $data);
+        }
+
+        $content = implode("\n", $rows);
+
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="statusreports.csv"');
 
         return $response;
