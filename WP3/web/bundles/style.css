@@ -1,0 +1,58 @@
+* {
+    font-family: 'Ubuntu', sans-serif;
+}
+tr td {
+    font-family: 'Roboto Mono', monospace;
+}
+button {
+    border: 0;
+    border-radius: 2px;
+    padding: 5px;
+    margin:0;
+    color: whitesmoke;
+    background: black;
+}
+button:hover {
+    color: black;
+    background: orange;
+}
+.extra_button {
+    background: darkred;
+}
+.technician_id, .technician_id:visited {
+    font-weight: bold;
+    color: darkred;
+}
+.technician_id:hover {
+    color: orange;
+}
+
+.login {
+    float: right;
+}
+.responsive_table {
+    width: 100%;
+    text-align: center
+}
+
+/* Wide Screen */
+@media all and (min-width: 1200px) {
+    .responsive_table {
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Small Screen */
+@media all and (max-width: 720px) {
+    .responsive_hide {
+        display: none;
+    }
+    .login {
+        float: none;
+        border-bottom: solid 1px black;
+        margin-bottom: 10px;
+        padding-bottom: 5px
+    }
+}
