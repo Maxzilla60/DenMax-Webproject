@@ -132,13 +132,10 @@ class StatusreportsController extends Controller
     /**
      * @Route("/statusreports/doc", name="doc")
      */
-    public function doctrineAction(StatusreportsService $statusreportsService) {
-        /*$em = $this->getDoctrine()->getManager();
-        $statusreports = $em->getRepository("AppBundle:Statusreports")->findAll();*/
-        //$statusreportsService = $this->get("abcde");
+    public function doctrineAction() {
+        $statusreportsService = $this->get("app.statusreports_service");
         $statusreports = $statusreportsService->fetchAllStatusreports();
 
-        //$statusreports = $this->getDoctrine()->getRepository("AppBundle:Statusreports")->findAll();
         return $this->render('AppBundle:Statusreports:doc.html.twig', array("statusreports" => $statusreports));
     }
 
@@ -146,7 +143,8 @@ class StatusreportsController extends Controller
      * @Route("/statusreports/csv", name="csv")
      */
     public function csvAction() {
-        $fetchedStatusreports = $this->getDoctrine()->getRepository("AppBundle:Statusreports")->findAll();
+        $statusreportsService = $this->get("app.statusreports_service");
+        $fetchedStatusreports = $statusreportsService->fetchAllStatusreports();
 
         $rows = array();
         $data = array("Id", "Location Id", "Location Name", "Status", "Date");
