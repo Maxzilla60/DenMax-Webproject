@@ -34,7 +34,7 @@ class DefaultController extends Controller
         
         $form = $this->createFormBuilder($data)
             ->setAction('/technicians/add/go')
-            ->add('username', TextType::class, array('required' => 'true', 'name' => 'username'))
+            ->add('username', TextType::class, array('required' => 'true'))
             ->add('add', SubmitType::class, array('label' => 'ADD'))
             ->getForm();
         

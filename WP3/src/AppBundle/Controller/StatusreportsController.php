@@ -41,9 +41,9 @@ class StatusreportsController extends Controller
     }
     
     /**
-     * @Route("/statusreports/csv", name="csv")
+     * @Route("/statusreports/old/csv", name="old_csv")
      */
-    public function statusreportsCSVAction() {
+    public function oldCSVAction() {
         // Create new response
         $response = new StreamedResponse();
         // Set callback function to create file:
@@ -93,9 +93,9 @@ class StatusreportsController extends Controller
     }
 
     /**
-     * @Route("/statusreports/csv2", name="csv2")
+     * @Route("/statusreports/old/csv2", name="old_csv2")
      */
-    public function statusreportsCSV2Action() {
+    public function oldCSV2Action() {
         $fetchedStatusreports = $this->repo->getAllStatusreports();
 
         $rows = array();
@@ -117,6 +117,47 @@ class StatusreportsController extends Controller
             $rows[] = implode(',', $data);
         }
 
+        $content = implode("\n", $rows);
+
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="statusreports.csv"');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/statusreports/doc", name="doc")
+     */
+    public function doctrineAction(Request $request) {
+        $statusreports = $this->getDoctrine()->getRepository("AppBundle:Statusreports")->findAll();
+        return $this->render('AppBundle:Statusreports:doc.html.twig', array("statusreports" => $statusreports));
+    }
+
+    /**
+     * @Route("/statusreports/csv", name="csv")
+     */
+    public function csvAction() {
+        $fetchedStatusreports = $this->getDoctrine()->getRepository("AppBundle:Statusreports")->findAll();
+
+        $rows = array();
+        $data = array("Id", "Location Id", "Location Name", "Status", "Date");
+        $rows[] = implode(',', $data);
+        foreach ($fetchedStatusreports as $report) {
+            if ($report->getStatus() == 0) {
+                $status = "GOOD";
+            }
+            else if ($report->getStatus() == 1) {
+                $status = "AVARAGE";
+            }
+            else {
+                $status = "BAD";
+            }
+
+            $data = array($report->getId(), $report->getLocation()->getId(), $report->getLocation()->getName(), $status, $report->getDate()->format('d-m-Y H:i:s'));
+
+            $rows[] = implode(',', $data);
+        }
         $content = implode("\n", $rows);
 
         $response = new Response($content);
