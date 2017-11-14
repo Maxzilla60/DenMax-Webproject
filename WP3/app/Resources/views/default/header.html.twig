@@ -18,7 +18,7 @@
     </div>
 
     <a href={{ url('home') }}><button>Home</button></a>
-    <a href={{ url('problems') }}><button>Problems</button></a>
+    <a href={{ url('docproblem') }}><button>Problems</button></a>
     <a href={{ url('statusreports') }}><button>Status Reports</button></a>
     {% if app.session.get('role') is same as("0") %}
         <a href={{ url('myproblems') }}><button class="extra_button">My Problems</button></a>

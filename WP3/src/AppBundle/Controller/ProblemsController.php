@@ -20,6 +20,14 @@ class ProblemsController extends Controller
             $this->repo = new ProblemsRepo();
         }
     }
+
+    /**
+     * @Route("/docproblem", name="docproblem")
+     */
+    public function doctineAction(Request $request){
+        $problems = $this->getDoctrine()->getRepository("AppBundle:Problems")->findAll();
+        return $this->render('AppBundle:Problems:doctrine.html.twig', array("problems" => $problems));
+    }
     
     /**
     *  @Route("/problems", name="problems")
@@ -162,5 +170,27 @@ class ProblemsController extends Controller
         }
         
         return $this->redirectToRoute('myproblems');
+    }
+
+    /**
+     * Export to PDF
+     *
+     * @Route("/pdf", name="acme_demo_pdf")
+     */
+    public function pdfAction()
+    {
+        $problems = $this->getDoctrine()->getRepository("AppBundle:Problems")->findAll();
+        $html = $this->renderView('AppBundle:Problems:doctrine.html.twig', array("problems" => $problems));
+
+        $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+            ]
+        );
     }
 }

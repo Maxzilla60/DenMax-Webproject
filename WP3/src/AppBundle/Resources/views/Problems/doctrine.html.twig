@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"><title>Problems</title>
+    {{ include('default/style.html.twig') }}
+</head>
+<body>
+{{ include('default/header.html.twig') }}
+
+{% if problems %}
+    <table class="responsive_table">
+        <tr>
+            <th>ID</th>
+            <th>LOCATION ID</th>
+            <th>DESCRIPTION</th>
+            <th class="responsive_hide">DATE</th>
+            <th>FIXED</th>
+            {% if app.session.get('role') == 1 %}
+                <th>TECHNICIAN ID</th>
+            {% endif %}
+        </tr>
+        {% for p in problems %}
+            <tr>
+                <td>{{p.id}}</td>
+                <td>{{p.location.name}}</td>
+                <td>{{p.description}}</td>
+                <td class="responsive_hide">{{p.date|date('Y-m-d H:i:s')}}</td>
+
+                {% if p.fixed == 1 %}
+                    <td style="background:green;color:white">YES</td>
+                {% else %}
+                    <td style="background:red;color:white">NO</td>
+                {% endif %}
+
+                {% if app.session.get('role') == 1 %}
+                    <td><a href={{ path('settechnician', {'problem_id': p.id}) }} class="technician_id">{{ p.technician ? p.technician : 'N/A' }}</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% else %} Oops, no problems found!
+{% endif %}
+</body>
+</html>

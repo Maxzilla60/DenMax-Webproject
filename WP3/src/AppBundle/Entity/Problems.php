@@ -60,5 +60,134 @@ class Problems
     private $location;
 
 
-}
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Problems
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Problems
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set fixed
+     *
+     * @param boolean $fixed
+     *
+     * @return Problems
+     */
+    public function setFixed($fixed)
+    {
+        $this->fixed = $fixed;
+
+        return $this;
+    }
+
+    /**
+     * Get fixed
+     *
+     * @return boolean
+     */
+    public function getFixed()
+    {
+        return $this->fixed;
+    }
+
+    /**
+     * Set technician
+     *
+     * @param integer $technician
+     *
+     * @return Problems
+     */
+    public function setTechnician($technician)
+    {
+        $this->technician = $technician;
+
+        return $this;
+    }
+
+    /**
+     * Get technician
+     *
+     * @return integer
+     */
+    public function getTechnician()
+    {
+        return $this->technician;
+    }
+
+    /**
+     * Set location
+     *
+     * @param \AppBundle\Entity\Locations $location
+     *
+     * @return Problems
+     */
+    public function setLocation(\AppBundle\Entity\Locations $location = null)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \AppBundle\Entity\Locations
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+}
