@@ -33,3 +33,13 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    app.statusreports_service:
+        class: 'AppBundle\Service\StatusreportsService'
+        arguments: [ "@doctrine.orm.entity_manager", "@app.statusreports_repository" ]
+        alias: 'abcde'
+
+    app.statusreports_repository:
+        class: 'AppBundle\ORM\EntityRepository'
+        factory: [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments: [ 'AppBundle\Entity\Statusreports' ]

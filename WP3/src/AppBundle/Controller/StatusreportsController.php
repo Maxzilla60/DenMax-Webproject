@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use AppBundle\Repository\StatusreportsRepo;
 
+use AppBundle\Entity\Statusreports;
+use AppBundle\Service\StatusreportsService;
+
 class StatusreportsController extends Controller
 {
     private $repo;
@@ -129,8 +132,13 @@ class StatusreportsController extends Controller
     /**
      * @Route("/statusreports/doc", name="doc")
      */
-    public function doctrineAction(Request $request) {
-        $statusreports = $this->getDoctrine()->getRepository("AppBundle:Statusreports")->findAll();
+    public function doctrineAction(StatusreportsService $statusreportsService) {
+        /*$em = $this->getDoctrine()->getManager();
+        $statusreports = $em->getRepository("AppBundle:Statusreports")->findAll();*/
+        //$statusreportsService = $this->get("abcde");
+        $statusreports = $statusreportsService->fetchAllStatusreports();
+
+        //$statusreports = $this->getDoctrine()->getRepository("AppBundle:Statusreports")->findAll();
         return $this->render('AppBundle:Statusreports:doc.html.twig', array("statusreports" => $statusreports));
     }
 
