@@ -146,30 +146,49 @@ class StatusreportsController extends Controller
         $statusreportsService = $this->get("app.statusreports_service");
         $fetchedStatusreports = $statusreportsService->fetchAllStatusreports();
 
-        $rows = array();
-        $data = array("Id", "Location Id", "Location Name", "Status", "Date");
-        $rows[] = implode(',', $data);
-        foreach ($fetchedStatusreports as $report) {
-            if ($report->getStatus() == 0) {
-                $status = "GOOD";
-            }
-            else if ($report->getStatus() == 1) {
-                $status = "AVARAGE";
-            }
-            else {
-                $status = "BAD";
-            }
-
-            $data = array($report->getId(), $report->getLocation()->getId(), $report->getLocation()->getName(), $status, $report->getDate()->format('d-m-Y H:i:s'));
-
-            $rows[] = implode(',', $data);
-        }
-        $content = implode("\n", $rows);
+        $content = $this->createCSVArray($fetchedStatusreports);
 
         $response = new Response($content);
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="statusreports.csv"');
 
         return $response;
+    }
+
+    public function createCSVArray($reports) {
+        // Rows array
+        $rows = array();
+        
+        // Header:
+        $data = array("Id", "Location Id", "Location Name", "Status", "Date");
+        $rows[] = implode(',', $data);
+
+        // Content:
+        foreach ($reports as $report) {
+            $report_id = $report->getId();
+            $location_id = $report->getLocation()->getId();
+            $location_name = $report->getLocation()->getName();
+            $status = $this->statusToReadable($report->getStatus());
+            $date = $report->getDate()->format('d-m-Y H:i:s');
+
+            $data = array($report_id, $location_id, $location_name, $status, $date);
+
+            $rows[] = implode(',', $data);
+        }
+
+        $content = implode("\n", $rows);
+        return $content;
+    }
+
+    public function statusToReadable($status) {
+        if ($status == 0) {
+            return "GOOD";
+        }
+        else if ($status == 1) {
+            return "AVARAGE";
+        }
+        else {
+            return "BAD";
+        }   
     }
 }
