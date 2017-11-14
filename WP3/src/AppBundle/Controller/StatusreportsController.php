@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use AppBundle\Repository\StatusreportsRepo;
 
+use AppBundle\Entity\Statusreports;
+use AppBundle\Service\StatusreportsService;
+
 class StatusreportsController extends Controller
 {
     private $repo;
@@ -129,8 +132,10 @@ class StatusreportsController extends Controller
     /**
      * @Route("/statusreports/doc", name="doc")
      */
-    public function doctrineAction(Request $request) {
-        $statusreports = $this->getDoctrine()->getRepository("AppBundle:Statusreports")->findAll();
+    public function doctrineAction() {
+        $statusreportsService = $this->get("app.statusreports_service");
+        $statusreports = $statusreportsService->fetchAllStatusreports();
+
         return $this->render('AppBundle:Statusreports:doc.html.twig', array("statusreports" => $statusreports));
     }
 
@@ -138,32 +143,52 @@ class StatusreportsController extends Controller
      * @Route("/statusreports/csv", name="csv")
      */
     public function csvAction() {
-        $fetchedStatusreports = $this->getDoctrine()->getRepository("AppBundle:Statusreports")->findAll();
+        $statusreportsService = $this->get("app.statusreports_service");
+        $fetchedStatusreports = $statusreportsService->fetchAllStatusreports();
 
-        $rows = array();
-        $data = array("Id", "Location Id", "Location Name", "Status", "Date");
-        $rows[] = implode(',', $data);
-        foreach ($fetchedStatusreports as $report) {
-            if ($report->getStatus() == 0) {
-                $status = "GOOD";
-            }
-            else if ($report->getStatus() == 1) {
-                $status = "AVARAGE";
-            }
-            else {
-                $status = "BAD";
-            }
-
-            $data = array($report->getId(), $report->getLocation()->getId(), $report->getLocation()->getName(), $status, $report->getDate()->format('d-m-Y H:i:s'));
-
-            $rows[] = implode(',', $data);
-        }
-        $content = implode("\n", $rows);
+        $content = $this->createCSVArray($fetchedStatusreports);
 
         $response = new Response($content);
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="statusreports.csv"');
 
         return $response;
+    }
+
+    public function createCSVArray($reports) {
+        // Rows array
+        $rows = array();
+        
+        // Header:
+        $data = array("Id", "Location Id", "Location Name", "Status", "Date");
+        $rows[] = implode(',', $data);
+
+        // Content:
+        foreach ($reports as $report) {
+            $report_id = $report->getId();
+            $location_id = $report->getLocation()->getId();
+            $location_name = $report->getLocation()->getName();
+            $status = $this->statusToReadable($report->getStatus());
+            $date = $report->getDate()->format('d-m-Y H:i:s');
+
+            $data = array($report_id, $location_id, $location_name, $status, $date);
+
+            $rows[] = implode(',', $data);
+        }
+
+        $content = implode("\n", $rows);
+        return $content;
+    }
+
+    public function statusToReadable($status) {
+        if ($status == 0) {
+            return "GOOD";
+        }
+        else if ($status == 1) {
+            return "AVARAGE";
+        }
+        else {
+            return "BAD";
+        }   
     }
 }
