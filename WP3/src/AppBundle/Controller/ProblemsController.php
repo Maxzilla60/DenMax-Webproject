@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 use AppBundle\Repository\ProblemsRepo;
 
+use AppBundle\Entity\Problems;
+use AppBundle\Service\ProblemsService;
+
 class ProblemsController extends Controller
 {
     private $repo;
@@ -25,7 +28,9 @@ class ProblemsController extends Controller
      * @Route("/docproblem", name="docproblem")
      */
     public function doctineAction(Request $request){
-        $problems = $this->getDoctrine()->getRepository("AppBundle:Problems")->findAll();
+        $problemsService = $this->get("app.problems_service");
+        $problems = $problemsService->fetchAllProblems();
+
         return $this->render('AppBundle:Problems:doctrine.html.twig', array("problems" => $problems));
     }
     
@@ -175,12 +180,13 @@ class ProblemsController extends Controller
     /**
      * Export to PDF
      *
-     * @Route("/pdf", name="acme_demo_pdf")
+     * @Route("/problems/pdf", name="problemPdf")
      */
     public function pdfAction()
     {
-        $problems = $this->getDoctrine()->getRepository("AppBundle:Problems")->findAll();
-        $html = $this->renderView('AppBundle:Problems:doctrine.html.twig', array("problems" => $problems));
+        $problemsService = $this->get("app.problems_service");
+        $problems = $problemsService->fetchAllProblems();
+        $html = $this->renderView('AppBundle:Problems:pdf.html.twig', array("problems" => $problems));
 
         $filename = sprintf('test-%s.pdf', date('Y-m-d'));
 

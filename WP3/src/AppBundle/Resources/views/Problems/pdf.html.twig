@@ -5,13 +5,6 @@
     {{ include('default/style.html.twig') }}
 </head>
 <body>
-{{ include('default/header.html.twig') }}
-
-<div style="border-bottom: solid 1px black; margin-bottom: 5px; padding-bottom: 5px">
-    <a href={{ url('problemPdf') }}>
-        <button class="extra_button">Export as PDF</button>
-    </a>
-</div>
 
 {% if problems %}
     <table class="responsive_table">

@@ -7,3 +7,12 @@ services:
         class: Doctrine\ORM\EntityRepository
         factory: [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments: [ 'AppBundle\Entity\Statusreports' ]
+
+    app.problems_service:
+        class: 'AppBundle\Service\ProblemsService'
+        arguments: [ "@doctrine.orm.entity_manager", "@app.problems_repository" ]
+
+    app.problems_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments: [ 'AppBundle\Entity\Problems' ]
